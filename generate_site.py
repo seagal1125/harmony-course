@@ -288,14 +288,13 @@ def generate():
             
     # 4. Generate Index (Redirect or Cover)
     # Let's make index.html a cover page that introduces the course and has the ToC
-    index_content = """
-    # 音樂理論自學教材：和聲的引力
-    
-    歡迎來到這套專為自學設計的音樂理論課程。
-    我們將從物理聲學出發，一路探索到爵士和聲的高級色彩。
-    
-    ## 課程目錄
-    """
+    index_content = """# 音樂理論自學教材：和聲的引力
+
+歡迎來到這套專為自學設計的音樂理論課程。
+我們將從物理聲學出發，一路探索到爵士和聲的高級色彩。
+
+## 課程目錄
+"""
     # Append list of lessons to index content
     for l in lessons:
         link = l['filename'].replace('.md', '.html')
