@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第十二. 調式互換 —— 借用另一個宇宙的顏色 - 和聲的引力</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        
+:root {
+    --bg-color: #fdfdfd;
+    --text-color: #333;
+    --sidebar-bg: #f7f7f7;
+    --sidebar-width: 280px;
+    --accent-color: #2c3e50;
+    --link-color: #3498db;
+    --font-heading: "Playfair Display", Georgia, serif;
+    --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #1a1a1a;
+        --text-color: #e0e0e0;
+        --sidebar-bg: #252525;
+        --accent-color: #ecf0f1;
+        --link-color: #5dade2;
+    }
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    border-right: 1px solid rgba(0,0,0,0.1);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 2rem 1.5rem;
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
+}
+
+.sidebar h1 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--accent-color);
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-links li {
+    margin-bottom: 0.8rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    opacity: 0.8;
+    transition: all 0.2s;
+    display: block;
+    padding: 0.3rem 0;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    opacity: 1;
+    color: var(--link-color);
+    font-weight: 600;
+    transform: translateX(5px);
+}
+
+/* Main Content */
+.main-content {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    padding: 4rem 10%;
+    max-width: 800px;
+}
+
+.markdown-body {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+    font-family: var(--font-heading);
+    color: var(--accent-color);
+    margin-top: 2rem;
+}
+
+.markdown-body h1 { font-size: 2.5rem; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 0.5rem; }
+.markdown-body h2 { font-size: 1.8rem; }
+.markdown-body blockquote {
+    border-left: 4px solid var(--link-color);
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+    background: rgba(52, 152, 219, 0.1);
+    border-radius: 0 4px 4px 0;
+    padding: 1rem;
+}
+
+.markdown-body code {
+    background: rgba(0,0,0,0.05);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+.markdown-body pre code {
+    background: transparent;
+    padding: 0;
+}
+
+.markdown-body pre {
+    background: #2d3436;
+    color: #dfe6e9;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.nav-buttons {
+    margin-top: 4rem;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    background: var(--sidebar-bg);
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background 0.2s;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.btn:hover {
+    background: rgba(0,0,0,0.05);
+    color: var(--link-color);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        z-index: 1000;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    }
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 2rem 1.5rem;
+    }
+    .menu-toggle {
+        display: block;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1001;
+        background: var(--bg-color);
+        border: 1px solid rgba(0,0,0,0.1);
+        padding: 0.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+}
+@media (min-width: 769px) {
+    .menu-toggle { display: none; }
+}
+
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+    <nav class="sidebar">
+        <h1><a href="index.html" style="color: inherit; text-decoration: none;">和聲的引力</a></h1>
+        <ul class="nav-links">
+            <li><a href="lesson_01.html" id="nav-1">第一. 音聲的物理基礎與「引力」的起源</a></li><li><a href="lesson_02.html" id="nav-2">第二. 時間的幾何學 —— 記譜與節奏層級</a></li><li><a href="lesson_03.html" id="nav-3">第三. 調性的導航圖 —— 五度圈深度解析</a></li><li><a href="lesson_04.html" id="nav-4">第四. 小調的變體 —— 憂鬱中的三種靈魂</a></li><li><a href="lesson_05.html" id="nav-5">第五. 縱向結構 —— 音符的建築學 (和弦)</a></li><li><a href="lesson_06.html" id="nav-6">第六. 和聲動力學 —— 解決、磁力與 Sus 和弦</a></li><li><a href="lesson_07.html" id="nav-7">第七. 橫向連接 —— 讓音樂流動的藝術 (聲部進行)</a></li><li><a href="lesson_08.html" id="nav-8">第八. 模進的力量 —— 五度圈的連鎖反應</a></li><li><a href="lesson_09.html" id="nav-9">第九. 經典分析 I ——《帕薩卡利亞》的結構美學</a></li><li><a href="lesson_10.html" id="nav-10">第十. 經典分析 II ——《枯葉》與爵士 2-5-1 的魅力</a></li><li><a href="lesson_11.html" id="nav-11">第十一. 副屬和弦 —— 音樂中的「暫時引力」</a></li><li><a class="active" href="lesson_12.html" id="nav-12">第十二. 調式互換 —— 借用另一個宇宙的顏色</a></li><li><a href="lesson_13.html" id="nav-13">第十三. 進階門檻 —— 突破調性的最後疆界</a></li>
+        </ul>
+    </nav>
+    <main class="main-content">
+        <article class="markdown-body">
+            <h1>第十二章：調式互換 —— 借用另一個宇宙的顏色</h1>
+<blockquote>
+<p>[!NOTE]<br />
+<strong>學習目標</strong>：如何在高興的大調音樂中加入一點點的高級憂鬱？我們將學習 <strong>調式互換 (Modal Interchange)</strong>，學會向您的「關係對象」借地雷。</p>
+</blockquote>
+<hr />
+<h2>12.1 視覺化描述：調性的「雙重曝光」</h2>
+<p>想像您在看一張照片：<br />
+*   照片是大調的 (明亮、陽光)。<br />
+*   但您在上面疊了一層小調的濾鏡 (幽暗、懷舊)。<br />
+這就是調式互換。最常見的做法是：<strong>在大調歌曲中，借用同主音小調（平行小調）的和弦。</strong></p>
+<h3>🧩 構造解析 (以 C 大調為例)</h3>
+<p>您原本的 IV 級是 <strong>F Major (F-A-C)</strong>。<br />
+*   我們從 C 小調借來一個 <strong>F minor (F-Ab-C)</strong>。<br />
+*   這個 <strong>Ab</strong> (降 6 級) 聽起來有一種「大徹大悟」或「淡淡哀愁」的味道。</p>
+<blockquote>
+<p><strong>視覺想像</strong>：這就像是在亮白色的牆面上，劃過一道深藍色的墨跡。它不破壞整體的白色，但讓層次感瞬間提升。</p>
+</blockquote>
+<hr />
+<h2>12.2 實例驅動：Radiohead 與「夢幻感」</h2>
+<h3>🚀 範例：流行與影視配樂的神技</h3>
+<p>當作曲家想表達「童話的終結」或「美好的回憶」時，他們會用 <strong>IVm \to I</strong> (Fm \to C)。<br />
+*   <strong>實例</strong>：Radiohead 的 《Creep》、迪士尼的動畫主題曲。<br />
+*   這是利用了從小調借來的音符，去對抗大調的平庸感。</p>
+<h3>🏮 預測您感興趣的主題：皮卡地終止 (Picardy Third) 的反向應用</h3>
+<ul>
+<li><strong>預測</strong>：您喜歡情緒的戲劇性變化。如果我們在小調的結尾，突然互換回大調的主和弦，會產生一種「苦盡甘來」的神聖感。這通常被稱為 <strong>皮卡地終止</strong>。</li>
+</ul>
+<hr />
+<h2>12.3 深度聯繫：為什麼您會注意到共同音的變化？</h2>
+<p>在調式互換中，最精彩的就是那個由「白鍵變成黑鍵」的過程（例如 A 變成 Ab）。<br />
+*   這對應到您之前觀察 <code>Am 是 Dm 的 5-7-9</code> 的細膩度。<br />
+*   當您學會調式互換，您就是在操控音高的「微小偏差」，這會讓聽眾的耳朵覺得您的音樂「很有戲」。</p>
+<hr />
+<h2>12.4 🎹 在鍵盤上彈彈看！</h2>
+<h3>任務一：體驗「懷舊小下屬」</h3>
+<ol>
+<li>右手彈一個 <strong>C</strong>，接一個 <strong>F</strong>，再回 <strong>C</strong>。</li>
+<li>改彈：<strong>C \to Fm (F-Ab-C) \to C</strong>。</li>
+<li>感受那個 <strong>Ab</strong> 帶來的吸力與情緒波動。</li>
+</ol>
+<h3>任務二：借用小調的「大和弦」</h3>
+<ol>
+<li>在 C 大調中，嘗試彈一個 <strong>Ab Major (Ab-C-Eb)</strong>。這在 C 大調中是不存在的，它是從小調借來的 bVI。</li>
+<li>這會產生一種「壯闊、甚至有點英雄主義」的開闊感（星際大戰風格！）。</li>
+</ol>
+<h3>任務三：混合五度圈</h3>
+<ol>
+<li>在您的 <code>Am - Dm - G - C</code> 進行末尾，試著把最後的 C 換成 Cm 或者是從別調借來的代用和弦。</li>
+</ol>
+<hr />
+<p><strong>下一章預告</strong>：這是本教材的最後一章！我們將挑戰 <strong>「進階門檻」</strong> —— 學習三全音代理、拿波里和弦等高級和聲工具，為您的自學之路畫下完美的（暫時性）句號。</p>
+        </article>
+        <div class="nav-buttons">
+            <a href="lesson_11.html" class="btn">← 上一章</a>
+            <a href="lesson_13.html" class="btn">下一章 →</a>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# 完整課程進度表
+
+- [x] 第 1 章：聲音物理與音程 (lesson_01.md)
+- [x] 第 2 章：記譜與時間 (lesson_02.md)
+- [x] 第 3 章：五度圈解密 (lesson_03.md)
+- [x] 第 4 章：小調的變體 (lesson_04.md)
+- [x] 第 5 章：縱向結構 (lesson_05.md)
+- [x] 第 6 章：和聲動力學 (lesson_06.md)
+- [x] 第 7 章：橫向連接 (lesson_07.md)
+- [x] 第 8 章：模進的力量 (lesson_08.md)
+- [x] 第 9 章：經典分析 I (lesson_09.md)
+- [x] 第 10 章：經典分析 II (lesson_10.md)
+- [x] 第 11 章：副屬和弦 (lesson_11.md)
+- [x] 第 12 章：調式互換 (lesson_12.md)
+- [x] 第 13 章：進階門檻 (lesson_13.md)

@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第一. 音聲的物理基礎與「引力」的起源 - 和聲的引力</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        
+:root {
+    --bg-color: #fdfdfd;
+    --text-color: #333;
+    --sidebar-bg: #f7f7f7;
+    --sidebar-width: 280px;
+    --accent-color: #2c3e50;
+    --link-color: #3498db;
+    --font-heading: "Playfair Display", Georgia, serif;
+    --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #1a1a1a;
+        --text-color: #e0e0e0;
+        --sidebar-bg: #252525;
+        --accent-color: #ecf0f1;
+        --link-color: #5dade2;
+    }
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    border-right: 1px solid rgba(0,0,0,0.1);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 2rem 1.5rem;
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
+}
+
+.sidebar h1 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--accent-color);
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-links li {
+    margin-bottom: 0.8rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    opacity: 0.8;
+    transition: all 0.2s;
+    display: block;
+    padding: 0.3rem 0;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    opacity: 1;
+    color: var(--link-color);
+    font-weight: 600;
+    transform: translateX(5px);
+}
+
+/* Main Content */
+.main-content {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    padding: 4rem 10%;
+    max-width: 800px;
+}
+
+.markdown-body {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+    font-family: var(--font-heading);
+    color: var(--accent-color);
+    margin-top: 2rem;
+}
+
+.markdown-body h1 { font-size: 2.5rem; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 0.5rem; }
+.markdown-body h2 { font-size: 1.8rem; }
+.markdown-body blockquote {
+    border-left: 4px solid var(--link-color);
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+    background: rgba(52, 152, 219, 0.1);
+    border-radius: 0 4px 4px 0;
+    padding: 1rem;
+}
+
+.markdown-body code {
+    background: rgba(0,0,0,0.05);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+.markdown-body pre code {
+    background: transparent;
+    padding: 0;
+}
+
+.markdown-body pre {
+    background: #2d3436;
+    color: #dfe6e9;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.nav-buttons {
+    margin-top: 4rem;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    background: var(--sidebar-bg);
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background 0.2s;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.btn:hover {
+    background: rgba(0,0,0,0.05);
+    color: var(--link-color);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        z-index: 1000;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    }
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 2rem 1.5rem;
+    }
+    .menu-toggle {
+        display: block;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1001;
+        background: var(--bg-color);
+        border: 1px solid rgba(0,0,0,0.1);
+        padding: 0.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+}
+@media (min-width: 769px) {
+    .menu-toggle { display: none; }
+}
+
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+    <nav class="sidebar">
+        <h1><a href="index.html" style="color: inherit; text-decoration: none;">和聲的引力</a></h1>
+        <ul class="nav-links">
+            <li><a class="active" href="lesson_01.html" id="nav-1">第一. 音聲的物理基礎與「引力」的起源</a></li><li><a href="lesson_02.html" id="nav-2">第二. 時間的幾何學 —— 記譜與節奏層級</a></li><li><a href="lesson_03.html" id="nav-3">第三. 調性的導航圖 —— 五度圈深度解析</a></li><li><a href="lesson_04.html" id="nav-4">第四. 小調的變體 —— 憂鬱中的三種靈魂</a></li><li><a href="lesson_05.html" id="nav-5">第五. 縱向結構 —— 音符的建築學 (和弦)</a></li><li><a href="lesson_06.html" id="nav-6">第六. 和聲動力學 —— 解決、磁力與 Sus 和弦</a></li><li><a href="lesson_07.html" id="nav-7">第七. 橫向連接 —— 讓音樂流動的藝術 (聲部進行)</a></li><li><a href="lesson_08.html" id="nav-8">第八. 模進的力量 —— 五度圈的連鎖反應</a></li><li><a href="lesson_09.html" id="nav-9">第九. 經典分析 I ——《帕薩卡利亞》的結構美學</a></li><li><a href="lesson_10.html" id="nav-10">第十. 經典分析 II ——《枯葉》與爵士 2-5-1 的魅力</a></li><li><a href="lesson_11.html" id="nav-11">第十一. 副屬和弦 —— 音樂中的「暫時引力」</a></li><li><a href="lesson_12.html" id="nav-12">第十二. 調式互換 —— 借用另一個宇宙的顏色</a></li><li><a href="lesson_13.html" id="nav-13">第十三. 進階門檻 —— 突破調性的最後疆界</a></li>
+        </ul>
+    </nav>
+    <main class="main-content">
+        <article class="markdown-body">
+            <h1>第一章：音聲的物理基礎與「引力」的起源</h1>
+<blockquote>
+<p>[!NOTE]<br />
+<strong>學習目標</strong>：理解為什麼 C 和 G 聽起來這麼「配」？為什麼八度音聽起來像同一個音？我們將從物理學的「泛音列」中找到音樂引力的密碼。</p>
+</blockquote>
+<hr />
+<h2>1.1 視覺化描述：琴弦中的「俄羅斯娃娃」 (泛音列)</h2>
+<p>當你彈下鍵盤上的一個音（基音），空氣中振動的不只是一個頻率。想像一根琴弦在振動時，它會同時分裂成 1/2、1/3、1/4 的小段同步振動，這就是<strong>泛音列 (Overtone Series)</strong>。</p>
+<h3>🎹 鍵盤上的幾何關係</h3>
+<p>讓我們以低音 <strong>C2</strong> 作為起點，看看它上方隱藏了什麼：</p>
+<ol>
+<li><strong>第一層 (1/2 處)</strong>：高八度的 <strong>C3</strong>。聽起來最穩定，幾乎與基音融合在一起。</li>
+<li><strong>第二層 (1/3 處)</strong>：純五度的 <strong>G3</strong>。這是音樂中「最強的支援」，也是五度圈的起點。</li>
+<li><strong>第三層 (1/4 處)</strong>：再高八度的 <strong>C4</strong>。</li>
+</ol>
+<p><strong>規律總結</strong>：<br />
+*   <strong>八度 (Octave)</strong> = 2:1 的頻率關係。<br />
+*   <strong>純五度 (Perfect 5th)</strong> = 3:2 的頻率關係。</p>
+<blockquote>
+<p><strong>視覺想像</strong>：想像一個巨大的齒輪（基音 C），它每轉兩圈，上方的小齒輪（高八度 C）剛好轉一圈；每轉三圈，另一個中齒輪（純五度 G）剛好轉兩圈。這種「整數比」就是耳朵覺得「和諧」的物理真相。</p>
+</blockquote>
+<hr />
+<h2>1.2 實例驅動：從 Hans Zimmer 到《星際效應》</h2>
+<p>您提到的「史詩感」與「穩定地基」，在 Hans Zimmer 的作品中隨處可見。</p>
+<h3>🚀 範例：電影《星際效應》(Interstellar) 核心動機</h3>
+<p>為什麼那種極簡的旋律（E - F - G...）配上厚重的低音會讓你覺得空靈且廣闊？<br />
+*   <strong>物理基礎</strong>：因為他大量使用了<strong>「純五度」與「八度」</strong>。當低音部的管風琴彈下極深的底音時，它產生的強大泛音列填充了整個音域。<br />
+*   <strong>與 Passacaglia 的連結</strong>：<br />
+    您喜歡的 <code>Am - Dm - G - C</code> 進行中，每一次「五度跳進」都在順應這種物理引力。當 A 解決到 D 時，其實是 D 的「磁力」吸住了 A。</p>
+<h3>🏮 預測您感興趣的擴展主題：久石讓與「空五度」</h3>
+<p>在《神隱少女》或《天空之城》中，久石讓常在右手彈奏旋律，左手卻只用一個<strong>五度和弦 (Power Chord，不加三度音)</strong>。<br />
+*   <strong>為什麼您會感興趣？</strong> 因為這能製造出一種「留白」的美感，讓旋律顯得更純粹，而不被大小調（高興或悲傷）所綁架。</p>
+<hr />
+<h2>1.3 深度觀察：為什麼您會注意到 5-7-9 度音？</h2>
+<p>您在觀察 <code>Am 是 Dm 的 5 7 9 度音</code> 時，其實觸碰到了<strong>擴展和聲 (Extended Harmony)</strong>。<br />
+*   <strong>物理學解釋</strong>：泛音列越往上走，音程就越擠。<br />
+    *   底層是穩定的五度、八度。<br />
+    *   高層則是 7 度、9 度、11 度。<br />
+*   當您使用 5-7-9 時，您是在<strong>「泛音的高層」</strong>進行創作，這會讓音樂聽起來具有「現代感」與「透明感」。</p>
+<hr />
+<h2>1.4 🎹 在鍵盤上彈彈看！</h2>
+<p>請坐在鋼琴前（或使用模擬器），完成以下三個小任務：</p>
+<h3>任務一：尋找物理的和諧</h3>
+<ol>
+<li>左手按住最低的 <strong>C</strong>（不要放掉）。</li>
+<li>右手輕輕彈奏上方的 <strong>G</strong>、<strong>C</strong>、再高一個 <strong>E</strong>。</li>
+<li>感受這三個音如何完美地「嵌入」左手 C 音的振動中。</li>
+</ol>
+<h3>任務二：感受《星際效應》的空靈</h3>
+<ol>
+<li>左手彈奏八度的 <strong>A1 - A2</strong>。</li>
+<li>右手只彈兩個音：<strong>E4</strong> 與 <strong>B4</strong> (這是一個五度音程)。</li>
+<li>慢慢地把右手五度音往下平移：<strong>D4 - A4</strong>，再移到 <strong>C4 - G4</strong>。</li>
+<li>聽聽看那種「史詩感」是不是出來了？</li>
+</ol>
+<h3>任務三：預習解決感</h3>
+<ol>
+<li>右手彈一個 <strong>G</strong> 和弦 (G-B-D)。</li>
+<li>觀察 <strong>B</strong> 這個音，它距離上方的 <strong>C</strong> 非常近（半音）。</li>
+<li>彈完 G 之後，馬上把 B 移到 C，把 G 移到 C。這就是最純粹的「物理回歸」。</li>
+</ol>
+<hr />
+<p><strong>下一章預告</strong>：我們將進入「調性的宇宙」，正式拆解五度圈的導航地圖。</p>
+        </article>
+        <div class="nav-buttons">
+            
+            <a href="lesson_02.html" class="btn">下一章 →</a>
+        </div>
+    </main>
+</body>
+</html>

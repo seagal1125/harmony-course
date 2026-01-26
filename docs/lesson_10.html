@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第十. 經典分析 II ——《枯葉》與爵士 2-5-1 的魅力 - 和聲的引力</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        
+:root {
+    --bg-color: #fdfdfd;
+    --text-color: #333;
+    --sidebar-bg: #f7f7f7;
+    --sidebar-width: 280px;
+    --accent-color: #2c3e50;
+    --link-color: #3498db;
+    --font-heading: "Playfair Display", Georgia, serif;
+    --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #1a1a1a;
+        --text-color: #e0e0e0;
+        --sidebar-bg: #252525;
+        --accent-color: #ecf0f1;
+        --link-color: #5dade2;
+    }
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    border-right: 1px solid rgba(0,0,0,0.1);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 2rem 1.5rem;
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
+}
+
+.sidebar h1 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--accent-color);
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-links li {
+    margin-bottom: 0.8rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    opacity: 0.8;
+    transition: all 0.2s;
+    display: block;
+    padding: 0.3rem 0;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    opacity: 1;
+    color: var(--link-color);
+    font-weight: 600;
+    transform: translateX(5px);
+}
+
+/* Main Content */
+.main-content {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    padding: 4rem 10%;
+    max-width: 800px;
+}
+
+.markdown-body {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+    font-family: var(--font-heading);
+    color: var(--accent-color);
+    margin-top: 2rem;
+}
+
+.markdown-body h1 { font-size: 2.5rem; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 0.5rem; }
+.markdown-body h2 { font-size: 1.8rem; }
+.markdown-body blockquote {
+    border-left: 4px solid var(--link-color);
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+    background: rgba(52, 152, 219, 0.1);
+    border-radius: 0 4px 4px 0;
+    padding: 1rem;
+}
+
+.markdown-body code {
+    background: rgba(0,0,0,0.05);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+.markdown-body pre code {
+    background: transparent;
+    padding: 0;
+}
+
+.markdown-body pre {
+    background: #2d3436;
+    color: #dfe6e9;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.nav-buttons {
+    margin-top: 4rem;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    background: var(--sidebar-bg);
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background 0.2s;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.btn:hover {
+    background: rgba(0,0,0,0.05);
+    color: var(--link-color);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        z-index: 1000;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    }
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 2rem 1.5rem;
+    }
+    .menu-toggle {
+        display: block;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1001;
+        background: var(--bg-color);
+        border: 1px solid rgba(0,0,0,0.1);
+        padding: 0.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+}
+@media (min-width: 769px) {
+    .menu-toggle { display: none; }
+}
+
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+    <nav class="sidebar">
+        <h1><a href="index.html" style="color: inherit; text-decoration: none;">和聲的引力</a></h1>
+        <ul class="nav-links">
+            <li><a href="lesson_01.html" id="nav-1">第一. 音聲的物理基礎與「引力」的起源</a></li><li><a href="lesson_02.html" id="nav-2">第二. 時間的幾何學 —— 記譜與節奏層級</a></li><li><a href="lesson_03.html" id="nav-3">第三. 調性的導航圖 —— 五度圈深度解析</a></li><li><a href="lesson_04.html" id="nav-4">第四. 小調的變體 —— 憂鬱中的三種靈魂</a></li><li><a href="lesson_05.html" id="nav-5">第五. 縱向結構 —— 音符的建築學 (和弦)</a></li><li><a href="lesson_06.html" id="nav-6">第六. 和聲動力學 —— 解決、磁力與 Sus 和弦</a></li><li><a href="lesson_07.html" id="nav-7">第七. 橫向連接 —— 讓音樂流動的藝術 (聲部進行)</a></li><li><a href="lesson_08.html" id="nav-8">第八. 模進的力量 —— 五度圈的連鎖反應</a></li><li><a href="lesson_09.html" id="nav-9">第九. 經典分析 I ——《帕薩卡利亞》的結構美學</a></li><li><a class="active" href="lesson_10.html" id="nav-10">第十. 經典分析 II ——《枯葉》與爵士 2-5-1 的魅力</a></li><li><a href="lesson_11.html" id="nav-11">第十一. 副屬和弦 —— 音樂中的「暫時引力」</a></li><li><a href="lesson_12.html" id="nav-12">第十二. 調式互換 —— 借用另一個宇宙的顏色</a></li><li><a href="lesson_13.html" id="nav-13">第十三. 進階門檻 —— 突破調性的最後疆界</a></li>
+        </ul>
+    </nav>
+    <main class="main-content">
+        <article class="markdown-body">
+            <h1>第十章：經典分析 II ——《枯葉》與爵士 2-5-1 的魅力</h1>
+<blockquote>
+<p>[!NOTE]<br />
+<strong>學習目標</strong>：同樣是「五度圈逆時針跳躍」，為什麼《枯葉》聽起來比《帕薩卡利亞》現代？我們將學會爵士樂的靈魂密碼：<strong>2-5-1 進行</strong>。</p>
+</blockquote>
+<hr />
+<h2>10.1 視覺化描述：調性的「雙城記」</h2>
+<p>《枯葉》(Autumn Leaves) 最精采的地方在於它在 <strong>關係大小調</strong> 之間不斷切換。<br />
+想像這是一個圓盤，左右來回搖擺：<br />
+*   左邊：<strong>Bb 大調</strong> (光明、希望、白天的落葉)<br />
+*   右邊：<strong>G 小調</strong> (陰影、憂傷、夜晚的蕭瑟)</p>
+<h3>🧩 2-5-1 構造解析 (以原調為例)</h3>
+<ol>
+<li><strong>大調區塊</strong>：<code>Cm7 (ii) \to F7 (V) \to Bbmaj7 (I)</code><ul>
+<li>這是標準的 <strong>2-5-1</strong>。聽起來非常圓滿、穩定。</li>
+</ul>
+</li>
+<li><strong>延伸與轉折</strong>：<code>Bbmaj7 \to Ebmaj7 (IV)</code><ul>
+<li>這裡是連接點，準備從大調「跌入」小調。</li>
+</ul>
+</li>
+<li><strong>小調區塊</strong>：<code>Am7b5 (iiø) \to D7 (V) \to Gm (i)</code><ul>
+<li>這是小調的 <strong>2-5-1</strong>。雖然結構跟大調一樣，但那個 <strong>Am7b5</strong> (減五度) 帶來了一種刺痛感。</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2>10.2 實例驅動：為什麼它聽起來比古典樂更「潮」？</h2>
+<h3>🚀 核心差異：和弦延伸音 (Tensions)</h3>
+<ul>
+<li>《帕薩卡利亞》多用三和弦，聽起來是「骨架感」。</li>
+<li>《枯葉》大量使用 <strong>七和弦與九和弦</strong>。<ul>
+<li>正如您觀察到的 <code>Am 是 Dm 的 5-7-9</code>，爵士樂手會把這組 5-7-9 <strong>直接揉進同一個和弦裡</strong>。</li>
+<li><strong>結果</strong>：每一拍都是豐富的色彩，而不是乾淨的音階。</li>
+</ul>
+</li>
+</ul>
+<h3>🏮 預測您感興趣的相關主題：拿波里和弦 (Neapolitan 6th) 與爵士代理</h3>
+<ul>
+<li><strong>預測</strong>：在《枯葉》中，有時候樂手不會彈 D7，而是彈 <strong>Ab7</strong>。</li>
+<li><strong>對您的意義</strong>：這在聽覺上會產生一種「半音下滑」的順滑感，這跟您喜歡的 1-7-6-5 那種線性流動感是不謀而合的。</li>
+</ul>
+<hr />
+<h2>10.3 深度聯繫：五度圈的「局部特寫」</h2>
+<p>與《帕薩卡利亞》跑完整個循環不同，《枯葉》是把五度圈切成兩半：<br />
+*   它先跑大調的一半 (C-F-Bb-Eb)。<br />
+*   再跑小調的一半 (A-D-G)。<br />
+*   <strong>這種「區段化」的處理</strong>，讓音樂更有層次感，這也是現代流行音樂最常使用的編排方式。</p>
+<hr />
+<h2>10.4 🎹 在鍵盤上彈彈看！</h2>
+<h3>任務一：體驗大調的「圓滿」</h3>
+<ol>
+<li>左手彈 <strong>C \to F \to Bb</strong>。</li>
+<li>右手彈對應的七和弦 (Cm7 \to F7 \to Bbmaj7)。</li>
+<li>感受那種「白雲飄過」的輕鬆感。</li>
+</ol>
+<h3>任務二：小調的「刺痛與回歸」</h3>
+<ol>
+<li>左手彈 <strong>A \to D \to G</strong>。</li>
+<li>右手彈 <strong>Am7b5</strong> (A-C-Eb-G) \to <strong>D7</strong> (A-C-D-F#) \to <strong>Gm</strong> (G-Bb-D)。</li>
+<li>感受 Eb (刺痛) 到 F# (解決引力) 的張力變化。</li>
+</ol>
+<h3>任務三：結合兩者 (完整《枯葉》進行)</h3>
+<ol>
+<li>嘗試將這兩段拼起來，中間用 <strong>Ebmaj7</strong> 作為橋樑。</li>
+<li><strong>體驗</strong>：這就是五度圈在現代音樂中的「二階跳躍」。</li>
+</ol>
+<hr />
+<p><strong>下一個階段 (第五部分)</strong>：實戰案例完成了。接下來我們要進入最高級的 <strong>「色彩魔法」</strong> —— 學習如何用 <strong>副屬和弦</strong> 與 <strong>調式互換</strong>，讓您的和聲變得跟大師一樣神祕且高級！</p>
+        </article>
+        <div class="nav-buttons">
+            <a href="lesson_09.html" class="btn">← 上一章</a>
+            <a href="lesson_11.html" class="btn">下一章 →</a>
+        </div>
+    </main>
+</body>
+</html>
