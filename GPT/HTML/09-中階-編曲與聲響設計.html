@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>第9章　中階：編曲與聲響設計（七和弦配置／配器擴張／低音線／節奏動機）</title>
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --panel: #0f1420;
+      --text: #e8eefc;
+      --muted: #a9b4cc;
+      --border: rgba(255,255,255,.10);
+      --accent: #7aa2ff;
+      --accent-2: #7ef0c6;
+      --code-bg: rgba(255,255,255,.06);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 14px;
+      --content-max: 920px;
+      --toc-max: 320px;
+      --lh: 1.8;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f7fb;
+        --panel: #ffffff;
+        --text: #111827;
+        --muted: #4b5563;
+        --border: rgba(17,24,39,.12);
+        --accent: #2b5bff;
+        --accent-2: #00a97f;
+        --code-bg: rgba(17,24,39,.06);
+        --shadow: 0 10px 30px rgba(17,24,39,.10);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 900px at 10% -10%, rgba(122,162,255,.25), transparent 55%),
+                  radial-gradient(1000px 800px at 100% 0%, rgba(126,240,198,.18), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      line-height: var(--lh);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      padding: 18px 16px 10px;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: color-mix(in oklab, var(--bg) 70%, transparent);
+      border-bottom: 1px solid var(--border);
+      z-index: 30;
+    }
+
+    .topbar {
+      max-width: calc(var(--content-max) + var(--toc-max) + 56px);
+      margin: 0 auto;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .brand .title {
+      font-size: 14px;
+      letter-spacing: .2px;
+      color: var(--text);
+      font-weight: 650;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand .subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chip {
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+      white-space: nowrap;
+    }
+
+    main {
+      max-width: calc(var(--content-max) + var(--toc-max) + 56px);
+      margin: 0 auto;
+      padding: 18px 16px 64px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    @media (min-width: 1024px) {
+      .layout {
+        grid-template-columns: minmax(0, var(--toc-max)) minmax(0, 1fr);
+        align-items: start;
+      }
+    }
+
+    .panel {
+      background: color-mix(in oklab, var(--panel) 92%, transparent);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .toc-panel {
+      display: none;
+      padding: 14px 14px 10px;
+    }
+
+    @media (min-width: 1024px) {
+      .toc-panel {
+        display: block;
+      }
+    }
+
+    .toc-panel h2 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      letter-spacing: .2px;
+    }
+
+    .toc-panel nav {
+      max-height: calc(100vh - 140px);
+      overflow: auto;
+      padding-right: 6px;
+    }
+
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .toc li {
+      margin: 6px 0;
+    }
+
+    .toc a {
+      display: block;
+      padding: 6px 8px;
+      border-radius: 10px;
+      color: var(--muted);
+      border: 1px solid transparent;
+      line-height: 1.4;
+    }
+
+    .toc a:hover {
+      color: var(--text);
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+      border-color: var(--border);
+      text-decoration: none;
+    }
+
+    .toc ul ul {
+      padding-left: 14px;
+      margin-top: 6px;
+      border-left: 1px dashed var(--border);
+    }
+
+    /* Mobile TOC as collapsible */
+    details.toc-mobile {
+      display: block;
+    }
+
+    @media (min-width: 1024px) {
+      details.toc-mobile { display: none; }
+    }
+
+    details.toc-mobile summary {
+      cursor: pointer;
+      user-select: none;
+      padding: 12px 14px;
+      font-weight: 650;
+      border-bottom: 1px solid var(--border);
+    }
+
+    details.toc-mobile summary::marker {
+      color: var(--muted);
+    }
+
+    details.toc-mobile .toc-body {
+      padding: 10px 14px 14px;
+      max-height: 60vh;
+      overflow: auto;
+    }
+
+    .content {
+      padding: 18px 18px 22px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    @media (min-width: 768px) {
+      .content { padding: 24px 28px 30px; }
+    }
+
+    .content > :first-child { margin-top: 0; }
+
+    h1, h2, h3, h4 {
+      line-height: 1.25;
+      scroll-margin-top: 84px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 18px 0 12px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin: 22px 0 10px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin: 18px 0 8px;
+      color: color-mix(in oklab, var(--text) 92%, var(--muted));
+    }
+
+    h4 {
+      font-size: 14px;
+      margin: 14px 0 6px;
+      color: var(--muted);
+    }
+
+    p { margin: 10px 0; }
+
+    ul, ol {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+
+    li { margin: 6px 0; }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 22px 0;
+    }
+
+    blockquote {
+      margin: 14px 0;
+      padding: 12px 14px;
+      border-left: 3px solid var(--accent);
+      background: color-mix(in oklab, var(--panel) 75%, transparent);
+      border-radius: 12px;
+      color: color-mix(in oklab, var(--text) 92%, var(--muted));
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2px 6px;
+      font-size: 0.92em;
+    }
+
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      overflow: auto;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    pre code {
+      background: transparent;
+      border: 0;
+      padding: 0;
+      border-radius: 0;
+      font-size: 0.92em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: color-mix(in oklab, var(--panel) 88%, transparent);
+      display: block;
+    }
+
+    @media (min-width: 600px) {
+      table { display: table; }
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 10px;
+      vertical-align: top;
+    }
+
+    th {
+      text-align: left;
+      color: var(--text);
+      font-weight: 650;
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .permalink {
+      opacity: .0;
+      margin-left: 8px;
+      font-size: .9em;
+      color: var(--muted);
+    }
+
+    h1:hover .permalink,
+    h2:hover .permalink,
+    h3:hover .permalink,
+    h4:hover .permalink {
+      opacity: .9;
+    }
+
+    .footer {
+      margin-top: 18px;
+      padding: 12px 14px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .backtop {
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      z-index: 40;
+    }
+
+    .backtop a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--panel) 85%, transparent);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .backtop a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a id="top"></a>
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <div class="title">第9章　中階：編曲與聲響設計（七和弦配置／配器擴張／低音線／節奏動機）</div>
+        <div class="subtitle">來源：講義/09-中階-編曲與聲響設計.md  →  HTML/09-中階-編曲與聲響設計.html</div>
+      </div>
+      <a class="chip" href="index.html" style="text-decoration:none">← 目錄</a>
+      <div class="chip">最後更新：2026-01-27 14:34</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="layout">
+      <section class="panel">
+        <details class="toc-mobile">
+          <summary>本頁目錄（點開）</summary>
+          <div class="toc-body"><div class="toc">
+<ul>
+<li><a href="#9">第9章 中階：編曲與聲響設計（七和弦配置／配器擴張／低音線／節奏動機）</a><ul>
+<li><a href="#learning-objectives">章節目標（Learning Objectives）</a></li>
+<li><a href="#_1">核心理論說明</a><ul>
+<li><a href="#_2">定義</a></li>
+<li><a href="#_3">功能（中階編曲的真正任務）</a></li>
+<li><a href="#_4">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_5">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_6">實際編曲／作曲應用</a><ul>
+<li><a href="#_7">鋼琴</a></li>
+<li><a href="#band">樂團／Band</a></li>
+<li><a href="#daw">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_8">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-cmaj9">1) Cmaj9 的乾淨配置</a></li>
+<li><a href="#2-dm11">2) Dm11 的乾淨配置</a></li>
+<li><a href="#3">3) 低音線先行（示意）</a></li>
+</ul>
+</li>
+<li><a href="#_9">常見錯誤與迷思</a></li>
+<li><a href="#3_1">習作（至少 3 題）</a></li>
+<li><a href="#_10">聆聽與分析建議</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+        </details>
+        <div class="toc-panel" aria-label="目錄">
+          <h2>本頁目錄</h2>
+          <nav><div class="toc">
+<ul>
+<li><a href="#9">第9章 中階：編曲與聲響設計（七和弦配置／配器擴張／低音線／節奏動機）</a><ul>
+<li><a href="#learning-objectives">章節目標（Learning Objectives）</a></li>
+<li><a href="#_1">核心理論說明</a><ul>
+<li><a href="#_2">定義</a></li>
+<li><a href="#_3">功能（中階編曲的真正任務）</a></li>
+<li><a href="#_4">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_5">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_6">實際編曲／作曲應用</a><ul>
+<li><a href="#_7">鋼琴</a></li>
+<li><a href="#band">樂團／Band</a></li>
+<li><a href="#daw">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_8">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-cmaj9">1) Cmaj9 的乾淨配置</a></li>
+<li><a href="#2-dm11">2) Dm11 的乾淨配置</a></li>
+<li><a href="#3">3) 低音線先行（示意）</a></li>
+</ul>
+</li>
+<li><a href="#_9">常見錯誤與迷思</a></li>
+<li><a href="#3_1">習作（至少 3 題）</a></li>
+<li><a href="#_10">聆聽與分析建議</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+        </div>
+      </section>
+
+      <article class="panel content" aria-label="正文">
+        <h1 id="9">第9章　中階：編曲與聲響設計（七和弦配置／配器擴張／低音線／節奏動機）<a class="headerlink" href="#9" title="連結到此段落">&para;</a></h1>
+<h2 id="learning-objectives">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>能把七和弦/延伸音配置得清楚、不混濁，知道哪些音可以省略。</li>
+<li>能以低音線先行設計和聲骨架（bass-first），提升段落線條感。</li>
+<li>能把和聲與節奏動機結合，讓進行「被聽成一個段落」，而不是一串和弦。</li>
+</ul>
+<h2 id="_1">核心理論說明<a class="headerlink" href="#_1" title="連結到此段落">&para;</a></h2>
+<h3 id="_2">定義<a class="headerlink" href="#_2" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>Guide tones（3、7）</strong>：決定和弦品質與功能方向的核心音。</li>
+<li><strong>Harmonic density（和聲密度）</strong>：同一時刻堆多少音、堆在哪個音域。</li>
+<li><strong>節奏動機（Rhythmic motif）</strong>：固定的切分/節奏型，能把和聲串成可辨識語句。</li>
+</ul>
+<h3 id="_3">功能（中階編曲的真正任務）<a class="headerlink" href="#_3" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>讓聽者在「音色很多、聲部很多」的狀態下，仍然聽得懂：</li>
+<li>這段在推進</li>
+<li>這段在落地</li>
+<li>這段在換色</li>
+</ul>
+<p>換句話說：你在編的是「方向感」與「空間感」。</p>
+<h3 id="_4">聽覺效果<a class="headerlink" href="#_4" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>低音線好：和聲像有重力方向（走路有地面）。</li>
+<li>內聲半音連接好：推進感會變得「順」且「必然」。</li>
+<li>節奏動機一致：和聲再複雜也會被聽成同一段落。</li>
+</ul>
+<h2 id="_5">古典／爵士／流行的對照說明<a class="headerlink" href="#_5" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典：聲部線條優先；配器分層清楚（低弦/中弦/木管/銅管分工）。</li>
+<li>爵士：省略根音/五度常見；3、7 與延伸音的排列是風格核心。</li>
+<li>流行：層次靠音色與節奏；和弦色彩常由 pad/keys 承擔，吉他更偏節奏化。</li>
+</ul>
+<h2 id="_6">實際編曲／作曲應用<a class="headerlink" href="#_6" title="連結到此段落">&para;</a></h2>
+<h3 id="_7">鋼琴<a class="headerlink" href="#_7" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>
+<p>最乾淨的中階 voicing 順序：
+  1. 左手：根音（必要時加五度）
+  2. 右手：3、7（必須清楚）
+  3. 再加 9 或 13（挑 1–2 個主角色彩音）</p>
+</li>
+<li>
+<p>一個非常實用的觀念：<strong>低音區越少音越高級</strong>。</p>
+</li>
+</ul>
+<h3 id="band">樂團／Band<a class="headerlink" href="#band" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>常見分工（讓聲音立刻清楚）：</li>
+<li>Bass：根音/低音線</li>
+<li>Guitar：3/7（或 3/5）+ 節奏</li>
+<li>Keys：9/13/#11（挑選）+ 長音或切分</li>
+<li>若主唱旋律很忙：和聲可以更簡；若主唱很長音：和聲可以更花。</li>
+</ul>
+<h3 id="daw">DAW 製作思維<a class="headerlink" href="#daw" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>先用 MIDI 確認 voicing，再用混音確保分層：</li>
+<li>EQ 切掉 pad 低頻</li>
+<li>Sidechain 讓 pad 不壓住主旋律或 kick</li>
+<li>用 automation 做段落能量：</li>
+<li>同一和弦循環也能從主歌推到副歌</li>
+</ul>
+<h2 id="_8">譜例（以文字描述即可）<a class="headerlink" href="#_8" title="連結到此段落">&para;</a></h2>
+<h3 id="1-cmaj9">1) Cmaj9 的乾淨配置<a class="headerlink" href="#1-cmaj9" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Bass：C</li>
+<li>Keys：E–B–D（3–7–9）</li>
+<li>省略 G（5）通常更乾淨</li>
+</ul>
+<h3 id="2-dm11">2) Dm11 的乾淨配置<a class="headerlink" href="#2-dm11" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Bass：D</li>
+<li>Keys：F–C–E（3–7–9）</li>
+<li>11（G）放高八度或交給另一層音色（更不會糊）</li>
+</ul>
+<h3 id="3">3) 低音線先行（示意）<a class="headerlink" href="#3" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>先寫低音：C – B – A – G</li>
+<li>再配和弦：C | G/B | Am | G</li>
+<li>你會得到「低音順階」帶來的自然推進。</li>
+</ul>
+<h2 id="_9">常見錯誤與迷思<a class="headerlink" href="#_9" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>錯誤 1：延伸音放太低</strong></li>
+<li>9/11/13 放低音會糊；把色彩放中高音。</li>
+<li><strong>錯誤 2：每個樂器都彈滿</strong></li>
+<li>會失去層次與空間；改成分工與留白。</li>
+<li><strong>錯誤 3：節奏每個樂器都很忙</strong></li>
+<li>會讓推進失焦。讓一個樂器負責節奏動機，其他樂器讓位。</li>
+</ul>
+<h2 id="3_1">習作（至少 3 題）<a class="headerlink" href="#3_1" title="連結到此段落">&para;</a></h2>
+<ol>
+<li>把同一段 8 小節和聲做兩版：
+   - A：封閉配置＋高密度
+   - B：開放配置＋低密度
+   比較哪版更像主歌、哪版更像副歌。</li>
+<li>先寫 8 小節低音線（先不寫和弦），再依低音線選和弦，要求至少一次順階走向。</li>
+<li>設計 2 小節節奏動機（切分），把它擴展成 8 小節：和弦可變，但節奏動機必須一致。</li>
+</ol>
+<h2 id="_10">聆聽與分析建議<a class="headerlink" href="#_10" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>內聲（3、7）是否有半音滑動？那通常是「最爵士/最高級」的地方。</li>
+<li>低音是否像一條旋律？</li>
+<li><strong>注意什麼</strong>：</li>
+<li>若覺得混濁：先減少低音區的音，再調整混音；通常不是和弦本身的錯。</li>
+</ul>
+        <div class="footer">來源：講義/09-中階-編曲與聲響設計.md  →  HTML/09-中階-編曲與聲響設計.html</div>
+      </article>
+    </div>
+  </main>
+
+  <div class="backtop"><a href="#top" title="回到頂部">↑</a></div>
+</body>
+</html>

@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>第15章　高階：編曲與配器技巧（9/11/13／Drop-2／旋律優先／對位融合）</title>
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --panel: #0f1420;
+      --text: #e8eefc;
+      --muted: #a9b4cc;
+      --border: rgba(255,255,255,.10);
+      --accent: #7aa2ff;
+      --accent-2: #7ef0c6;
+      --code-bg: rgba(255,255,255,.06);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 14px;
+      --content-max: 920px;
+      --toc-max: 320px;
+      --lh: 1.8;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f7fb;
+        --panel: #ffffff;
+        --text: #111827;
+        --muted: #4b5563;
+        --border: rgba(17,24,39,.12);
+        --accent: #2b5bff;
+        --accent-2: #00a97f;
+        --code-bg: rgba(17,24,39,.06);
+        --shadow: 0 10px 30px rgba(17,24,39,.10);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 900px at 10% -10%, rgba(122,162,255,.25), transparent 55%),
+                  radial-gradient(1000px 800px at 100% 0%, rgba(126,240,198,.18), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      line-height: var(--lh);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      padding: 18px 16px 10px;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: color-mix(in oklab, var(--bg) 70%, transparent);
+      border-bottom: 1px solid var(--border);
+      z-index: 30;
+    }
+
+    .topbar {
+      max-width: calc(var(--content-max) + var(--toc-max) + 56px);
+      margin: 0 auto;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .brand .title {
+      font-size: 14px;
+      letter-spacing: .2px;
+      color: var(--text);
+      font-weight: 650;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand .subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chip {
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+      white-space: nowrap;
+    }
+
+    main {
+      max-width: calc(var(--content-max) + var(--toc-max) + 56px);
+      margin: 0 auto;
+      padding: 18px 16px 64px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    @media (min-width: 1024px) {
+      .layout {
+        grid-template-columns: minmax(0, var(--toc-max)) minmax(0, 1fr);
+        align-items: start;
+      }
+    }
+
+    .panel {
+      background: color-mix(in oklab, var(--panel) 92%, transparent);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .toc-panel {
+      display: none;
+      padding: 14px 14px 10px;
+    }
+
+    @media (min-width: 1024px) {
+      .toc-panel {
+        display: block;
+      }
+    }
+
+    .toc-panel h2 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      letter-spacing: .2px;
+    }
+
+    .toc-panel nav {
+      max-height: calc(100vh - 140px);
+      overflow: auto;
+      padding-right: 6px;
+    }
+
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .toc li {
+      margin: 6px 0;
+    }
+
+    .toc a {
+      display: block;
+      padding: 6px 8px;
+      border-radius: 10px;
+      color: var(--muted);
+      border: 1px solid transparent;
+      line-height: 1.4;
+    }
+
+    .toc a:hover {
+      color: var(--text);
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+      border-color: var(--border);
+      text-decoration: none;
+    }
+
+    .toc ul ul {
+      padding-left: 14px;
+      margin-top: 6px;
+      border-left: 1px dashed var(--border);
+    }
+
+    /* Mobile TOC as collapsible */
+    details.toc-mobile {
+      display: block;
+    }
+
+    @media (min-width: 1024px) {
+      details.toc-mobile { display: none; }
+    }
+
+    details.toc-mobile summary {
+      cursor: pointer;
+      user-select: none;
+      padding: 12px 14px;
+      font-weight: 650;
+      border-bottom: 1px solid var(--border);
+    }
+
+    details.toc-mobile summary::marker {
+      color: var(--muted);
+    }
+
+    details.toc-mobile .toc-body {
+      padding: 10px 14px 14px;
+      max-height: 60vh;
+      overflow: auto;
+    }
+
+    .content {
+      padding: 18px 18px 22px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    @media (min-width: 768px) {
+      .content { padding: 24px 28px 30px; }
+    }
+
+    .content > :first-child { margin-top: 0; }
+
+    h1, h2, h3, h4 {
+      line-height: 1.25;
+      scroll-margin-top: 84px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 18px 0 12px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin: 22px 0 10px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin: 18px 0 8px;
+      color: color-mix(in oklab, var(--text) 92%, var(--muted));
+    }
+
+    h4 {
+      font-size: 14px;
+      margin: 14px 0 6px;
+      color: var(--muted);
+    }
+
+    p { margin: 10px 0; }
+
+    ul, ol {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+
+    li { margin: 6px 0; }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 22px 0;
+    }
+
+    blockquote {
+      margin: 14px 0;
+      padding: 12px 14px;
+      border-left: 3px solid var(--accent);
+      background: color-mix(in oklab, var(--panel) 75%, transparent);
+      border-radius: 12px;
+      color: color-mix(in oklab, var(--text) 92%, var(--muted));
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2px 6px;
+      font-size: 0.92em;
+    }
+
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      overflow: auto;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    pre code {
+      background: transparent;
+      border: 0;
+      padding: 0;
+      border-radius: 0;
+      font-size: 0.92em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: color-mix(in oklab, var(--panel) 88%, transparent);
+      display: block;
+    }
+
+    @media (min-width: 600px) {
+      table { display: table; }
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 10px;
+      vertical-align: top;
+    }
+
+    th {
+      text-align: left;
+      color: var(--text);
+      font-weight: 650;
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .permalink {
+      opacity: .0;
+      margin-left: 8px;
+      font-size: .9em;
+      color: var(--muted);
+    }
+
+    h1:hover .permalink,
+    h2:hover .permalink,
+    h3:hover .permalink,
+    h4:hover .permalink {
+      opacity: .9;
+    }
+
+    .footer {
+      margin-top: 18px;
+      padding: 12px 14px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .backtop {
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      z-index: 40;
+    }
+
+    .backtop a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--panel) 85%, transparent);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .backtop a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a id="top"></a>
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <div class="title">第15章　高階：編曲與配器技巧（9/11/13／Drop-2／旋律優先／對位融合）</div>
+        <div class="subtitle">來源：講義/15-高階-配器與排列.md  →  HTML/15-高階-配器與排列.html</div>
+      </div>
+      <a class="chip" href="index.html" style="text-decoration:none">← 目錄</a>
+      <div class="chip">最後更新：2026-01-27 14:37</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="layout">
+      <section class="panel">
+        <details class="toc-mobile">
+          <summary>本頁目錄（點開）</summary>
+          <div class="toc-body"><div class="toc">
+<ul>
+<li><a href="#15-91113drop-2">第15章 高階：編曲與配器技巧（9/11/13／Drop-2／旋律優先／對位融合）</a><ul>
+<li><a href="#learning-objectives">章節目標（Learning Objectives）</a></li>
+<li><a href="#_1">核心理論說明</a><ul>
+<li><a href="#_2">定義</a></li>
+<li><a href="#_3">功能（高階配器在做什麼？）</a></li>
+<li><a href="#_4">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_5">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_6">實際編曲／作曲應用</a><ul>
+<li><a href="#_7">鋼琴</a></li>
+<li><a href="#band">樂團／Band</a></li>
+<li><a href="#daw">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_8">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-c13cegbda">1) C13（C–E–G–B♭–D–A）分工示例</a></li>
+<li><a href="#2-drop-2">2) Drop-2 概念示意</a></li>
+<li><a href="#3">3) 對位式伴奏示意</a></li>
+</ul>
+</li>
+<li><a href="#_9">常見錯誤與迷思</a></li>
+<li><a href="#3_1">習作（至少 3 題）</a></li>
+<li><a href="#_10">聆聽與分析建議</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+        </details>
+        <div class="toc-panel" aria-label="目錄">
+          <h2>本頁目錄</h2>
+          <nav><div class="toc">
+<ul>
+<li><a href="#15-91113drop-2">第15章 高階：編曲與配器技巧（9/11/13／Drop-2／旋律優先／對位融合）</a><ul>
+<li><a href="#learning-objectives">章節目標（Learning Objectives）</a></li>
+<li><a href="#_1">核心理論說明</a><ul>
+<li><a href="#_2">定義</a></li>
+<li><a href="#_3">功能（高階配器在做什麼？）</a></li>
+<li><a href="#_4">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_5">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_6">實際編曲／作曲應用</a><ul>
+<li><a href="#_7">鋼琴</a></li>
+<li><a href="#band">樂團／Band</a></li>
+<li><a href="#daw">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_8">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-c13cegbda">1) C13（C–E–G–B♭–D–A）分工示例</a></li>
+<li><a href="#2-drop-2">2) Drop-2 概念示意</a></li>
+<li><a href="#3">3) 對位式伴奏示意</a></li>
+</ul>
+</li>
+<li><a href="#_9">常見錯誤與迷思</a></li>
+<li><a href="#3_1">習作（至少 3 題）</a></li>
+<li><a href="#_10">聆聽與分析建議</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+        </div>
+      </section>
+
+      <article class="panel content" aria-label="正文">
+        <h1 id="15-91113drop-2">第15章　高階：編曲與配器技巧（9/11/13／Drop-2／旋律優先／對位融合）<a class="headerlink" href="#15-91113drop-2" title="連結到此段落">&para;</a></h1>
+<h2 id="learning-objectives">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>能把 9/11/13 配得清楚、不糊，並能說清楚你為什麼留/省某些音。</li>
+<li>了解 Close / Open / Drop-2 的排列思維，並能在鋼琴與合奏中落地。</li>
+<li>讓旋律永遠最清楚：配置服務旋律與段落，而不是掩蓋。</li>
+<li>能把對位思維融入和聲編曲（伴奏也像旋律）。</li>
+</ul>
+<h2 id="_1">核心理論說明<a class="headerlink" href="#_1" title="連結到此段落">&para;</a></h2>
+<h3 id="_2">定義<a class="headerlink" href="#_2" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>Drop-2</strong>：把四聲部中「第二高音」下移八度，形成更開闊的排列（合奏常用）。</li>
+<li><strong>對位式伴奏（Counter-melody）</strong>：伴奏聲部本身有旋律線條，但合起來仍暗示和弦。</li>
+</ul>
+<h3 id="_3">功能（高階配器在做什麼？）<a class="headerlink" href="#_3" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>把和弦翻譯成「可被合奏清楚演出的聲響」：</li>
+<li>誰負責功能（3/7）</li>
+<li>誰負責色彩（9/13/#11）</li>
+<li>誰負責地基（根音）</li>
+<li>旋律優先：</li>
+<li>如果旋律聽不清楚，再華麗的和聲都會失效。</li>
+</ul>
+<h3 id="_4">聽覺效果<a class="headerlink" href="#_4" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Drop-2：更寬、更像合奏、呼吸感更大。</li>
+<li>色彩音（9/13/#11）若放在高音域，會像「光澤」；放低音域容易變成「濁」。</li>
+<li>對位式伴奏會讓段落更有生命力（不是只在和弦格子裡換）。</li>
+</ul>
+<h2 id="_5">古典／爵士／流行的對照說明<a class="headerlink" href="#_5" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典：聲部清晰與音色分層；九和弦常以配器分散呈現。</li>
+<li>爵士：根音多交給貝斯；3/7/9/13 分配到不同聲部；排列法是聲響設計核心。</li>
+<li>流行：用 layer 與空間做厚度；用留白、停頓與齊入做戲劇對比。</li>
+</ul>
+<h2 id="_6">實際編曲／作曲應用<a class="headerlink" href="#_6" title="連結到此段落">&para;</a></h2>
+<h3 id="_7">鋼琴<a class="headerlink" href="#_7" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>大和弦配置建議（最不容易糊）：</li>
+<li>左手：根音（必要時加五度）</li>
+<li>右手：3、7（一定要有）</li>
+<li>右手再加：9 或 13（挑 1–2 個主色彩）</li>
+</ul>
+<h3 id="band">樂團／Band<a class="headerlink" href="#band" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>旋律優先的兩個原則：</li>
+<li>不要讓和弦最高音長時間壓在旋律同區域</li>
+<li>色彩音由次要音色承擔並控制音量（讓它像光澤，不像主角）</li>
+</ul>
+<h3 id="daw">DAW 製作思維<a class="headerlink" href="#daw" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>漸進加厚（非常有效）：</li>
+<li>主歌：三和弦/少音</li>
+<li>預副歌：加 7 或 add9</li>
+<li>副歌：加 9/13 + layer</li>
+<li>留白與齊入：</li>
+<li>抽掉和聲只留旋律 1 小節</li>
+<li>下一小節全樂器齊入（強終止或強落點）</li>
+</ul>
+<h2 id="_8">譜例（以文字描述即可）<a class="headerlink" href="#_8" title="連結到此段落">&para;</a></h2>
+<h3 id="1-c13cegbda">1) C13（C–E–G–B♭–D–A）分工示例<a class="headerlink" href="#1-c13cegbda" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Bass：C</li>
+<li>Keys：E–B♭–D–A（3–7–9–13）</li>
+<li>Guitar：可彈 B♭–E–A（7–3–13）或加入 D（9）</li>
+</ul>
+<h3 id="2-drop-2">2) Drop-2 概念示意<a class="headerlink" href="#2-drop-2" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>假設四聲部由高到低是：S–A–T–B</li>
+<li>Drop-2：把「第二高音（A）」下移八度 → 你會得到更開闊的排列（合奏更好聽）。</li>
+</ul>
+<h3 id="3">3) 對位式伴奏示意<a class="headerlink" href="#3" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>低音線：C–B–A–G</li>
+<li>上方對位線：E–F–E–D</li>
+<li>合起來仍可解釋為 I–V6–vi–V（或相近功能），但聽感像兩條旋律互動。</li>
+</ul>
+<h2 id="_9">常見錯誤與迷思<a class="headerlink" href="#_9" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>錯誤 1：9/11/13 全塞</strong></li>
+<li>會糊。先選主角（例如只選 9 與 13），其餘音讓位。</li>
+<li><strong>錯誤 2：色彩音放太低</strong></li>
+<li>低音區色彩音容易變濁；把它上移八度通常立刻改善。</li>
+<li><strong>錯誤 3：對位＝亂跑</strong></li>
+<li>對位線條仍要服務旋律與段落，不要搶主角。</li>
+</ul>
+<h2 id="3_1">習作（至少 3 題）<a class="headerlink" href="#3_1" title="連結到此段落">&para;</a></h2>
+<ol>
+<li>把一段 8 小節和聲（含 9/13）寫成三種配器：
+   - 鋼琴獨奏
+   - Band（Bass/Guitar/Keys/Drums）
+   - 管弦（至少分低弦、中層、高音旋律）</li>
+<li>寫 4 小節對位式伴奏：要求每拍合起來仍可解釋為同一和弦進行。</li>
+<li>做一段「漸進加和聲」：同一旋律從單音到九和弦逐步加厚，最後做一次強終止。</li>
+</ol>
+<h2 id="_10">聆聽與分析建議<a class="headerlink" href="#_10" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>旋律是否被托住（更清楚、更亮），還是被和聲淹沒？</li>
+<li>色彩音由哪個音色呈現？（誰在負責#11/13）</li>
+<li><strong>注意什麼</strong>：</li>
+<li>你想學的是「聲響如何做到」：分工、音域、密度、空間，而不只是和弦名字。</li>
+</ul>
+        <div class="footer">來源：講義/15-高階-配器與排列.md  →  HTML/15-高階-配器與排列.html</div>
+      </article>
+    </div>
+  </main>
+
+  <div class="backtop"><a href="#top" title="回到頂部">↑</a></div>
+</body>
+</html>

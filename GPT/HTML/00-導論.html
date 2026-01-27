@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>第0章　導論：三種風格的和聲地圖（古典／爵士／流行）</title>
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --panel: #0f1420;
+      --text: #e8eefc;
+      --muted: #a9b4cc;
+      --border: rgba(255,255,255,.10);
+      --accent: #7aa2ff;
+      --accent-2: #7ef0c6;
+      --code-bg: rgba(255,255,255,.06);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 14px;
+      --content-max: 920px;
+      --toc-max: 320px;
+      --lh: 1.8;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f7fb;
+        --panel: #ffffff;
+        --text: #111827;
+        --muted: #4b5563;
+        --border: rgba(17,24,39,.12);
+        --accent: #2b5bff;
+        --accent-2: #00a97f;
+        --code-bg: rgba(17,24,39,.06);
+        --shadow: 0 10px 30px rgba(17,24,39,.10);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 900px at 10% -10%, rgba(122,162,255,.25), transparent 55%),
+                  radial-gradient(1000px 800px at 100% 0%, rgba(126,240,198,.18), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      line-height: var(--lh);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      padding: 18px 16px 10px;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: color-mix(in oklab, var(--bg) 70%, transparent);
+      border-bottom: 1px solid var(--border);
+      z-index: 30;
+    }
+
+    .topbar {
+      max-width: calc(var(--content-max) + var(--toc-max) + 56px);
+      margin: 0 auto;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .brand .title {
+      font-size: 14px;
+      letter-spacing: .2px;
+      color: var(--text);
+      font-weight: 650;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand .subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chip {
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+      white-space: nowrap;
+    }
+
+    main {
+      max-width: calc(var(--content-max) + var(--toc-max) + 56px);
+      margin: 0 auto;
+      padding: 18px 16px 64px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    @media (min-width: 1024px) {
+      .layout {
+        grid-template-columns: minmax(0, var(--toc-max)) minmax(0, 1fr);
+        align-items: start;
+      }
+    }
+
+    .panel {
+      background: color-mix(in oklab, var(--panel) 92%, transparent);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .toc-panel {
+      display: none;
+      padding: 14px 14px 10px;
+    }
+
+    @media (min-width: 1024px) {
+      .toc-panel {
+        display: block;
+      }
+    }
+
+    .toc-panel h2 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      letter-spacing: .2px;
+    }
+
+    .toc-panel nav {
+      max-height: calc(100vh - 140px);
+      overflow: auto;
+      padding-right: 6px;
+    }
+
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .toc li {
+      margin: 6px 0;
+    }
+
+    .toc a {
+      display: block;
+      padding: 6px 8px;
+      border-radius: 10px;
+      color: var(--muted);
+      border: 1px solid transparent;
+      line-height: 1.4;
+    }
+
+    .toc a:hover {
+      color: var(--text);
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+      border-color: var(--border);
+      text-decoration: none;
+    }
+
+    .toc ul ul {
+      padding-left: 14px;
+      margin-top: 6px;
+      border-left: 1px dashed var(--border);
+    }
+
+    /* Mobile TOC as collapsible */
+    details.toc-mobile {
+      display: block;
+    }
+
+    @media (min-width: 1024px) {
+      details.toc-mobile { display: none; }
+    }
+
+    details.toc-mobile summary {
+      cursor: pointer;
+      user-select: none;
+      padding: 12px 14px;
+      font-weight: 650;
+      border-bottom: 1px solid var(--border);
+    }
+
+    details.toc-mobile summary::marker {
+      color: var(--muted);
+    }
+
+    details.toc-mobile .toc-body {
+      padding: 10px 14px 14px;
+      max-height: 60vh;
+      overflow: auto;
+    }
+
+    .content {
+      padding: 18px 18px 22px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    @media (min-width: 768px) {
+      .content { padding: 24px 28px 30px; }
+    }
+
+    .content > :first-child { margin-top: 0; }
+
+    h1, h2, h3, h4 {
+      line-height: 1.25;
+      scroll-margin-top: 84px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 18px 0 12px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin: 22px 0 10px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin: 18px 0 8px;
+      color: color-mix(in oklab, var(--text) 92%, var(--muted));
+    }
+
+    h4 {
+      font-size: 14px;
+      margin: 14px 0 6px;
+      color: var(--muted);
+    }
+
+    p { margin: 10px 0; }
+
+    ul, ol {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+
+    li { margin: 6px 0; }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 22px 0;
+    }
+
+    blockquote {
+      margin: 14px 0;
+      padding: 12px 14px;
+      border-left: 3px solid var(--accent);
+      background: color-mix(in oklab, var(--panel) 75%, transparent);
+      border-radius: 12px;
+      color: color-mix(in oklab, var(--text) 92%, var(--muted));
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2px 6px;
+      font-size: 0.92em;
+    }
+
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      overflow: auto;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    pre code {
+      background: transparent;
+      border: 0;
+      padding: 0;
+      border-radius: 0;
+      font-size: 0.92em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: color-mix(in oklab, var(--panel) 88%, transparent);
+      display: block;
+    }
+
+    @media (min-width: 600px) {
+      table { display: table; }
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 10px;
+      vertical-align: top;
+    }
+
+    th {
+      text-align: left;
+      color: var(--text);
+      font-weight: 650;
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .permalink {
+      opacity: .0;
+      margin-left: 8px;
+      font-size: .9em;
+      color: var(--muted);
+    }
+
+    h1:hover .permalink,
+    h2:hover .permalink,
+    h3:hover .permalink,
+    h4:hover .permalink {
+      opacity: .9;
+    }
+
+    .footer {
+      margin-top: 18px;
+      padding: 12px 14px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .backtop {
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      z-index: 40;
+    }
+
+    .backtop a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--panel) 85%, transparent);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .backtop a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a id="top"></a>
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <div class="title">第0章　導論：三種風格的和聲地圖（古典／爵士／流行）</div>
+        <div class="subtitle">來源：講義/00-導論.md  →  HTML/00-導論.html</div>
+      </div>
+      <a class="chip" href="index.html" style="text-decoration:none">← 目錄</a>
+      <div class="chip">最後更新：2026-01-27 14:30</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="layout">
+      <section class="panel">
+        <details class="toc-mobile">
+          <summary>本頁目錄（點開）</summary>
+          <div class="toc-body"><div class="toc">
+<ul>
+<li><a href="#0">第0章 導論：三種風格的和聲地圖（古典／爵士／流行）</a><ul>
+<li><a href="#learning-objectives">章節目標（Learning Objectives）</a></li>
+<li><a href="#_1">記號與約定（你會在整份講義一直用到）</a></li>
+<li><a href="#_2">核心理論說明</a><ul>
+<li><a href="#_3">定義</a></li>
+<li><a href="#_4">功能（為什麼它存在？音樂上造成什麼效果？）</a></li>
+<li><a href="#_5">聽覺效果（把抽象變成耳朵的地圖）</a></li>
+</ul>
+</li>
+<li><a href="#_6">古典／爵士／流行的對照說明</a><ul>
+<li><a href="#common-practice-period">古典（Common Practice Period）</a></li>
+<li><a href="#_7">爵士</a></li>
+<li><a href="#_8">流行／現代</a></li>
+</ul>
+</li>
+<li><a href="#_9">實際編曲／作曲應用</a><ul>
+<li><a href="#_10">鋼琴</a></li>
+<li><a href="#band">樂團／Band</a></li>
+<li><a href="#daw">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_11">譜例（以文字描述即可）</a></li>
+<li><a href="#_12">常見錯誤與迷思</a></li>
+<li><a href="#3">習作（由易到難，至少 3 題）</a></li>
+<li><a href="#_13">聆聽與分析建議</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+        </details>
+        <div class="toc-panel" aria-label="目錄">
+          <h2>本頁目錄</h2>
+          <nav><div class="toc">
+<ul>
+<li><a href="#0">第0章 導論：三種風格的和聲地圖（古典／爵士／流行）</a><ul>
+<li><a href="#learning-objectives">章節目標（Learning Objectives）</a></li>
+<li><a href="#_1">記號與約定（你會在整份講義一直用到）</a></li>
+<li><a href="#_2">核心理論說明</a><ul>
+<li><a href="#_3">定義</a></li>
+<li><a href="#_4">功能（為什麼它存在？音樂上造成什麼效果？）</a></li>
+<li><a href="#_5">聽覺效果（把抽象變成耳朵的地圖）</a></li>
+</ul>
+</li>
+<li><a href="#_6">古典／爵士／流行的對照說明</a><ul>
+<li><a href="#common-practice-period">古典（Common Practice Period）</a></li>
+<li><a href="#_7">爵士</a></li>
+<li><a href="#_8">流行／現代</a></li>
+</ul>
+</li>
+<li><a href="#_9">實際編曲／作曲應用</a><ul>
+<li><a href="#_10">鋼琴</a></li>
+<li><a href="#band">樂團／Band</a></li>
+<li><a href="#daw">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_11">譜例（以文字描述即可）</a></li>
+<li><a href="#_12">常見錯誤與迷思</a></li>
+<li><a href="#3">習作（由易到難，至少 3 題）</a></li>
+<li><a href="#_13">聆聽與分析建議</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+        </div>
+      </section>
+
+      <article class="panel content" aria-label="正文">
+        <h1 id="0">第0章　導論：三種風格的和聲地圖（古典／爵士／流行）<a class="headerlink" href="#0" title="連結到此段落">&para;</a></h1>
+<blockquote>
+<p>讀者定位：具備不完整但有基礎的樂理背景。目標是建立可分析、可編曲、可作曲的完整和聲體系。</p>
+</blockquote>
+<h2 id="learning-objectives">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>建立一套可跨風格使用的核心語言：<strong>調性重心、功能、張力與解決、聲部導向、音色與節奏</strong>。</li>
+<li>釐清古典、爵士、流行之間的差異是「語法層」還是「材料層」，避免把三者當成互相否定的規則。</li>
+<li>建立自學與教學的實作流程：分析 → 模仿 → 變形 → 創作。</li>
+</ul>
+<h2 id="_1">記號與約定（你會在整份講義一直用到）<a class="headerlink" href="#_1" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>音級（Scale degrees）</strong>：Ⅰ～Ⅶ表示大調／自然小調的級數；若需變音以 ♯/♭ 標記（如 ♭Ⅵ）。</li>
+<li><strong>羅馬數字（Roman Numeral）</strong>：</li>
+<li>大寫：大三和弦（I, IV, V）</li>
+<li>小寫：小三和弦（ii, iii, vi）</li>
+<li>°：減和弦（vii°）</li>
+<li>+：增和弦（I+）</li>
+<li>7：七和弦（V7, ii7）</li>
+<li>轉位：I⁶、I⁶⁴（以低音音程標記）</li>
+<li><strong>爵士和弦符號（Chord symbols）</strong>：C, Cm, C7, Cmaj7, Cø7, C°7, C9, C13, C7(♭9)…</li>
+<li><strong>功能三分法（最常用）</strong>：</li>
+<li>主功能（T）：I（常含 vi、iii 視情境）</li>
+<li>下屬功能（S）：ii、IV</li>
+<li>屬功能（D）：V、vii°（與各種「屬性」的副屬）</li>
+</ul>
+<h2 id="_2">核心理論說明<a class="headerlink" href="#_2" title="連結到此段落">&para;</a></h2>
+<h3 id="_3">定義<a class="headerlink" href="#_3" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>和聲（Harmony）</strong>：同時發聲的音形成和弦（垂直），以及和弦隨時間形成的進行（水平）。</li>
+<li><strong>調性（Tonality）</strong>：一套「引力系統」。主音／主和弦像重力中心，其他和弦與音會在靠近、遠離、回歸之間造成張力與釋放。</li>
+<li><strong>功能（Function）</strong>：和弦在引力系統中的角色；不是「名字」，而是「它在句子裡想做什麼」。</li>
+</ul>
+<h3 id="_4">功能（為什麼它存在？音樂上造成什麼效果？）<a class="headerlink" href="#_4" title="連結到此段落">&para;</a></h3>
+<p>你可以把一段音樂想成一句話：</p>
+<ul>
+<li><strong>主功能（T）</strong>：句子的「落地」與「停頓」。沒有它，聽者會找不到家。</li>
+<li><strong>下屬功能（S）</strong>：句子的「出發」與「鋪墊」。它把你從家帶出去，讓後面回家才有重量。</li>
+<li><strong>屬功能（D）</strong>：句子的「期待」與「逼近」。它像把門口磁力放大，讓回家變得必然。</li>
+</ul>
+<p>功能的好處是：你能用它在任何風格做決策。</p>
+<ul>
+<li>想要更安心：延長 T、減少 D。</li>
+<li>想要更期待：延長 D、或用副屬讓 D 更尖。</li>
+<li>想要換色彩但不換調：用借用（iv、♭VI、♭VII）讓光線瞬間轉暗或轉復古。</li>
+</ul>
+<h3 id="_5">聽覺效果（把抽象變成耳朵的地圖）<a class="headerlink" href="#_5" title="連結到此段落">&para;</a></h3>
+<p>以 C 大調為例：</p>
+<ul>
+<li>I（C）：像「站穩、回家」。</li>
+<li>IV/ii（F/Dm）：像「走出去、開始推」。</li>
+<li>V/V7（G/G7）：像「門口吸力、必須解決」。</li>
+</ul>
+<p>這套感覺在古典、爵士、流行都存在；差異通常不在「有沒有引力」，而在「表面語法」如何呈現。</p>
+<h2 id="_6">古典／爵士／流行的對照說明<a class="headerlink" href="#_6" title="連結到此段落">&para;</a></h2>
+<h3 id="common-practice-period">古典（Common Practice Period）<a class="headerlink" href="#common-practice-period" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>核心：<strong>功能＋聲部導向</strong>。</li>
+<li>不協和通常需要解決（掛留、倚音等有相對規範）。</li>
+<li>終止是句法核心：作品常以終止切分樂句與曲式。</li>
+</ul>
+<h3 id="_7">爵士<a class="headerlink" href="#_7" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>核心：<strong>七和弦起步＋延伸音色彩＋（常見）循環推進</strong>。</li>
+<li>不協和可作為色彩長時間存在：重要的是配置與語句，而非一律解決。</li>
+<li>ii–V–I 與五度圈是常見語法；臨時轉調與替代很常見。</li>
+</ul>
+<h3 id="_8">流行／現代<a class="headerlink" href="#_8" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>核心：<strong>循環（loop）＋旋律可唱性＋聲響層次</strong>。</li>
+<li>功能感可能被循環稀釋：不是每次都要 V→I 才成立。</li>
+<li>風格差異常由節奏、音色、配器與段落能量決定（和聲材料反而常更簡）。</li>
+</ul>
+<blockquote>
+<p>如果要用一句話概括三者：
+古典重「句法」、爵士重「色彩」、流行重「段落能量」。</p>
+</blockquote>
+<h2 id="_9">實際編曲／作曲應用<a class="headerlink" href="#_9" title="連結到此段落">&para;</a></h2>
+<h3 id="_10">鋼琴<a class="headerlink" href="#_10" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>三層思考（建議每次練習都問自己三件事）：
+  1. 低音線要帶你去哪裡？（根音走向）
+  2. 內聲怎麼移動？（3、7 的半音／順階連接）
+  3. 旋律落點是否清楚？（強拍落和弦音、句尾落點）</li>
+</ul>
+<h3 id="band">樂團／Band<a class="headerlink" href="#band" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>最常見、也最有效的分工：</li>
+<li>Bass：根音／低音線（功能方向）</li>
+<li>Guitar/Keys：和弦質地（voicing＋節奏）</li>
+<li>Vocal/Lead：張力落點（旋律）</li>
+<li>若整團聽起來「怪」：先檢查低音，再檢查內聲（尤其導音與七音）。</li>
+</ul>
+<h3 id="daw">DAW 製作思維<a class="headerlink" href="#daw" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>先用「乾淨音色」寫對和聲，再用「時尚音色」放大它。</li>
+<li>乾淨音色：鋼琴、電鋼琴、簡單 pad</li>
+<li>放大手段：layer、reverb、automation、密度控制</li>
+<li>一個實用檢查：</li>
+<li>把所有音色換回鋼琴，如果和聲就變難聽，通常是和聲/配置有問題；若仍好聽，才是扎實。</li>
+</ul>
+<h2 id="_11">譜例（以文字描述即可）<a class="headerlink" href="#_11" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>最基本句法（C 大調）：</li>
+<li>| C | F | G7 | C |</li>
+<li>功能：T → S → D → T</li>
+<li>聽感：出發 → 逼近 → 回家</li>
+</ul>
+<h2 id="_12">常見錯誤與迷思<a class="headerlink" href="#_12" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>迷思 1：和聲就是背和弦公式</strong></li>
+<li>公式只是入口。真正讓你「會寫」的是：低音線、內聲解決、段落張力設計。</li>
+<li><strong>迷思 2：爵士＝加很多音</strong></li>
+<li>爵士更像「挑選」：哪些音在這個瞬間最能代表功能與色彩。</li>
+<li><strong>迷思 3：流行很簡單所以不用學</strong></li>
+<li>流行的難在「簡單但要有效」：段落能量與聲響層次高度依賴和聲決策。</li>
+</ul>
+<h2 id="3">習作（由易到難，至少 3 題）<a class="headerlink" href="#3" title="連結到此段落">&para;</a></h2>
+<ol>
+<li><strong>功能聽感建立</strong>：在鋼琴上彈 | F | G7 | C |（IV–V7–I），每次彈完用一句話描述你聽到的「期待→落地」。</li>
+<li><strong>同一骨架三種語言</strong>：把 | C | F | G | C | 分別做成三種版本：
+   - 古典：每兩小節一個小終止（加 V7）
+   - 爵士：改成 | Dm7 | G7 | Cmaj7 | Cmaj7 |
+   - 流行：改成節奏化伴奏（例如 8 分分解）</li>
+<li><strong>段落能量設計</strong>：用 I–V–vi–IV 做 8 小節：
+   - 前 4 小節做主歌（薄、少層）
+   - 後 4 小節做副歌（加高八度與 layer）
+   寫下你用了哪些「和聲/配置/音色」手段做出能量差。</li>
+</ol>
+<h2 id="_13">聆聽與分析建議<a class="headerlink" href="#_13" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>句尾終止：每 4 或 8 小節怎麼結束？</li>
+<li>低音走向：低音比和弦名字更能揭露功能。</li>
+<li><strong>注意什麼</strong>：</li>
+<li>導音→主音（7→1）是否明顯？</li>
+<li>即使不換和弦，是否靠掛留／節奏／音色推進？</li>
+</ul>
+        <div class="footer">來源：講義/00-導論.md  →  HTML/00-導論.html</div>
+      </article>
+    </div>
+  </main>
+
+  <div class="backtop"><a href="#top" title="回到頂部">↑</a></div>
+</body>
+</html>

@@ -1,0 +1,3664 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>和聲學完整講義（古典／爵士／流行）</title>
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --panel: #0f1420;
+      --text: #e8eefc;
+      --muted: #a9b4cc;
+      --border: rgba(255,255,255,.10);
+      --accent: #7aa2ff;
+      --accent-2: #7ef0c6;
+      --code-bg: rgba(255,255,255,.06);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 14px;
+      --content-max: 920px;
+      --toc-max: 320px;
+      --lh: 1.8;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f7fb;
+        --panel: #ffffff;
+        --text: #111827;
+        --muted: #4b5563;
+        --border: rgba(17,24,39,.12);
+        --accent: #2b5bff;
+        --accent-2: #00a97f;
+        --code-bg: rgba(17,24,39,.06);
+        --shadow: 0 10px 30px rgba(17,24,39,.10);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 900px at 10% -10%, rgba(122,162,255,.25), transparent 55%),
+                  radial-gradient(1000px 800px at 100% 0%, rgba(126,240,198,.18), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      line-height: var(--lh);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      padding: 18px 16px 10px;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: color-mix(in oklab, var(--bg) 70%, transparent);
+      border-bottom: 1px solid var(--border);
+      z-index: 30;
+    }
+
+    .topbar {
+      max-width: calc(var(--content-max) + var(--toc-max) + 56px);
+      margin: 0 auto;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .brand .title {
+      font-size: 14px;
+      letter-spacing: .2px;
+      color: var(--text);
+      font-weight: 650;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand .subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chip {
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+      white-space: nowrap;
+    }
+
+    main {
+      max-width: calc(var(--content-max) + var(--toc-max) + 56px);
+      margin: 0 auto;
+      padding: 18px 16px 64px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    @media (min-width: 1024px) {
+      .layout {
+        grid-template-columns: minmax(0, var(--toc-max)) minmax(0, 1fr);
+        align-items: start;
+      }
+    }
+
+    .panel {
+      background: color-mix(in oklab, var(--panel) 92%, transparent);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .toc-panel {
+      display: none;
+      padding: 14px 14px 10px;
+    }
+
+    @media (min-width: 1024px) {
+      .toc-panel {
+        display: block;
+      }
+    }
+
+    .toc-panel h2 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      letter-spacing: .2px;
+    }
+
+    .toc-panel nav {
+      max-height: calc(100vh - 140px);
+      overflow: auto;
+      padding-right: 6px;
+    }
+
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .toc li {
+      margin: 6px 0;
+    }
+
+    .toc a {
+      display: block;
+      padding: 6px 8px;
+      border-radius: 10px;
+      color: var(--muted);
+      border: 1px solid transparent;
+      line-height: 1.4;
+    }
+
+    .toc a:hover {
+      color: var(--text);
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+      border-color: var(--border);
+      text-decoration: none;
+    }
+
+    .toc ul ul {
+      padding-left: 14px;
+      margin-top: 6px;
+      border-left: 1px dashed var(--border);
+    }
+
+    /* Mobile TOC as collapsible */
+    details.toc-mobile {
+      display: block;
+    }
+
+    @media (min-width: 1024px) {
+      details.toc-mobile { display: none; }
+    }
+
+    details.toc-mobile summary {
+      cursor: pointer;
+      user-select: none;
+      padding: 12px 14px;
+      font-weight: 650;
+      border-bottom: 1px solid var(--border);
+    }
+
+    details.toc-mobile summary::marker {
+      color: var(--muted);
+    }
+
+    details.toc-mobile .toc-body {
+      padding: 10px 14px 14px;
+      max-height: 60vh;
+      overflow: auto;
+    }
+
+    .content {
+      padding: 18px 18px 22px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    @media (min-width: 768px) {
+      .content { padding: 24px 28px 30px; }
+    }
+
+    .content > :first-child { margin-top: 0; }
+
+    h1, h2, h3, h4 {
+      line-height: 1.25;
+      scroll-margin-top: 84px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 18px 0 12px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin: 22px 0 10px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin: 18px 0 8px;
+      color: color-mix(in oklab, var(--text) 92%, var(--muted));
+    }
+
+    h4 {
+      font-size: 14px;
+      margin: 14px 0 6px;
+      color: var(--muted);
+    }
+
+    p { margin: 10px 0; }
+
+    ul, ol {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+
+    li { margin: 6px 0; }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 22px 0;
+    }
+
+    blockquote {
+      margin: 14px 0;
+      padding: 12px 14px;
+      border-left: 3px solid var(--accent);
+      background: color-mix(in oklab, var(--panel) 75%, transparent);
+      border-radius: 12px;
+      color: color-mix(in oklab, var(--text) 92%, var(--muted));
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2px 6px;
+      font-size: 0.92em;
+    }
+
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      overflow: auto;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    pre code {
+      background: transparent;
+      border: 0;
+      padding: 0;
+      border-radius: 0;
+      font-size: 0.92em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: color-mix(in oklab, var(--panel) 88%, transparent);
+      display: block;
+    }
+
+    @media (min-width: 600px) {
+      table { display: table; }
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 10px;
+      vertical-align: top;
+    }
+
+    th {
+      text-align: left;
+      color: var(--text);
+      font-weight: 650;
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .permalink {
+      opacity: .0;
+      margin-left: 8px;
+      font-size: .9em;
+      color: var(--muted);
+    }
+
+    h1:hover .permalink,
+    h2:hover .permalink,
+    h3:hover .permalink,
+    h4:hover .permalink {
+      opacity: .9;
+    }
+
+    .footer {
+      margin-top: 18px;
+      padding: 12px 14px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .backtop {
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      z-index: 40;
+    }
+
+    .backtop a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--panel) 85%, transparent);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .backtop a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a id="top"></a>
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <div class="title">和聲學完整講義（古典／爵士／流行）</div>
+        <div class="subtitle">手機友善（RWD）單檔 HTML｜由分章講義合併生成</div>
+      </div>
+      <div class="chip">最後更新：2026-01-27 14:44</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="layout">
+      <section class="panel">
+        <details class="toc-mobile">
+          <summary>目錄（點開）</summary>
+          <div class="toc-body"><div class="toc">
+<ul>
+<li><a href="#_1">和聲學完整講義：古典、爵士與流行音樂的整合式學習（完整合併版）</a><ul>
+<li><a href="#0">第0章 導論：三種風格的和聲地圖（古典／爵士／流行）</a></li>
+<li><a href="#learning-objectives">章節目標（Learning Objectives）</a></li>
+<li><a href="#_2">記號與約定（你會在整份講義一直用到）</a></li>
+<li><a href="#_3">核心理論說明</a><ul>
+<li><a href="#_4">定義</a></li>
+<li><a href="#_5">功能（為什麼它存在？音樂上造成什麼效果？）</a></li>
+<li><a href="#_6">聽覺效果（把抽象變成耳朵的地圖）</a></li>
+</ul>
+</li>
+<li><a href="#_7">古典／爵士／流行的對照說明</a><ul>
+<li><a href="#common-practice-period">古典（Common Practice Period）</a></li>
+<li><a href="#_8">爵士</a></li>
+<li><a href="#_9">流行／現代</a></li>
+</ul>
+</li>
+<li><a href="#_10">實際編曲／作曲應用</a><ul>
+<li><a href="#_11">鋼琴</a></li>
+<li><a href="#band">樂團／Band</a></li>
+<li><a href="#daw">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_12">譜例（以文字描述即可）</a></li>
+<li><a href="#_13">常見錯誤與迷思</a></li>
+<li><a href="#3">習作（由易到難，至少 3 題）</a></li>
+<li><a href="#_14">聆聽與分析建議</a></li>
+<li><a href="#1">第1章 初階：核心概念與基本和弦結構</a></li>
+<li><a href="#learning-objectives_1">章節目標（Learning Objectives）</a></li>
+<li><a href="#_15">核心理論說明</a><ul>
+<li><a href="#_16">定義</a></li>
+<li><a href="#_17">功能（為什麼存在？）</a><ul>
+<li><a href="#1_1">1) 為什麼要用音級思考</a></li>
+<li><a href="#2">2) 為什麼要用轉位</a></li>
+<li><a href="#3-v7">3) 為什麼 V7 這麼重要</a></li>
+</ul>
+</li>
+<li><a href="#_18">聽覺效果（你要能用耳朵辨認）</a></li>
+</ul>
+</li>
+<li><a href="#_19">古典／爵士／流行的對照說明</a><ul>
+<li><a href="#_20">古典</a></li>
+<li><a href="#_21">爵士</a></li>
+<li><a href="#_22">流行</a></li>
+</ul>
+</li>
+<li><a href="#_23">實際編曲／作曲應用</a><ul>
+<li><a href="#_24">鋼琴</a></li>
+<li><a href="#band_1">樂團／Band</a></li>
+<li><a href="#daw_1">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_25">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-c">1) C 大調調內三和弦</a></li>
+<li><a href="#2-v7">2) V7 的趨勢音解決</a></li>
+<li><a href="#3-c">3) 四種終止（C 大調）</a></li>
+</ul>
+</li>
+<li><a href="#_26">常見錯誤與迷思</a></li>
+<li><a href="#3_1">習作（由易到難，至少 3 題）</a></li>
+<li><a href="#_27">聆聽與分析建議</a></li>
+<li><a href="#2_1">第2章 初階：基本和聲進行與各風格入門語法</a></li>
+<li><a href="#learning-objectives_2">章節目標（Learning Objectives）</a></li>
+<li><a href="#_28">核心理論說明</a><ul>
+<li><a href="#_29">定義</a></li>
+<li><a href="#_30">功能（為什麼這些套路到處都是？）</a></li>
+<li><a href="#_31">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_32">古典／爵士／流行的對照說明</a><ul>
+<li><a href="#_33">古典入門語法</a></li>
+<li><a href="#_34">爵士入門語法</a></li>
+<li><a href="#_35">流行入門語法</a></li>
+</ul>
+</li>
+<li><a href="#_36">實際編曲／作曲應用</a><ul>
+<li><a href="#_37">鋼琴</a></li>
+<li><a href="#band_2">樂團／Band</a></li>
+<li><a href="#daw_2">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_38">譜例（以文字描述即可）</a></li>
+<li><a href="#_39">常見錯誤與迷思</a></li>
+<li><a href="#3_2">習作（至少 3 題）</a></li>
+<li><a href="#_40">聆聽與分析建議</a></li>
+<li><a href="#3_3">第3章 初階：編曲與和聲配置技巧（四部和聲／伴奏／音域）</a></li>
+<li><a href="#learning-objectives_3">章節目標（Learning Objectives）</a></li>
+<li><a href="#_41">核心理論說明</a><ul>
+<li><a href="#_42">定義</a></li>
+<li><a href="#_43">功能（為什麼學四部和聲對你有用？）</a></li>
+<li><a href="#_44">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_45">古典／爵士／流行的對照說明</a><ul>
+<li><a href="#_46">古典</a></li>
+<li><a href="#_47">爵士</a></li>
+<li><a href="#_48">流行</a></li>
+</ul>
+</li>
+<li><a href="#_49">實際編曲／作曲應用</a><ul>
+<li><a href="#_50">鋼琴</a></li>
+<li><a href="#band_3">樂團／Band</a></li>
+<li><a href="#daw_3">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_51">譜例（以文字描述即可）</a><ul>
+<li><a href="#1_2">1) 四部和聲寫作步驟（最實用的流程）</a></li>
+<li><a href="#2-v7i">2) 一個簡單且常用的 V7→I 內聲連接</a></li>
+<li><a href="#3_4">3) 同一和弦的兩種配置（聽感差很大）</a></li>
+</ul>
+</li>
+<li><a href="#_52">常見錯誤與迷思</a></li>
+<li><a href="#3_5">習作（至少 3 題）</a></li>
+<li><a href="#_53">聆聽與分析建議</a></li>
+<li><a href="#4">第4章 初階：作曲與即興應用（旋律寫作／和聲化／入門即興）</a></li>
+<li><a href="#learning-objectives_4">章節目標（Learning Objectives）</a></li>
+<li><a href="#_54">核心理論說明</a><ul>
+<li><a href="#_55">定義</a></li>
+<li><a href="#_56">功能（旋律怎麼跟和聲合作？）</a></li>
+<li><a href="#_57">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_58">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_59">實際編曲／作曲應用</a><ul>
+<li><a href="#_60">鋼琴</a></li>
+<li><a href="#band_4">樂團／Band</a></li>
+<li><a href="#daw_4">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_61">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-ivviivcgamf">1) 在 I–V–vi–IV（C–G–Am–F）上的落點示例</a></li>
+<li><a href="#2-v7_1">2) 在 V7 上做掛留（最常見也最好用）</a></li>
+</ul>
+</li>
+<li><a href="#_62">常見錯誤與迷思</a></li>
+<li><a href="#3_6">習作（至少 3 題）</a></li>
+<li><a href="#_63">聆聽與分析建議</a></li>
+<li><a href="#5">第5章 初階：聆聽與分析範例（如何聽出和聲）</a></li>
+<li><a href="#learning-objectives_5">章節目標（Learning Objectives）</a></li>
+<li><a href="#_64">核心理論說明</a><ul>
+<li><a href="#_65">定義</a></li>
+<li><a href="#_66">功能</a></li>
+<li><a href="#_67">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_68">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_69">實際編曲／作曲應用</a><ul>
+<li><a href="#_70">鋼琴</a></li>
+<li><a href="#band_5">樂團／Band</a></li>
+<li><a href="#daw_5">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_71">譜例（以文字描述即可）</a></li>
+<li><a href="#_72">常見錯誤與迷思</a></li>
+<li><a href="#3_7">習作（至少 3 題）</a></li>
+<li><a href="#_73">聆聽與分析建議</a></li>
+<li><a href="#6">第6章 初階：習作題目與練習方向（把基礎變成能力）</a></li>
+<li><a href="#learning-objectives_6">章節目標（Learning Objectives）</a></li>
+<li><a href="#_74">核心理論說明</a><ul>
+<li><a href="#_75">定義</a></li>
+<li><a href="#_76">功能</a></li>
+<li><a href="#_77">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_78">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_79">實際編曲／作曲應用</a><ul>
+<li><a href="#_80">鋼琴</a></li>
+<li><a href="#band_6">樂團／Band</a></li>
+<li><a href="#daw_6">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_81">譜例（以文字描述即可）</a></li>
+<li><a href="#_82">常見錯誤與迷思</a></li>
+<li><a href="#3_8">習作（至少 3 題）</a></li>
+<li><a href="#_83">聆聽與分析建議</a></li>
+<li><a href="#7">第7章 中階：和聲語彙的擴展與進階技術（七和弦／副屬／借用／轉調／非和弦音）</a></li>
+<li><a href="#learning-objectives_7">章節目標（Learning Objectives）</a></li>
+<li><a href="#_84">核心理論說明</a><ul>
+<li><a href="#_85">定義</a></li>
+<li><a href="#_86">功能（為什麼這些東西會讓音樂「更像音樂」？）</a><ul>
+<li><a href="#1_3">1) 七和弦：把張力變得更精細</a></li>
+<li><a href="#2-37">2) 為什麼 3、7 是爵士與現代編曲的核心</a></li>
+<li><a href="#3_9">3) 副屬：局部加速器</a></li>
+<li><a href="#4_1">4) 借用：調色盤</a></li>
+<li><a href="#5_1">5) 非和弦音：不換和弦也能推進</a></li>
+</ul>
+</li>
+<li><a href="#_87">聽覺效果（你應該能聽到的變化）</a></li>
+</ul>
+</li>
+<li><a href="#_88">古典／爵士／流行的對照說明</a><ul>
+<li><a href="#_89">古典</a></li>
+<li><a href="#_90">爵士</a></li>
+<li><a href="#_91">流行</a></li>
+</ul>
+</li>
+<li><a href="#_92">實際編曲／作曲應用</a><ul>
+<li><a href="#_93">鋼琴</a></li>
+<li><a href="#band_7">樂團／Band</a></li>
+<li><a href="#daw_7">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_94">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-diatonic-c">1) 大調 diatonic 七和弦（以 C 大調示意）</a></li>
+<li><a href="#2_2">2) 小調（常見以和聲小調/旋律小調混用）</a></li>
+<li><a href="#3-c_1">3) 副屬（C 大調）</a></li>
+<li><a href="#4-c">4) 借用（C 大調）</a></li>
+<li><a href="#5_2">5) 掛留示例（概念）</a></li>
+</ul>
+</li>
+<li><a href="#_95">常見錯誤與迷思</a></li>
+<li><a href="#3_10">習作（由易到難，至少 3 題）</a></li>
+<li><a href="#_96">聆聽與分析建議</a></li>
+<li><a href="#8-sus">第8章 中階：各風格中階和聲語法與特色（古典序進／爵士替代與延伸／流行借用與sus）</a></li>
+<li><a href="#learning-objectives_8">章節目標（Learning Objectives）</a></li>
+<li><a href="#_97">核心理論說明</a><ul>
+<li><a href="#_98">定義</a></li>
+<li><a href="#_99">功能（為什麼這些語法很常見？）</a></li>
+<li><a href="#_100">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_101">古典／爵士／流行的對照說明</a><ul>
+<li><a href="#_102">古典（中階語法重點）</a></li>
+<li><a href="#_103">爵士（中階語法重點）</a></li>
+<li><a href="#_104">流行（中階語法重點）</a></li>
+</ul>
+</li>
+<li><a href="#_105">實際編曲／作曲應用</a><ul>
+<li><a href="#_106">鋼琴</a></li>
+<li><a href="#band_8">樂團／Band</a></li>
+<li><a href="#daw_8">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_107">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-tritone-subc">1) Tritone sub（C 調）</a></li>
+<li><a href="#2_3">2) 流行套路變體</a></li>
+<li><a href="#3-susadd">3) sus/add</a></li>
+<li><a href="#4-backdoor">4) Backdoor（概念示意）</a></li>
+</ul>
+</li>
+<li><a href="#_108">常見錯誤與迷思</a></li>
+<li><a href="#3_11">習作（至少 3 題）</a></li>
+<li><a href="#_109">聆聽與分析建議</a></li>
+<li><a href="#9">第9章 中階：編曲與聲響設計（七和弦配置／配器擴張／低音線／節奏動機）</a></li>
+<li><a href="#learning-objectives_9">章節目標（Learning Objectives）</a></li>
+<li><a href="#_110">核心理論說明</a><ul>
+<li><a href="#_111">定義</a></li>
+<li><a href="#_112">功能（中階編曲的真正任務）</a></li>
+<li><a href="#_113">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_114">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_115">實際編曲／作曲應用</a><ul>
+<li><a href="#_116">鋼琴</a></li>
+<li><a href="#band_9">樂團／Band</a></li>
+<li><a href="#daw_9">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_117">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-cmaj9">1) Cmaj9 的乾淨配置</a></li>
+<li><a href="#2-dm11">2) Dm11 的乾淨配置</a></li>
+<li><a href="#3_12">3) 低音線先行（示意）</a></li>
+</ul>
+</li>
+<li><a href="#_118">常見錯誤與迷思</a></li>
+<li><a href="#3_13">習作（至少 3 題）</a></li>
+<li><a href="#_119">聆聽與分析建議</a></li>
+<li><a href="#10-key">第10章 中階：作曲與即興應用（轉調／升 key／再和聲化／即興系統化）</a></li>
+<li><a href="#learning-objectives_10">章節目標（Learning Objectives）</a></li>
+<li><a href="#_120">核心理論說明</a><ul>
+<li><a href="#_121">定義</a></li>
+<li><a href="#_122">功能（為什麼要轉調/再和聲化？）</a></li>
+<li><a href="#_123">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_124">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_125">實際編曲／作曲應用</a><ul>
+<li><a href="#_126">鋼琴</a></li>
+<li><a href="#band_10">樂團／Band</a></li>
+<li><a href="#daw_10">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_127">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-gd">1) 樞紐轉調（G→D）</a></li>
+<li><a href="#2-turnaroundc">2) Turnaround（C 調）</a></li>
+<li><a href="#3-i">3) 再和聲化：把一小節 I 撐滿</a></li>
+</ul>
+</li>
+<li><a href="#_128">常見錯誤與迷思</a></li>
+<li><a href="#3_14">習作（至少 3 題）</a></li>
+<li><a href="#_129">聆聽與分析建議</a></li>
+<li><a href="#11">第11章 中階：聆聽與分析範例（副屬／轉調／五度圈）</a></li>
+<li><a href="#learning-objectives_11">章節目標（Learning Objectives）</a></li>
+<li><a href="#_130">核心理論說明</a><ul>
+<li><a href="#_131">定義</a></li>
+<li><a href="#_132">功能</a></li>
+<li><a href="#_133">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_134">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_135">實際編曲／作曲應用</a><ul>
+<li><a href="#_136">鋼琴</a></li>
+<li><a href="#band_11">樂團／Band</a></li>
+<li><a href="#daw_11">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_137">譜例（以文字描述即可）</a></li>
+<li><a href="#_138">常見錯誤與迷思</a></li>
+<li><a href="#3_15">習作（至少 3 題）</a></li>
+<li><a href="#_139">聆聽與分析建議</a></li>
+<li><a href="#12">第12章 中階：習作題目與練習方向（副屬／借用／轉調／改編）</a></li>
+<li><a href="#learning-objectives_12">章節目標（Learning Objectives）</a></li>
+<li><a href="#_140">核心理論說明</a><ul>
+<li><a href="#_141">定義</a></li>
+<li><a href="#_142">功能</a></li>
+<li><a href="#_143">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_144">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_145">實際編曲／作曲應用</a><ul>
+<li><a href="#_146">鋼琴</a></li>
+<li><a href="#band_12">樂團／Band</a></li>
+<li><a href="#daw_12">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_147">譜例（以文字描述即可）</a></li>
+<li><a href="#_148">常見錯誤與迷思</a></li>
+<li><a href="#3_16">習作（至少 3 題）</a></li>
+<li><a href="#_149">聆聽與分析建議</a></li>
+<li><a href="#13-passacaglia-ground-bass">第13章 Passacaglia 專章：低音反覆（Ground Bass）與變奏的和聲引擎</a></li>
+<li><a href="#learning-objectives_13">章節目標（Learning Objectives）</a></li>
+<li><a href="#_150">核心理論說明</a><ul>
+<li><a href="#_151">定義</a></li>
+<li><a href="#_152">功能（為什麼這種形式有力量？）</a></li>
+<li><a href="#_153">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_154">古典／爵士／流行的對照說明</a></li>
+<li><a href="#1_4">1️⃣ 歷史與體裁背景</a><ul>
+<li><a href="#passacaglia">Passacaglia 的起源（概念性）</a></li>
+<li><a href="#chaconne">與 Chaconne 的異同（實務角度）</a></li>
+<li><a href="#_155">為何「低音反覆」在巴洛克具有結構性意義</a></li>
+</ul>
+</li>
+<li><a href="#2_4">2️⃣ 和聲骨架分析</a><ul>
+<li><a href="#ground-bass">Ground Bass 的音級與功能（分析流程）</a></li>
+<li><a href="#_156">為何這種進行能承載大量變奏而不崩壞</a></li>
+</ul>
+</li>
+<li><a href="#3_17">3️⃣ 變奏層次拆解</a><ul>
+<li><a href="#a-rhythm-layer">A) 節奏層（Rhythm layer）</a></li>
+<li><a href="#b-voicingregisters-layer">B) 聲部層（Voicing/Registers layer）</a></li>
+<li><a href="#c-ornament-layer">C) 和聲裝飾層（Ornament layer）</a></li>
+<li><a href="#d-counterpoint-layer">D) 對位與非和弦音（Counterpoint layer）</a></li>
+</ul>
+</li>
+<li><a href="#4_2">4️⃣ 和聲張力設計：如何「不換和聲也能推進」</a><ul>
+<li><a href="#vs">穩定 vs 不穩定的配置</a></li>
+<li><a href="#_157">延遲音、倚音、經過音的角色</a></li>
+<li><a href="#_158">一個很實用的張力公式</a></li>
+</ul>
+</li>
+<li><a href="#_159">實際編曲／作曲應用</a><ul>
+<li><a href="#_160">鋼琴</a></li>
+<li><a href="#band_13">樂團／Band</a></li>
+<li><a href="#daw_13">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#5_3">5️⃣ 現代應用延伸</a><ul>
+<li><a href="#_161">電影配樂</a></li>
+<li><a href="#_162">流行歌副歌</a></li>
+<li><a href="#loop">電子音樂 Loop</a></li>
+<li><a href="#jazz-modal-vamp">Jazz modal vamp</a></li>
+</ul>
+</li>
+<li><a href="#_163">習作</a><ul>
+<li><a href="#6-3">6️⃣ 創作練習（由易到難，至少 3 題）</a></li>
+</ul>
+</li>
+<li><a href="#_164">譜例（以文字描述即可）</a></li>
+<li><a href="#_165">常見錯誤與迷思</a></li>
+<li><a href="#_166">聆聽與分析建議</a></li>
+<li><a href="#14">第14章 高階：複雜和聲技法與現代和聲語彙</a></li>
+<li><a href="#learning-objectives_14">章節目標（Learning Objectives）</a></li>
+<li><a href="#_167">核心理論說明</a><ul>
+<li><a href="#_168">定義</a></li>
+<li><a href="#_169">功能（為什麼高階和聲不是「更複雜」而已？）</a></li>
+<li><a href="#_170">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_171">古典／爵士／流行的對照說明</a><ul>
+<li><a href="#_172">古典（浪漫→近代）</a></li>
+<li><a href="#_173">爵士</a></li>
+<li><a href="#_174">流行／配樂</a></li>
+</ul>
+</li>
+<li><a href="#_175">實際編曲／作曲應用</a><ul>
+<li><a href="#_176">鋼琴</a></li>
+<li><a href="#band_14">樂團／Band</a></li>
+<li><a href="#daw_14">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_177">譜例（以文字描述即可）</a></li>
+<li><a href="#_178">常見錯誤與迷思</a></li>
+<li><a href="#3_18">習作（至少 3 題）</a></li>
+<li><a href="#_179">聆聽與分析建議</a></li>
+<li><a href="#15-91113drop-2">第15章 高階：編曲與配器技巧（9/11/13／Drop-2／旋律優先／對位融合）</a></li>
+<li><a href="#learning-objectives_15">章節目標（Learning Objectives）</a></li>
+<li><a href="#_180">核心理論說明</a><ul>
+<li><a href="#_181">定義</a></li>
+<li><a href="#_182">功能（高階配器在做什麼？）</a></li>
+<li><a href="#_183">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_184">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_185">實際編曲／作曲應用</a><ul>
+<li><a href="#_186">鋼琴</a></li>
+<li><a href="#band_15">樂團／Band</a></li>
+<li><a href="#daw_15">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_187">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-c13cegbda">1) C13（C–E–G–B♭–D–A）分工示例</a></li>
+<li><a href="#2-drop-2">2) Drop-2 概念示意</a></li>
+<li><a href="#3_19">3) 對位式伴奏示意</a></li>
+</ul>
+</li>
+<li><a href="#_188">常見錯誤與迷思</a></li>
+<li><a href="#3_20">習作（至少 3 題）</a></li>
+<li><a href="#_189">聆聽與分析建議</a></li>
+<li><a href="#16">第16章 高階：作曲與即興應用（風格融合／多次轉調／高難度即興／大型曲構思）</a></li>
+<li><a href="#learning-objectives_16">章節目標（Learning Objectives）</a></li>
+<li><a href="#_190">核心理論說明</a><ul>
+<li><a href="#_191">定義</a></li>
+<li><a href="#_192">功能</a></li>
+<li><a href="#_193">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_194">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_195">實際編曲／作曲應用</a><ul>
+<li><a href="#_196">鋼琴</a></li>
+<li><a href="#band_16">樂團／Band</a></li>
+<li><a href="#daw_16">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_197">譜例（以文字描述即可）</a><ul>
+<li><a href="#1_5">1) 「奏鳴曲呈示部」和聲藍圖（概念）</a></li>
+<li><a href="#2_5">2) 「多次轉調但連貫」的策略清單</a></li>
+</ul>
+</li>
+<li><a href="#_198">常見錯誤與迷思</a></li>
+<li><a href="#3_21">習作（至少 3 題）</a></li>
+<li><a href="#_199">聆聽與分析建議</a></li>
+<li><a href="#17">第17章 高階：聆聽與分析範例（浪漫／印象派／多調性／現代爵士／前衛流行）</a></li>
+<li><a href="#learning-objectives_17">章節目標（Learning Objectives）</a></li>
+<li><a href="#_200">核心理論說明</a><ul>
+<li><a href="#_201">定義</a></li>
+<li><a href="#_202">功能</a></li>
+<li><a href="#_203">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_204">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_205">實際編曲／作曲應用</a><ul>
+<li><a href="#_206">鋼琴</a></li>
+<li><a href="#band_17">樂團／Band</a></li>
+<li><a href="#daw_17">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_207">譜例（以文字描述即可）</a></li>
+<li><a href="#_208">常見錯誤與迷思</a></li>
+<li><a href="#3_22">習作（至少 3 題）</a></li>
+<li><a href="#_209">聆聽與分析建議</a></li>
+<li><a href="#18">第18章 高階：習作題目與發展方向（混搭編曲／管弦配器／論文分析／作品集）</a></li>
+<li><a href="#learning-objectives_18">章節目標（Learning Objectives）</a></li>
+<li><a href="#_210">核心理論說明</a><ul>
+<li><a href="#_211">定義</a></li>
+<li><a href="#_212">功能</a></li>
+<li><a href="#_213">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_214">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_215">實際編曲／作曲應用</a><ul>
+<li><a href="#_216">鋼琴</a></li>
+<li><a href="#band_18">樂團／Band</a></li>
+<li><a href="#daw_18">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_217">譜例（以文字描述即可）</a></li>
+<li><a href="#_218">常見錯誤與迷思</a></li>
+<li><a href="#3_23">習作（至少 3 題）</a></li>
+<li><a href="#_219">聆聽與分析建議</a></li>
+<li><a href="#19">第19章 結語：把和聲變成你的語言</a></li>
+<li><a href="#learning-objectives_19">章節目標（Learning Objectives）</a></li>
+<li><a href="#_220">核心理論說明</a><ul>
+<li><a href="#_221">定義</a></li>
+<li><a href="#_222">功能</a></li>
+<li><a href="#_223">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_224">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_225">實際編曲／作曲應用</a><ul>
+<li><a href="#_226">鋼琴</a></li>
+<li><a href="#band_19">樂團／Band</a></li>
+<li><a href="#daw_19">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_227">譜例（以文字描述即可）</a></li>
+<li><a href="#_228">常見錯誤與迷思</a></li>
+<li><a href="#3_24">習作（至少 3 題）</a></li>
+<li><a href="#_229">聆聽與分析建議</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+        </details>
+        <div class="toc-panel" aria-label="目錄">
+          <h2>目錄</h2>
+          <nav><div class="toc">
+<ul>
+<li><a href="#_1">和聲學完整講義：古典、爵士與流行音樂的整合式學習（完整合併版）</a><ul>
+<li><a href="#0">第0章 導論：三種風格的和聲地圖（古典／爵士／流行）</a></li>
+<li><a href="#learning-objectives">章節目標（Learning Objectives）</a></li>
+<li><a href="#_2">記號與約定（你會在整份講義一直用到）</a></li>
+<li><a href="#_3">核心理論說明</a><ul>
+<li><a href="#_4">定義</a></li>
+<li><a href="#_5">功能（為什麼它存在？音樂上造成什麼效果？）</a></li>
+<li><a href="#_6">聽覺效果（把抽象變成耳朵的地圖）</a></li>
+</ul>
+</li>
+<li><a href="#_7">古典／爵士／流行的對照說明</a><ul>
+<li><a href="#common-practice-period">古典（Common Practice Period）</a></li>
+<li><a href="#_8">爵士</a></li>
+<li><a href="#_9">流行／現代</a></li>
+</ul>
+</li>
+<li><a href="#_10">實際編曲／作曲應用</a><ul>
+<li><a href="#_11">鋼琴</a></li>
+<li><a href="#band">樂團／Band</a></li>
+<li><a href="#daw">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_12">譜例（以文字描述即可）</a></li>
+<li><a href="#_13">常見錯誤與迷思</a></li>
+<li><a href="#3">習作（由易到難，至少 3 題）</a></li>
+<li><a href="#_14">聆聽與分析建議</a></li>
+<li><a href="#1">第1章 初階：核心概念與基本和弦結構</a></li>
+<li><a href="#learning-objectives_1">章節目標（Learning Objectives）</a></li>
+<li><a href="#_15">核心理論說明</a><ul>
+<li><a href="#_16">定義</a></li>
+<li><a href="#_17">功能（為什麼存在？）</a><ul>
+<li><a href="#1_1">1) 為什麼要用音級思考</a></li>
+<li><a href="#2">2) 為什麼要用轉位</a></li>
+<li><a href="#3-v7">3) 為什麼 V7 這麼重要</a></li>
+</ul>
+</li>
+<li><a href="#_18">聽覺效果（你要能用耳朵辨認）</a></li>
+</ul>
+</li>
+<li><a href="#_19">古典／爵士／流行的對照說明</a><ul>
+<li><a href="#_20">古典</a></li>
+<li><a href="#_21">爵士</a></li>
+<li><a href="#_22">流行</a></li>
+</ul>
+</li>
+<li><a href="#_23">實際編曲／作曲應用</a><ul>
+<li><a href="#_24">鋼琴</a></li>
+<li><a href="#band_1">樂團／Band</a></li>
+<li><a href="#daw_1">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_25">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-c">1) C 大調調內三和弦</a></li>
+<li><a href="#2-v7">2) V7 的趨勢音解決</a></li>
+<li><a href="#3-c">3) 四種終止（C 大調）</a></li>
+</ul>
+</li>
+<li><a href="#_26">常見錯誤與迷思</a></li>
+<li><a href="#3_1">習作（由易到難，至少 3 題）</a></li>
+<li><a href="#_27">聆聽與分析建議</a></li>
+<li><a href="#2_1">第2章 初階：基本和聲進行與各風格入門語法</a></li>
+<li><a href="#learning-objectives_2">章節目標（Learning Objectives）</a></li>
+<li><a href="#_28">核心理論說明</a><ul>
+<li><a href="#_29">定義</a></li>
+<li><a href="#_30">功能（為什麼這些套路到處都是？）</a></li>
+<li><a href="#_31">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_32">古典／爵士／流行的對照說明</a><ul>
+<li><a href="#_33">古典入門語法</a></li>
+<li><a href="#_34">爵士入門語法</a></li>
+<li><a href="#_35">流行入門語法</a></li>
+</ul>
+</li>
+<li><a href="#_36">實際編曲／作曲應用</a><ul>
+<li><a href="#_37">鋼琴</a></li>
+<li><a href="#band_2">樂團／Band</a></li>
+<li><a href="#daw_2">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_38">譜例（以文字描述即可）</a></li>
+<li><a href="#_39">常見錯誤與迷思</a></li>
+<li><a href="#3_2">習作（至少 3 題）</a></li>
+<li><a href="#_40">聆聽與分析建議</a></li>
+<li><a href="#3_3">第3章 初階：編曲與和聲配置技巧（四部和聲／伴奏／音域）</a></li>
+<li><a href="#learning-objectives_3">章節目標（Learning Objectives）</a></li>
+<li><a href="#_41">核心理論說明</a><ul>
+<li><a href="#_42">定義</a></li>
+<li><a href="#_43">功能（為什麼學四部和聲對你有用？）</a></li>
+<li><a href="#_44">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_45">古典／爵士／流行的對照說明</a><ul>
+<li><a href="#_46">古典</a></li>
+<li><a href="#_47">爵士</a></li>
+<li><a href="#_48">流行</a></li>
+</ul>
+</li>
+<li><a href="#_49">實際編曲／作曲應用</a><ul>
+<li><a href="#_50">鋼琴</a></li>
+<li><a href="#band_3">樂團／Band</a></li>
+<li><a href="#daw_3">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_51">譜例（以文字描述即可）</a><ul>
+<li><a href="#1_2">1) 四部和聲寫作步驟（最實用的流程）</a></li>
+<li><a href="#2-v7i">2) 一個簡單且常用的 V7→I 內聲連接</a></li>
+<li><a href="#3_4">3) 同一和弦的兩種配置（聽感差很大）</a></li>
+</ul>
+</li>
+<li><a href="#_52">常見錯誤與迷思</a></li>
+<li><a href="#3_5">習作（至少 3 題）</a></li>
+<li><a href="#_53">聆聽與分析建議</a></li>
+<li><a href="#4">第4章 初階：作曲與即興應用（旋律寫作／和聲化／入門即興）</a></li>
+<li><a href="#learning-objectives_4">章節目標（Learning Objectives）</a></li>
+<li><a href="#_54">核心理論說明</a><ul>
+<li><a href="#_55">定義</a></li>
+<li><a href="#_56">功能（旋律怎麼跟和聲合作？）</a></li>
+<li><a href="#_57">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_58">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_59">實際編曲／作曲應用</a><ul>
+<li><a href="#_60">鋼琴</a></li>
+<li><a href="#band_4">樂團／Band</a></li>
+<li><a href="#daw_4">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_61">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-ivviivcgamf">1) 在 I–V–vi–IV（C–G–Am–F）上的落點示例</a></li>
+<li><a href="#2-v7_1">2) 在 V7 上做掛留（最常見也最好用）</a></li>
+</ul>
+</li>
+<li><a href="#_62">常見錯誤與迷思</a></li>
+<li><a href="#3_6">習作（至少 3 題）</a></li>
+<li><a href="#_63">聆聽與分析建議</a></li>
+<li><a href="#5">第5章 初階：聆聽與分析範例（如何聽出和聲）</a></li>
+<li><a href="#learning-objectives_5">章節目標（Learning Objectives）</a></li>
+<li><a href="#_64">核心理論說明</a><ul>
+<li><a href="#_65">定義</a></li>
+<li><a href="#_66">功能</a></li>
+<li><a href="#_67">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_68">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_69">實際編曲／作曲應用</a><ul>
+<li><a href="#_70">鋼琴</a></li>
+<li><a href="#band_5">樂團／Band</a></li>
+<li><a href="#daw_5">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_71">譜例（以文字描述即可）</a></li>
+<li><a href="#_72">常見錯誤與迷思</a></li>
+<li><a href="#3_7">習作（至少 3 題）</a></li>
+<li><a href="#_73">聆聽與分析建議</a></li>
+<li><a href="#6">第6章 初階：習作題目與練習方向（把基礎變成能力）</a></li>
+<li><a href="#learning-objectives_6">章節目標（Learning Objectives）</a></li>
+<li><a href="#_74">核心理論說明</a><ul>
+<li><a href="#_75">定義</a></li>
+<li><a href="#_76">功能</a></li>
+<li><a href="#_77">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_78">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_79">實際編曲／作曲應用</a><ul>
+<li><a href="#_80">鋼琴</a></li>
+<li><a href="#band_6">樂團／Band</a></li>
+<li><a href="#daw_6">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_81">譜例（以文字描述即可）</a></li>
+<li><a href="#_82">常見錯誤與迷思</a></li>
+<li><a href="#3_8">習作（至少 3 題）</a></li>
+<li><a href="#_83">聆聽與分析建議</a></li>
+<li><a href="#7">第7章 中階：和聲語彙的擴展與進階技術（七和弦／副屬／借用／轉調／非和弦音）</a></li>
+<li><a href="#learning-objectives_7">章節目標（Learning Objectives）</a></li>
+<li><a href="#_84">核心理論說明</a><ul>
+<li><a href="#_85">定義</a></li>
+<li><a href="#_86">功能（為什麼這些東西會讓音樂「更像音樂」？）</a><ul>
+<li><a href="#1_3">1) 七和弦：把張力變得更精細</a></li>
+<li><a href="#2-37">2) 為什麼 3、7 是爵士與現代編曲的核心</a></li>
+<li><a href="#3_9">3) 副屬：局部加速器</a></li>
+<li><a href="#4_1">4) 借用：調色盤</a></li>
+<li><a href="#5_1">5) 非和弦音：不換和弦也能推進</a></li>
+</ul>
+</li>
+<li><a href="#_87">聽覺效果（你應該能聽到的變化）</a></li>
+</ul>
+</li>
+<li><a href="#_88">古典／爵士／流行的對照說明</a><ul>
+<li><a href="#_89">古典</a></li>
+<li><a href="#_90">爵士</a></li>
+<li><a href="#_91">流行</a></li>
+</ul>
+</li>
+<li><a href="#_92">實際編曲／作曲應用</a><ul>
+<li><a href="#_93">鋼琴</a></li>
+<li><a href="#band_7">樂團／Band</a></li>
+<li><a href="#daw_7">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_94">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-diatonic-c">1) 大調 diatonic 七和弦（以 C 大調示意）</a></li>
+<li><a href="#2_2">2) 小調（常見以和聲小調/旋律小調混用）</a></li>
+<li><a href="#3-c_1">3) 副屬（C 大調）</a></li>
+<li><a href="#4-c">4) 借用（C 大調）</a></li>
+<li><a href="#5_2">5) 掛留示例（概念）</a></li>
+</ul>
+</li>
+<li><a href="#_95">常見錯誤與迷思</a></li>
+<li><a href="#3_10">習作（由易到難，至少 3 題）</a></li>
+<li><a href="#_96">聆聽與分析建議</a></li>
+<li><a href="#8-sus">第8章 中階：各風格中階和聲語法與特色（古典序進／爵士替代與延伸／流行借用與sus）</a></li>
+<li><a href="#learning-objectives_8">章節目標（Learning Objectives）</a></li>
+<li><a href="#_97">核心理論說明</a><ul>
+<li><a href="#_98">定義</a></li>
+<li><a href="#_99">功能（為什麼這些語法很常見？）</a></li>
+<li><a href="#_100">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_101">古典／爵士／流行的對照說明</a><ul>
+<li><a href="#_102">古典（中階語法重點）</a></li>
+<li><a href="#_103">爵士（中階語法重點）</a></li>
+<li><a href="#_104">流行（中階語法重點）</a></li>
+</ul>
+</li>
+<li><a href="#_105">實際編曲／作曲應用</a><ul>
+<li><a href="#_106">鋼琴</a></li>
+<li><a href="#band_8">樂團／Band</a></li>
+<li><a href="#daw_8">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_107">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-tritone-subc">1) Tritone sub（C 調）</a></li>
+<li><a href="#2_3">2) 流行套路變體</a></li>
+<li><a href="#3-susadd">3) sus/add</a></li>
+<li><a href="#4-backdoor">4) Backdoor（概念示意）</a></li>
+</ul>
+</li>
+<li><a href="#_108">常見錯誤與迷思</a></li>
+<li><a href="#3_11">習作（至少 3 題）</a></li>
+<li><a href="#_109">聆聽與分析建議</a></li>
+<li><a href="#9">第9章 中階：編曲與聲響設計（七和弦配置／配器擴張／低音線／節奏動機）</a></li>
+<li><a href="#learning-objectives_9">章節目標（Learning Objectives）</a></li>
+<li><a href="#_110">核心理論說明</a><ul>
+<li><a href="#_111">定義</a></li>
+<li><a href="#_112">功能（中階編曲的真正任務）</a></li>
+<li><a href="#_113">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_114">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_115">實際編曲／作曲應用</a><ul>
+<li><a href="#_116">鋼琴</a></li>
+<li><a href="#band_9">樂團／Band</a></li>
+<li><a href="#daw_9">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_117">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-cmaj9">1) Cmaj9 的乾淨配置</a></li>
+<li><a href="#2-dm11">2) Dm11 的乾淨配置</a></li>
+<li><a href="#3_12">3) 低音線先行（示意）</a></li>
+</ul>
+</li>
+<li><a href="#_118">常見錯誤與迷思</a></li>
+<li><a href="#3_13">習作（至少 3 題）</a></li>
+<li><a href="#_119">聆聽與分析建議</a></li>
+<li><a href="#10-key">第10章 中階：作曲與即興應用（轉調／升 key／再和聲化／即興系統化）</a></li>
+<li><a href="#learning-objectives_10">章節目標（Learning Objectives）</a></li>
+<li><a href="#_120">核心理論說明</a><ul>
+<li><a href="#_121">定義</a></li>
+<li><a href="#_122">功能（為什麼要轉調/再和聲化？）</a></li>
+<li><a href="#_123">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_124">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_125">實際編曲／作曲應用</a><ul>
+<li><a href="#_126">鋼琴</a></li>
+<li><a href="#band_10">樂團／Band</a></li>
+<li><a href="#daw_10">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_127">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-gd">1) 樞紐轉調（G→D）</a></li>
+<li><a href="#2-turnaroundc">2) Turnaround（C 調）</a></li>
+<li><a href="#3-i">3) 再和聲化：把一小節 I 撐滿</a></li>
+</ul>
+</li>
+<li><a href="#_128">常見錯誤與迷思</a></li>
+<li><a href="#3_14">習作（至少 3 題）</a></li>
+<li><a href="#_129">聆聽與分析建議</a></li>
+<li><a href="#11">第11章 中階：聆聽與分析範例（副屬／轉調／五度圈）</a></li>
+<li><a href="#learning-objectives_11">章節目標（Learning Objectives）</a></li>
+<li><a href="#_130">核心理論說明</a><ul>
+<li><a href="#_131">定義</a></li>
+<li><a href="#_132">功能</a></li>
+<li><a href="#_133">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_134">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_135">實際編曲／作曲應用</a><ul>
+<li><a href="#_136">鋼琴</a></li>
+<li><a href="#band_11">樂團／Band</a></li>
+<li><a href="#daw_11">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_137">譜例（以文字描述即可）</a></li>
+<li><a href="#_138">常見錯誤與迷思</a></li>
+<li><a href="#3_15">習作（至少 3 題）</a></li>
+<li><a href="#_139">聆聽與分析建議</a></li>
+<li><a href="#12">第12章 中階：習作題目與練習方向（副屬／借用／轉調／改編）</a></li>
+<li><a href="#learning-objectives_12">章節目標（Learning Objectives）</a></li>
+<li><a href="#_140">核心理論說明</a><ul>
+<li><a href="#_141">定義</a></li>
+<li><a href="#_142">功能</a></li>
+<li><a href="#_143">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_144">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_145">實際編曲／作曲應用</a><ul>
+<li><a href="#_146">鋼琴</a></li>
+<li><a href="#band_12">樂團／Band</a></li>
+<li><a href="#daw_12">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_147">譜例（以文字描述即可）</a></li>
+<li><a href="#_148">常見錯誤與迷思</a></li>
+<li><a href="#3_16">習作（至少 3 題）</a></li>
+<li><a href="#_149">聆聽與分析建議</a></li>
+<li><a href="#13-passacaglia-ground-bass">第13章 Passacaglia 專章：低音反覆（Ground Bass）與變奏的和聲引擎</a></li>
+<li><a href="#learning-objectives_13">章節目標（Learning Objectives）</a></li>
+<li><a href="#_150">核心理論說明</a><ul>
+<li><a href="#_151">定義</a></li>
+<li><a href="#_152">功能（為什麼這種形式有力量？）</a></li>
+<li><a href="#_153">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_154">古典／爵士／流行的對照說明</a></li>
+<li><a href="#1_4">1️⃣ 歷史與體裁背景</a><ul>
+<li><a href="#passacaglia">Passacaglia 的起源（概念性）</a></li>
+<li><a href="#chaconne">與 Chaconne 的異同（實務角度）</a></li>
+<li><a href="#_155">為何「低音反覆」在巴洛克具有結構性意義</a></li>
+</ul>
+</li>
+<li><a href="#2_4">2️⃣ 和聲骨架分析</a><ul>
+<li><a href="#ground-bass">Ground Bass 的音級與功能（分析流程）</a></li>
+<li><a href="#_156">為何這種進行能承載大量變奏而不崩壞</a></li>
+</ul>
+</li>
+<li><a href="#3_17">3️⃣ 變奏層次拆解</a><ul>
+<li><a href="#a-rhythm-layer">A) 節奏層（Rhythm layer）</a></li>
+<li><a href="#b-voicingregisters-layer">B) 聲部層（Voicing/Registers layer）</a></li>
+<li><a href="#c-ornament-layer">C) 和聲裝飾層（Ornament layer）</a></li>
+<li><a href="#d-counterpoint-layer">D) 對位與非和弦音（Counterpoint layer）</a></li>
+</ul>
+</li>
+<li><a href="#4_2">4️⃣ 和聲張力設計：如何「不換和聲也能推進」</a><ul>
+<li><a href="#vs">穩定 vs 不穩定的配置</a></li>
+<li><a href="#_157">延遲音、倚音、經過音的角色</a></li>
+<li><a href="#_158">一個很實用的張力公式</a></li>
+</ul>
+</li>
+<li><a href="#_159">實際編曲／作曲應用</a><ul>
+<li><a href="#_160">鋼琴</a></li>
+<li><a href="#band_13">樂團／Band</a></li>
+<li><a href="#daw_13">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#5_3">5️⃣ 現代應用延伸</a><ul>
+<li><a href="#_161">電影配樂</a></li>
+<li><a href="#_162">流行歌副歌</a></li>
+<li><a href="#loop">電子音樂 Loop</a></li>
+<li><a href="#jazz-modal-vamp">Jazz modal vamp</a></li>
+</ul>
+</li>
+<li><a href="#_163">習作</a><ul>
+<li><a href="#6-3">6️⃣ 創作練習（由易到難，至少 3 題）</a></li>
+</ul>
+</li>
+<li><a href="#_164">譜例（以文字描述即可）</a></li>
+<li><a href="#_165">常見錯誤與迷思</a></li>
+<li><a href="#_166">聆聽與分析建議</a></li>
+<li><a href="#14">第14章 高階：複雜和聲技法與現代和聲語彙</a></li>
+<li><a href="#learning-objectives_14">章節目標（Learning Objectives）</a></li>
+<li><a href="#_167">核心理論說明</a><ul>
+<li><a href="#_168">定義</a></li>
+<li><a href="#_169">功能（為什麼高階和聲不是「更複雜」而已？）</a></li>
+<li><a href="#_170">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_171">古典／爵士／流行的對照說明</a><ul>
+<li><a href="#_172">古典（浪漫→近代）</a></li>
+<li><a href="#_173">爵士</a></li>
+<li><a href="#_174">流行／配樂</a></li>
+</ul>
+</li>
+<li><a href="#_175">實際編曲／作曲應用</a><ul>
+<li><a href="#_176">鋼琴</a></li>
+<li><a href="#band_14">樂團／Band</a></li>
+<li><a href="#daw_14">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_177">譜例（以文字描述即可）</a></li>
+<li><a href="#_178">常見錯誤與迷思</a></li>
+<li><a href="#3_18">習作（至少 3 題）</a></li>
+<li><a href="#_179">聆聽與分析建議</a></li>
+<li><a href="#15-91113drop-2">第15章 高階：編曲與配器技巧（9/11/13／Drop-2／旋律優先／對位融合）</a></li>
+<li><a href="#learning-objectives_15">章節目標（Learning Objectives）</a></li>
+<li><a href="#_180">核心理論說明</a><ul>
+<li><a href="#_181">定義</a></li>
+<li><a href="#_182">功能（高階配器在做什麼？）</a></li>
+<li><a href="#_183">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_184">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_185">實際編曲／作曲應用</a><ul>
+<li><a href="#_186">鋼琴</a></li>
+<li><a href="#band_15">樂團／Band</a></li>
+<li><a href="#daw_15">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_187">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-c13cegbda">1) C13（C–E–G–B♭–D–A）分工示例</a></li>
+<li><a href="#2-drop-2">2) Drop-2 概念示意</a></li>
+<li><a href="#3_19">3) 對位式伴奏示意</a></li>
+</ul>
+</li>
+<li><a href="#_188">常見錯誤與迷思</a></li>
+<li><a href="#3_20">習作（至少 3 題）</a></li>
+<li><a href="#_189">聆聽與分析建議</a></li>
+<li><a href="#16">第16章 高階：作曲與即興應用（風格融合／多次轉調／高難度即興／大型曲構思）</a></li>
+<li><a href="#learning-objectives_16">章節目標（Learning Objectives）</a></li>
+<li><a href="#_190">核心理論說明</a><ul>
+<li><a href="#_191">定義</a></li>
+<li><a href="#_192">功能</a></li>
+<li><a href="#_193">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_194">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_195">實際編曲／作曲應用</a><ul>
+<li><a href="#_196">鋼琴</a></li>
+<li><a href="#band_16">樂團／Band</a></li>
+<li><a href="#daw_16">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_197">譜例（以文字描述即可）</a><ul>
+<li><a href="#1_5">1) 「奏鳴曲呈示部」和聲藍圖（概念）</a></li>
+<li><a href="#2_5">2) 「多次轉調但連貫」的策略清單</a></li>
+</ul>
+</li>
+<li><a href="#_198">常見錯誤與迷思</a></li>
+<li><a href="#3_21">習作（至少 3 題）</a></li>
+<li><a href="#_199">聆聽與分析建議</a></li>
+<li><a href="#17">第17章 高階：聆聽與分析範例（浪漫／印象派／多調性／現代爵士／前衛流行）</a></li>
+<li><a href="#learning-objectives_17">章節目標（Learning Objectives）</a></li>
+<li><a href="#_200">核心理論說明</a><ul>
+<li><a href="#_201">定義</a></li>
+<li><a href="#_202">功能</a></li>
+<li><a href="#_203">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_204">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_205">實際編曲／作曲應用</a><ul>
+<li><a href="#_206">鋼琴</a></li>
+<li><a href="#band_17">樂團／Band</a></li>
+<li><a href="#daw_17">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_207">譜例（以文字描述即可）</a></li>
+<li><a href="#_208">常見錯誤與迷思</a></li>
+<li><a href="#3_22">習作（至少 3 題）</a></li>
+<li><a href="#_209">聆聽與分析建議</a></li>
+<li><a href="#18">第18章 高階：習作題目與發展方向（混搭編曲／管弦配器／論文分析／作品集）</a></li>
+<li><a href="#learning-objectives_18">章節目標（Learning Objectives）</a></li>
+<li><a href="#_210">核心理論說明</a><ul>
+<li><a href="#_211">定義</a></li>
+<li><a href="#_212">功能</a></li>
+<li><a href="#_213">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_214">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_215">實際編曲／作曲應用</a><ul>
+<li><a href="#_216">鋼琴</a></li>
+<li><a href="#band_18">樂團／Band</a></li>
+<li><a href="#daw_18">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_217">譜例（以文字描述即可）</a></li>
+<li><a href="#_218">常見錯誤與迷思</a></li>
+<li><a href="#3_23">習作（至少 3 題）</a></li>
+<li><a href="#_219">聆聽與分析建議</a></li>
+<li><a href="#19">第19章 結語：把和聲變成你的語言</a></li>
+<li><a href="#learning-objectives_19">章節目標（Learning Objectives）</a></li>
+<li><a href="#_220">核心理論說明</a><ul>
+<li><a href="#_221">定義</a></li>
+<li><a href="#_222">功能</a></li>
+<li><a href="#_223">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_224">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_225">實際編曲／作曲應用</a><ul>
+<li><a href="#_226">鋼琴</a></li>
+<li><a href="#band_19">樂團／Band</a></li>
+<li><a href="#daw_19">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_227">譜例（以文字描述即可）</a></li>
+<li><a href="#_228">常見錯誤與迷思</a></li>
+<li><a href="#3_24">習作（至少 3 題）</a></li>
+<li><a href="#_229">聆聽與分析建議</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+        </div>
+      </section>
+
+      <article class="panel content" aria-label="講義正文">
+        <h1 id="_1">和聲學完整講義：古典、爵士與流行音樂的整合式學習（完整合併版）<a class="headerlink" href="#_1" title="連結到此段落">&para;</a></h1>
+<blockquote>
+<p>本檔案由 <code>講義/</code> 章節檔自動合併產生，方便輸出 PDF/HTML。</p>
+<p>若要分章閱讀/編修，請用 <code>講義/index.md</code>。</p>
+</blockquote>
+<hr>
+<h2 id="0">第0章　導論：三種風格的和聲地圖（古典／爵士／流行）<a class="headerlink" href="#0" title="連結到此段落">&para;</a></h2>
+<blockquote>
+<p>讀者定位：具備不完整但有基礎的樂理背景。目標是建立可分析、可編曲、可作曲的完整和聲體系。</p>
+</blockquote>
+<h2 id="learning-objectives">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>建立一套可跨風格使用的核心語言：<strong>調性重心、功能、張力與解決、聲部導向、音色與節奏</strong>。</li>
+<li>釐清古典、爵士、流行之間的差異是「語法層」還是「材料層」，避免把三者當成互相否定的規則。</li>
+<li>建立自學與教學的實作流程：分析 → 模仿 → 變形 → 創作。</li>
+</ul>
+<h2 id="_2">記號與約定（你會在整份講義一直用到）<a class="headerlink" href="#_2" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>音級（Scale degrees）</strong>：Ⅰ～Ⅶ表示大調／自然小調的級數；若需變音以 ♯/♭ 標記（如 ♭Ⅵ）。</li>
+<li><strong>羅馬數字（Roman Numeral）</strong>：</li>
+<li>大寫：大三和弦（I, IV, V）</li>
+<li>小寫：小三和弦（ii, iii, vi）</li>
+<li>°：減和弦（vii°）</li>
+<li>+：增和弦（I+）</li>
+<li>7：七和弦（V7, ii7）</li>
+<li>轉位：I⁶、I⁶⁴（以低音音程標記）</li>
+<li><strong>爵士和弦符號（Chord symbols）</strong>：C, Cm, C7, Cmaj7, Cø7, C°7, C9, C13, C7(♭9)…</li>
+<li><strong>功能三分法（最常用）</strong>：</li>
+<li>主功能（T）：I（常含 vi、iii 視情境）</li>
+<li>下屬功能（S）：ii、IV</li>
+<li>屬功能（D）：V、vii°（與各種「屬性」的副屬）</li>
+</ul>
+<h2 id="_3">核心理論說明<a class="headerlink" href="#_3" title="連結到此段落">&para;</a></h2>
+<h3 id="_4">定義<a class="headerlink" href="#_4" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>和聲（Harmony）</strong>：同時發聲的音形成和弦（垂直），以及和弦隨時間形成的進行（水平）。</li>
+<li><strong>調性（Tonality）</strong>：一套「引力系統」。主音／主和弦像重力中心，其他和弦與音會在靠近、遠離、回歸之間造成張力與釋放。</li>
+<li><strong>功能（Function）</strong>：和弦在引力系統中的角色；不是「名字」，而是「它在句子裡想做什麼」。</li>
+</ul>
+<h3 id="_5">功能（為什麼它存在？音樂上造成什麼效果？）<a class="headerlink" href="#_5" title="連結到此段落">&para;</a></h3>
+<p>你可以把一段音樂想成一句話：</p>
+<ul>
+<li><strong>主功能（T）</strong>：句子的「落地」與「停頓」。沒有它，聽者會找不到家。</li>
+<li><strong>下屬功能（S）</strong>：句子的「出發」與「鋪墊」。它把你從家帶出去，讓後面回家才有重量。</li>
+<li><strong>屬功能（D）</strong>：句子的「期待」與「逼近」。它像把門口磁力放大，讓回家變得必然。</li>
+</ul>
+<p>功能的好處是：你能用它在任何風格做決策。</p>
+<ul>
+<li>想要更安心：延長 T、減少 D。</li>
+<li>想要更期待：延長 D、或用副屬讓 D 更尖。</li>
+<li>想要換色彩但不換調：用借用（iv、♭VI、♭VII）讓光線瞬間轉暗或轉復古。</li>
+</ul>
+<h3 id="_6">聽覺效果（把抽象變成耳朵的地圖）<a class="headerlink" href="#_6" title="連結到此段落">&para;</a></h3>
+<p>以 C 大調為例：</p>
+<ul>
+<li>I（C）：像「站穩、回家」。</li>
+<li>IV/ii（F/Dm）：像「走出去、開始推」。</li>
+<li>V/V7（G/G7）：像「門口吸力、必須解決」。</li>
+</ul>
+<p>這套感覺在古典、爵士、流行都存在；差異通常不在「有沒有引力」，而在「表面語法」如何呈現。</p>
+<h2 id="_7">古典／爵士／流行的對照說明<a class="headerlink" href="#_7" title="連結到此段落">&para;</a></h2>
+<h3 id="common-practice-period">古典（Common Practice Period）<a class="headerlink" href="#common-practice-period" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>核心：<strong>功能＋聲部導向</strong>。</li>
+<li>不協和通常需要解決（掛留、倚音等有相對規範）。</li>
+<li>終止是句法核心：作品常以終止切分樂句與曲式。</li>
+</ul>
+<h3 id="_8">爵士<a class="headerlink" href="#_8" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>核心：<strong>七和弦起步＋延伸音色彩＋（常見）循環推進</strong>。</li>
+<li>不協和可作為色彩長時間存在：重要的是配置與語句，而非一律解決。</li>
+<li>ii–V–I 與五度圈是常見語法；臨時轉調與替代很常見。</li>
+</ul>
+<h3 id="_9">流行／現代<a class="headerlink" href="#_9" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>核心：<strong>循環（loop）＋旋律可唱性＋聲響層次</strong>。</li>
+<li>功能感可能被循環稀釋：不是每次都要 V→I 才成立。</li>
+<li>風格差異常由節奏、音色、配器與段落能量決定（和聲材料反而常更簡）。</li>
+</ul>
+<blockquote>
+<p>如果要用一句話概括三者：
+古典重「句法」、爵士重「色彩」、流行重「段落能量」。</p>
+</blockquote>
+<h2 id="_10">實際編曲／作曲應用<a class="headerlink" href="#_10" title="連結到此段落">&para;</a></h2>
+<h3 id="_11">鋼琴<a class="headerlink" href="#_11" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>三層思考（建議每次練習都問自己三件事）：
+  1. 低音線要帶你去哪裡？（根音走向）
+  2. 內聲怎麼移動？（3、7 的半音／順階連接）
+  3. 旋律落點是否清楚？（強拍落和弦音、句尾落點）</li>
+</ul>
+<h3 id="band">樂團／Band<a class="headerlink" href="#band" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>最常見、也最有效的分工：</li>
+<li>Bass：根音／低音線（功能方向）</li>
+<li>Guitar/Keys：和弦質地（voicing＋節奏）</li>
+<li>Vocal/Lead：張力落點（旋律）</li>
+<li>若整團聽起來「怪」：先檢查低音，再檢查內聲（尤其導音與七音）。</li>
+</ul>
+<h3 id="daw">DAW 製作思維<a class="headerlink" href="#daw" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>先用「乾淨音色」寫對和聲，再用「時尚音色」放大它。</li>
+<li>乾淨音色：鋼琴、電鋼琴、簡單 pad</li>
+<li>放大手段：layer、reverb、automation、密度控制</li>
+<li>一個實用檢查：</li>
+<li>把所有音色換回鋼琴，如果和聲就變難聽，通常是和聲/配置有問題；若仍好聽，才是扎實。</li>
+</ul>
+<h2 id="_12">譜例（以文字描述即可）<a class="headerlink" href="#_12" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>最基本句法（C 大調）：</li>
+<li>| C | F | G7 | C |</li>
+<li>功能：T → S → D → T</li>
+<li>聽感：出發 → 逼近 → 回家</li>
+</ul>
+<h2 id="_13">常見錯誤與迷思<a class="headerlink" href="#_13" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>迷思 1：和聲就是背和弦公式</strong></li>
+<li>公式只是入口。真正讓你「會寫」的是：低音線、內聲解決、段落張力設計。</li>
+<li><strong>迷思 2：爵士＝加很多音</strong></li>
+<li>爵士更像「挑選」：哪些音在這個瞬間最能代表功能與色彩。</li>
+<li><strong>迷思 3：流行很簡單所以不用學</strong></li>
+<li>流行的難在「簡單但要有效」：段落能量與聲響層次高度依賴和聲決策。</li>
+</ul>
+<h2 id="3">習作（由易到難，至少 3 題）<a class="headerlink" href="#3" title="連結到此段落">&para;</a></h2>
+<ol>
+<li><strong>功能聽感建立</strong>：在鋼琴上彈 | F | G7 | C |（IV–V7–I），每次彈完用一句話描述你聽到的「期待→落地」。</li>
+<li><strong>同一骨架三種語言</strong>：把 | C | F | G | C | 分別做成三種版本：
+   - 古典：每兩小節一個小終止（加 V7）
+   - 爵士：改成 | Dm7 | G7 | Cmaj7 | Cmaj7 |
+   - 流行：改成節奏化伴奏（例如 8 分分解）</li>
+<li><strong>段落能量設計</strong>：用 I–V–vi–IV 做 8 小節：
+   - 前 4 小節做主歌（薄、少層）
+   - 後 4 小節做副歌（加高八度與 layer）
+   寫下你用了哪些「和聲/配置/音色」手段做出能量差。</li>
+</ol>
+<h2 id="_14">聆聽與分析建議<a class="headerlink" href="#_14" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>句尾終止：每 4 或 8 小節怎麼結束？</li>
+<li>低音走向：低音比和弦名字更能揭露功能。</li>
+<li><strong>注意什麼</strong>：</li>
+<li>導音→主音（7→1）是否明顯？</li>
+<li>即使不換和弦，是否靠掛留／節奏／音色推進？</li>
+</ul>
+<hr>
+<h2 id="1">第1章　初階：核心概念與基本和弦結構<a class="headerlink" href="#1" title="連結到此段落">&para;</a></h2>
+<h2 id="learning-objectives_1">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_1" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>能在任意調上迅速建立：音階級數、三和弦、基本七和弦（至少 V7）。</li>
+<li>了解「轉位」的真正用途：讓低音線與各聲部更流暢。</li>
+<li>能用功能語言（T/S/D）描述和聲角色，而不是只背和弦名稱。</li>
+<li>能辨認並寫出四種常見終止：正格、變格、半終止、偽終止。</li>
+</ul>
+<h2 id="_15">核心理論說明<a class="headerlink" href="#_15" title="連結到此段落">&para;</a></h2>
+<h3 id="_16">定義<a class="headerlink" href="#_16" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>音級（Scale degrees）</strong>：在某調內的第幾級（Ⅰ～Ⅶ）。</li>
+<li><strong>三和弦（Triad）</strong>：根音＋三音＋五音（以三度堆疊）。</li>
+<li><strong>七和弦（Seventh chord）</strong>：三和弦再加七音。</li>
+<li><strong>轉位（Inversion）</strong>：低音不是根音。</li>
+<li>第一轉位：三音在低音（I⁶）</li>
+<li>第二轉位：五音在低音（I⁶⁴）</li>
+<li><strong>屬七和弦（V7）</strong>：屬和弦加七音；在大調最常見且方向最強。</li>
+</ul>
+<h3 id="_17">功能（為什麼存在？）<a class="headerlink" href="#_17" title="連結到此段落">&para;</a></h3>
+<h4 id="1_1">1) 為什麼要用音級思考<a class="headerlink" href="#1_1" title="連結到此段落">&para;</a></h4>
+<ul>
+<li>因為它能「一鍵移調」：</li>
+<li>你只要知道 I–V–vi–IV 是什麼角色，換到任何調都成立。</li>
+<li>因為它能直接連到功能（T/S/D）：</li>
+<li>I 是主，V 是屬，IV/ii 是下屬（最常見情況）。</li>
+</ul>
+<h4 id="2">2) 為什麼要用轉位<a class="headerlink" href="#2" title="連結到此段落">&para;</a></h4>
+<ul>
+<li>轉位不是裝飾，而是「連接工具」：</li>
+<li><strong>讓低音線更像旋律</strong>（順階或小跳）。</li>
+<li><strong>減少聲部跳躍</strong>，保留共同音。</li>
+<li>你可以把它想成：</li>
+<li>根音位置像「站在原地說話」</li>
+<li>轉位像「邊走邊說話」——句子更流暢。</li>
+</ul>
+<h4 id="3-v7">3) 為什麼 V7 這麼重要<a class="headerlink" href="#3-v7" title="連結到此段落">&para;</a></h4>
+<ul>
+<li>V7 同時包含兩個最強的趨勢音：</li>
+<li>導音（7→1）</li>
+<li>七音下行解決（4→3）</li>
+<li>這讓它成為「最像句號」的工具。</li>
+</ul>
+<h3 id="_18">聽覺效果（你要能用耳朵辨認）<a class="headerlink" href="#_18" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>大三和弦</strong>：明亮、穩。</li>
+<li><strong>小三和弦</strong>：陰影、內縮。</li>
+<li><strong>減三和弦</strong>：不安、懸疑（不容易穩住）。</li>
+<li><strong>V7</strong>：期待強、很想回 I。</li>
+</ul>
+<blockquote>
+<p>小技巧：當你不確定和弦「是大是小」，先去找旋律或內聲有沒有「三度」：
+大三度會明亮，小三度會偏暗。</p>
+</blockquote>
+<h2 id="_19">古典／爵士／流行的對照說明<a class="headerlink" href="#_19" title="連結到此段落">&para;</a></h2>
+<h3 id="_20">古典<a class="headerlink" href="#_20" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>重點不是「和弦多不多」，而是聲部怎麼走：</li>
+<li>導音多半上行到主音。</li>
+<li>七音多半下行一步解決。</li>
+<li>避免平行五度／八度（因為會讓兩個聲部失去獨立性）。</li>
+</ul>
+<h3 id="_21">爵士<a class="headerlink" href="#_21" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>七和弦是起點：</li>
+<li>I 常寫 Imaj7（主七）。</li>
+<li>3、7 是功能核心（guide tones）。</li>
+<li>很多 voicing 會省略五度，甚至省略根音（由貝斯負責）。</li>
+</ul>
+<h3 id="_22">流行<a class="headerlink" href="#_22" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>三和弦與循環常見：I–V–vi–IV。</li>
+<li>V7 多是「選配」：想更有句尾推力就加，不想太古典就不用。</li>
+<li>有些音色（失真吉他、厚 pad）會弱化三度，這時你要靠低音與旋律來維持調性感。</li>
+</ul>
+<h2 id="_23">實際編曲／作曲應用<a class="headerlink" href="#_23" title="連結到此段落">&para;</a></h2>
+<h3 id="_24">鋼琴<a class="headerlink" href="#_24" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>初階最有效練法</strong>：
+  1. 左手：根音（每小節 1 或 2 次）
+  2. 右手：三和弦（先根音位置）
+  3. 右手：改成最小移動（用轉位把手留在小音域）</li>
+<li><strong>V7 解決練習</strong>：</li>
+<li>彈 G7 → C，右手刻意聽 B→C、F→E 的解決。</li>
+</ul>
+<h3 id="band_1">樂團／Band<a class="headerlink" href="#band_1" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Bass：先穩定根音。</li>
+<li>Guitar：可用三和弦或 power chord；Keys 補三度/七度讓和弦性格清楚。</li>
+<li>若主唱旋律已唱出三度（例如唱 E），伴奏可以省略三度或改配置，避免太厚。</li>
+</ul>
+<h3 id="daw_1">DAW 製作思維<a class="headerlink" href="#daw_1" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>編 MIDI 和弦時：</li>
+<li>先寫低音線（根音走向）。</li>
+<li>再加 3、7（決定性音）。</li>
+<li>最後才加 5 或延伸音。</li>
+<li>低音區避免同時堆 pad 的根音與鋼琴左手根音（容易糊）。</li>
+</ul>
+<h2 id="_25">譜例（以文字描述即可）<a class="headerlink" href="#_25" title="連結到此段落">&para;</a></h2>
+<h3 id="1-c">1) C 大調調內三和弦<a class="headerlink" href="#1-c" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>I：C–E–G（C）</li>
+<li>ii：D–F–A（Dm）</li>
+<li>iii：E–G–B（Em）</li>
+<li>IV：F–A–C（F）</li>
+<li>V：G–B–D（G）</li>
+<li>vi：A–C–E（Am）</li>
+<li>vii°：B–D–F（B°）</li>
+</ul>
+<h3 id="2-v7">2) V7 的趨勢音解決<a class="headerlink" href="#2-v7" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>G7（G–B–D–F）→ C（C–E–G）</li>
+<li>B（導音）→ C（上行）</li>
+<li>F（七音）→ E（下行）</li>
+</ul>
+<h3 id="3-c">3) 四種終止（C 大調）<a class="headerlink" href="#3-c" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>正格終止：G7 → C</li>
+<li>變格終止：F → C</li>
+<li>半終止：… → G（句尾停在 V）</li>
+<li>偽終止：G7 → Am（V7→vi）</li>
+</ul>
+<h2 id="_26">常見錯誤與迷思<a class="headerlink" href="#_26" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>錯誤 1：只背和弦種類，不會在調上建立</strong></li>
+<li>解法：每週固定練 3 個調，把 I～vii° 全寫一遍。</li>
+<li><strong>錯誤 2：轉位亂用，低音線更跳</strong></li>
+<li>原則：轉位要服務低音線；先決定低音要怎麼走，再選轉位。</li>
+<li><strong>錯誤 3：V7 解決不乾淨</strong></li>
+<li>最常見是七音不上不下。請刻意聽「七音下行」與「導音上行」。</li>
+</ul>
+<h2 id="3_1">習作（由易到難，至少 3 題）<a class="headerlink" href="#3_1" title="連結到此段落">&para;</a></h2>
+<ol>
+<li><strong>調內和弦建立</strong>：任選 3 個調（含 1 個降號調），寫出 I～vii° 三和弦（音名＋和弦性質）。</li>
+<li><strong>終止聽感比較</strong>：在同一調寫 4 種終止各 2 小節，彈出來並用一句話描述差異（像句號、像逗號、像轉彎…）。</li>
+<li><strong>四部和聲入門</strong>：把 | I | IV | V7 | I | 寫成四部：
+   - 導音上行、七音下行
+   - 共同音盡量保留
+   - 避免明顯平行五八度</li>
+</ol>
+<h2 id="_27">聆聽與分析建議<a class="headerlink" href="#_27" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>導音（7→1）在哪個聲部出現（旋律？內聲？低音？）。</li>
+<li>V7 的七音解決是否明確（4→3）。</li>
+<li><strong>注意什麼</strong>：</li>
+<li>流行歌曲若不用 V7，仍可聽低音是否形成「回家」或「續航」。</li>
+</ul>
+<hr>
+<h2 id="2_1">第2章　初階：基本和聲進行與各風格入門語法<a class="headerlink" href="#2_1" title="連結到此段落">&para;</a></h2>
+<h2 id="learning-objectives_2">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_2" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>用功能（T/S/D）理解最常見的推進：S→D→T。</li>
+<li>掌握三種入門骨架並能移調：</li>
+<li>古典：I–IV–V–I（終止句法）</li>
+<li>爵士：ii–V–I</li>
+<li>流行：I–V–vi–IV（循環）</li>
+<li>理解「和聲節奏（harmonic rhythm）」：和弦多久換一次，直接影響段落能量。</li>
+</ul>
+<h2 id="_28">核心理論說明<a class="headerlink" href="#_28" title="連結到此段落">&para;</a></h2>
+<h3 id="_29">定義<a class="headerlink" href="#_29" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>和聲進行（Progression）</strong>：和弦隨時間排列。</li>
+<li><strong>句法（Syntax）</strong>：和弦排列形成「像一句話」的感覺。</li>
+<li><strong>和聲節奏（Harmonic rhythm）</strong>：和弦變換的頻率（每拍換／每小節換／兩小節換）。</li>
+</ul>
+<h3 id="_30">功能（為什麼這些套路到處都是？）<a class="headerlink" href="#_30" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>你在多數調性音樂聽到的推進，都可以被理解為：</li>
+<li><strong>主（T）</strong>提供安定</li>
+<li><strong>下屬（S）</strong>把你帶離安定</li>
+<li><strong>屬（D）</strong>把你推回安定</li>
+<li>這是「重力系統」的自然結果：</li>
+<li>不是作曲家硬背出來的套路，而是耳朵很容易接受的因果鏈。</li>
+</ul>
+<h3 id="_31">聽覺效果<a class="headerlink" href="#_31" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>I–IV–V–I</strong>：出發 → 緊張 → 回家（句號感強）。</li>
+<li><strong>ii–V–I</strong>：先預備（ii）再逼近（V）再落地（I）；推進感比直接 V–I 更像「先吸一口氣」。</li>
+<li><strong>I–V–vi–IV</strong>：循環感強，像一直往前走；很多時候靠節奏/音色做段落，而不是靠終止。</li>
+</ul>
+<h2 id="_32">古典／爵士／流行的對照說明<a class="headerlink" href="#_32" title="連結到此段落">&para;</a></h2>
+<h3 id="_33">古典入門語法<a class="headerlink" href="#_33" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>I/IV/V 是骨架。</li>
+<li>終止是句法核心：</li>
+<li>正格終止（V–I）像句號</li>
+<li>半終止（…–V）像逗號</li>
+<li>偽終止（V–vi）像以為句號卻轉彎</li>
+<li>古典常用「較慢的和聲節奏」：一個和弦可能撐半小節到兩小節，推進靠聲部線條與非和弦音。</li>
+</ul>
+<h3 id="_34">爵士入門語法<a class="headerlink" href="#_34" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>ii–V–I 是母語。</li>
+<li>和聲節奏常更快：每兩拍或每小節換一次很常見。</li>
+<li>即興者會「以和弦地形思考」：每個和弦都有對應的落點音（尤其 3、7）。</li>
+</ul>
+<h3 id="_35">流行入門語法<a class="headerlink" href="#_35" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>循環是骨架：I–V–vi–IV、I–vi–IV–V 等。</li>
+<li>句尾不一定用 V–I；有時靠「段落收束」：鼓收、和聲人聲進、旋律落點、甚至直接停音。</li>
+<li>V→IV 常見：把原本要落地的期待，轉成情緒轉折。</li>
+</ul>
+<h2 id="_36">實際編曲／作曲應用<a class="headerlink" href="#_36" title="連結到此段落">&para;</a></h2>
+<h3 id="_37">鋼琴<a class="headerlink" href="#_37" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>同一進行三種寫法（訓練你「不是只背和弦」）：
+  1. <strong>古典感</strong>：和弦撐長（每小節一和弦），內聲用經過音推進。
+  2. <strong>爵士感</strong>：右手只彈 3/7/9，左手根音；用切分 comping。
+  3. <strong>流行感</strong>：固定分解節奏（8 分或 16 分），靠節奏推進。</li>
+</ul>
+<h3 id="band_2">樂團／Band<a class="headerlink" href="#band_2" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>流行：先確立 groove（鼓＋貝斯），再決定和弦是否需要加 7 或 sus。</li>
+<li>爵士：貝斯走根音或 walking；鍵盤/吉他用 comping 讓 ii–V 的推進被聽見。</li>
+<li>古典感（在 band 裡也能做）：用長音 pad/strings 撐和弦，內聲用小動作（上行/下行）製造推進。</li>
+</ul>
+<h3 id="daw_2">DAW 製作思維<a class="headerlink" href="#daw_2" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>段落能量最常見的控制杆：</li>
+<li>和聲節奏（副歌通常更快或更密）</li>
+<li>配器密度（layer）</li>
+<li>高八度與高頻（亮度）</li>
+</ul>
+<h2 id="_38">譜例（以文字描述即可）<a class="headerlink" href="#_38" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>C 大調：</li>
+<li>古典骨架：| C | F | G7 | C |</li>
+<li>爵士骨架：| Dm7 | G7 | Cmaj7 | Cmaj7 |</li>
+<li>流行骨架：| C | G | Am | F |（循環）</li>
+<li>偽終止：| G7 | Am |</li>
+<li>半終止：| F | G |</li>
+</ul>
+<h2 id="_39">常見錯誤與迷思<a class="headerlink" href="#_39" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>錯誤 1：只背循環，不做功能感</strong></li>
+<li>你要能說出：在循環裡，哪個和弦像「離開」(S)、哪個像「期待」(D)。</li>
+<li><strong>錯誤 2：爵士 ii–V–I 只靠手型</strong></li>
+<li>爵士味常在內聲：讓 3、7 形成半音滑動（例如 Dm7 的 F→G7 的 F，或 Cmaj7 的 E）。</li>
+<li><strong>錯誤 3：古典寫作每拍換和弦</strong></li>
+<li>會變成練習而不是音樂。古典推進很多靠非和弦音與聲部流動。</li>
+</ul>
+<h2 id="3_2">習作（至少 3 題）<a class="headerlink" href="#3_2" title="連結到此段落">&para;</a></h2>
+<ol>
+<li><strong>移調練習</strong>：把 I–IV–V7–I 轉調到 6 個不同調（至少含 2 個降號調）。</li>
+<li><strong>循環→落地</strong>：做 8 小節：前 4 小節用 I–V–vi–IV 循環，後 4 小節改成 ii–V–I（爵士落地）。聽「從循環變句尾」。</li>
+<li><strong>句法設計</strong>：寫 8 小節古典風格，限制只能用 I、IV、V、vi：
+   - 句中必須包含一次偽終止（V→vi）
+   - 句尾必須回正格終止（V–I）</li>
+</ol>
+<h2 id="_40">聆聽與分析建議<a class="headerlink" href="#_40" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>每 4/8 小節句尾如何處理：和聲落在 I 還是停在 V？</li>
+<li>若沒有落地，段落靠什麼成立（節奏、旋律落點、編曲收束）？</li>
+<li><strong>注意什麼</strong>：</li>
+<li>同一進行在不同風格的差異，常不在和弦本身，而在和聲節奏與配置。</li>
+</ul>
+<hr>
+<h2 id="3_3">第3章　初階：編曲與和聲配置技巧（四部和聲／伴奏／音域）<a class="headerlink" href="#3_3" title="連結到此段落">&para;</a></h2>
+<h2 id="learning-objectives_3">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_3" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>理解「配置（voicing）」如何直接決定聲響：同一個和弦，配置不同就像不同作品。</li>
+<li>能用四部和聲（SATB 思維）把 I/IV/V/V7 連接寫順。</li>
+<li>能在鋼琴／吉他／Band 做出可用的伴奏配置，並避免常見音域衝突。</li>
+</ul>
+<h2 id="_41">核心理論說明<a class="headerlink" href="#_41" title="連結到此段落">&para;</a></h2>
+<h3 id="_42">定義<a class="headerlink" href="#_42" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>配置（Voicing）</strong>：同一和弦中，選哪些音、放在哪些八度、由哪些聲部/樂器演奏。</li>
+<li><strong>封閉（Close）</strong>：聲部集中，聲音密且直接。</li>
+<li><strong>開放（Open）</strong>：聲部拉開，聲音透明且寬。</li>
+<li><strong>四部和聲（SATB）</strong>：Soprano/Alto/Tenor/Bass 的寫作框架，是訓練聲部導向最有效的方法之一。</li>
+</ul>
+<h3 id="_43">功能（為什麼學四部和聲對你有用？）<a class="headerlink" href="#_43" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>因為它把「和聲」從垂直變成水平：你會開始聽見每個聲部如何走。</li>
+<li>因為它是最直接的「編曲基本功」：</li>
+<li>合唱是四部</li>
+<li>弦樂分部是多部</li>
+<li>Big Band 排列也是多部</li>
+<li>你在 DAW 疊 layer，本質上也在做「多聲部配置」</li>
+</ul>
+<h3 id="_44">聽覺效果<a class="headerlink" href="#_44" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>封閉</strong>：像同一團聲音靠近你，能量集中。</li>
+<li><strong>開放</strong>：像空間被拉大，聲音更立體。</li>
+<li><strong>低音區的密度</strong>會放大混濁：越低越要節制。</li>
+</ul>
+<h2 id="_45">古典／爵士／流行的對照說明<a class="headerlink" href="#_45" title="連結到此段落">&para;</a></h2>
+<h3 id="_46">古典<a class="headerlink" href="#_46" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>四部和聲的規範在古典最嚴格，但目的不是「守規則」，而是讓聲部獨立、流暢、可唱。</li>
+<li>常見基本原則（初階就夠用）：</li>
+<li>導音上行到主音</li>
+<li>七音下行一步解決</li>
+<li>避免平行五度與八度</li>
+<li>盡量保留共同音、採最小移動</li>
+</ul>
+<h3 id="_47">爵士<a class="headerlink" href="#_47" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>以 voicing 思維為主：</li>
+<li>3、7 是骨架</li>
+<li>9/13 是色彩</li>
+<li>根音常由貝斯處理</li>
+<li>規則更自由，但「聲部順」依然是高級感來源。</li>
+</ul>
+<h3 id="_48">流行<a class="headerlink" href="#_48" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>配置常以「層」呈現：</li>
+<li>Pad 撐長音</li>
+<li>吉他做節奏</li>
+<li>鍵盤補色彩</li>
+<li>不需要古典式嚴格避免平行，但需要「頻段乾淨」與「旋律優先」。</li>
+</ul>
+<h2 id="_49">實際編曲／作曲應用<a class="headerlink" href="#_49" title="連結到此段落">&para;</a></h2>
+<h3 id="_50">鋼琴<a class="headerlink" href="#_50" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>先練 <strong>最小移動</strong>：讓右手在小音域內用轉位連接。</li>
+<li>再練 <strong>功能線條</strong>：右手只彈 3 與 7（或遇三和弦先彈 3），你會更清楚聽到推進。</li>
+</ul>
+<h3 id="band_3">樂團／Band<a class="headerlink" href="#band_3" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>初階最穩的分工：</li>
+<li>Bass：根音/低音線（不要跟鍵盤左手打架）</li>
+<li>Guitar：三和弦骨架（轉位減少跳動）</li>
+<li>Keys：補 3/7 或 add9/sus 的色彩</li>
+</ul>
+<h3 id="daw_3">DAW 製作思維<a class="headerlink" href="#daw_3" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>低頻只留一個主角：Bass（加 Kick）。</li>
+<li>同一和弦若要疊 2 個音色：</li>
+<li>讓其中一個高八度或改開放配置</li>
+<li>不要兩個音色都堆同一個根音在低音</li>
+</ul>
+<h2 id="_51">譜例（以文字描述即可）<a class="headerlink" href="#_51" title="連結到此段落">&para;</a></h2>
+<h3 id="1_2">1) 四部和聲寫作步驟（最實用的流程）<a class="headerlink" href="#1_2" title="連結到此段落">&para;</a></h3>
+<p>以 | I | IV | V7 | I | 為例：</p>
+<ol>
+<li>先寫低音（Bass）：決定根音走向（例如 C–F–G–C）。</li>
+<li>再放外聲（Soprano）：選一條可唱的上聲部（例如 E–F–G–E）。</li>
+<li>補內聲（Alto/Tenor）：
+   - 優先保留共同音
+   - 其次讓聲部順階或小跳</li>
+<li>檢查：
+   - 導音（B）是否上行到 C
+   - 七音（F）是否下行到 E
+   - 是否有平行五度/八度</li>
+</ol>
+<h3 id="2-v7i">2) 一個簡單且常用的 V7→I 內聲連接<a class="headerlink" href="#2-v7i" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>在 G7：B（導音）與 F（七音）</li>
+<li>解決到 C：B→C、F→E</li>
+</ul>
+<h3 id="3_4">3) 同一和弦的兩種配置（聽感差很大）<a class="headerlink" href="#3_4" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>C（封閉）：C–E–G（集中）</li>
+<li>C（開放）：C–G–E（把三度放高一點，更透明）</li>
+</ul>
+<h2 id="_52">常見錯誤與迷思<a class="headerlink" href="#_52" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>錯誤 1：和弦越滿越好</strong></li>
+<li>低音區塞滿會糊；請把色彩留給中高音。</li>
+<li><strong>錯誤 2：只顧垂直，不顧水平</strong></li>
+<li>聲部像在亂跳，聽起來會不高級。把每個聲部當旋律寫。</li>
+<li><strong>迷思：避免平行五八度只是古典教條</strong></li>
+<li>本質是「聲部獨立性」。即使在流行或爵士，過多的同向平行也會讓聲部失去線條感。</li>
+</ul>
+<h2 id="3_5">習作（至少 3 題）<a class="headerlink" href="#3_5" title="連結到此段落">&para;</a></h2>
+<ol>
+<li>把 I–IV–V7–I 寫成 4 部（任一調）：
+   - 必須處理導音上行與七音下行
+   - 優先最小移動</li>
+<li>用吉他或鍵盤寫 8 小節 I–V–vi–IV：
+   - 要求至少用 2 種不同轉位（讓和弦連接更順）
+   - 每 2 小節換一種節奏型</li>
+<li>DAW 四軌編曲：Bass / Pad / Piano / Melody
+   - 同一 4 和弦循環做主歌→副歌能量差
+   - 主歌：稀疏、低密度；副歌：加高八度、加 layer</li>
+</ol>
+<h2 id="_53">聆聽與分析建議<a class="headerlink" href="#_53" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>內聲的半音解決（導音、七音）。</li>
+<li>低頻是否混濁（Bass 與左手/Pad 是否打架）。</li>
+<li><strong>注意什麼</strong>：</li>
+<li>你覺得「很順」的作品，通常不是和弦更複雜，而是聲部更乾淨。</li>
+</ul>
+<hr>
+<h2 id="4">第4章　初階：作曲與即興應用（旋律寫作／和聲化／入門即興）<a class="headerlink" href="#4" title="連結到此段落">&para;</a></h2>
+<h2 id="learning-objectives_4">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_4" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>能在簡單進行上寫出可唱旋律：懂得用強拍落和弦音、弱拍用經過音推進。</li>
+<li>能為單旋律配和聲（先用 I/IV/V/vi），並能彈回驗證是否成立。</li>
+<li>入門即興：能在循環上用音階與琶音做出「有落點」的短句，而不是只跑音階。</li>
+</ul>
+<h2 id="_54">核心理論說明<a class="headerlink" href="#_54" title="連結到此段落">&para;</a></h2>
+<h3 id="_55">定義<a class="headerlink" href="#_55" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>和弦音（Chord tones）</strong>：1、3、5（與 7）等構成音。</li>
+<li><strong>非和弦音（Non-chord tones）</strong>：</li>
+<li>經過音（passing tone）：把兩個和弦音用順階連起來</li>
+<li>倚音（appoggiatura）：強拍落在非和弦音，形成尖張力，之後解決</li>
+<li>掛留（suspension）：上一和弦的音延留到下一和弦造成不協和，再解決</li>
+<li>先現音（anticipation）：先提前出現下一和弦音</li>
+<li><strong>落點（Target）</strong>：一句話你要落在什麼音（通常是 1 或 3，或句中落在 7/9 製造期待）。</li>
+</ul>
+<h3 id="_56">功能（旋律怎麼跟和聲合作？）<a class="headerlink" href="#_56" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>和聲提供「地形」，旋律提供「走法」。</li>
+<li>最穩的原則：</li>
+<li><strong>強拍落在和弦音</strong>（尤其 1 或 3）→ 旋律站得住。</li>
+<li><strong>弱拍可以用非和弦音</strong> → 旋律會流動、有方向。</li>
+<li>旋律在很多時候其實在做「功能表達」：</li>
+<li>你在 V 上唱出導音（7），聽者就會更期待回 I。</li>
+<li>你在 I 上停在 9 或 7，聽者就會覺得還沒完全落地（適合句中推進）。</li>
+</ul>
+<h3 id="_57">聽覺效果<a class="headerlink" href="#_57" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>強拍落 3 音：最能讓聽者立刻感到「大/小」性格。</li>
+<li>句尾落主音（1）：最穩、最像句號。</li>
+<li>句尾落 3 或 5：仍穩，但更像「留餘韻」。</li>
+<li>句尾落 2/4/7：通常像「還沒說完」，需要下一句。</li>
+</ul>
+<h2 id="_58">古典／爵士／流行的對照說明<a class="headerlink" href="#_58" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典：旋律與聲部導向緊密；很多「即興」以加花、裝飾、變奏形式存在。</li>
+<li>爵士：旋律（head）後即興；即興要跟著 changes 地形走，落點多靠 3、7。</li>
+<li>流行：可唱性與 hook 優先；即興多以 fill、riff、裝飾音、轉音存在。</li>
+</ul>
+<h2 id="_59">實際編曲／作曲應用<a class="headerlink" href="#_59" title="連結到此段落">&para;</a></h2>
+<h3 id="_60">鋼琴<a class="headerlink" href="#_60" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>
+<p>寫旋律的三步流程（最實用）：
+  1. 先寫和聲（4 或 8 小節循環）
+  2. 先寫每小節的「強拍落點」（先只寫一個音）
+  3. 用經過音/先現音把落點連成線條</p>
+</li>
+<li>
+<p>入門即興流程：</p>
+</li>
+<li>第一輪：只用五聲音階（避免太多不協和）</li>
+<li>第二輪：加入導音與半音裝飾（讓語句更像說話）</li>
+</ul>
+<h3 id="band_4">樂團／Band<a class="headerlink" href="#band_4" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>先寫主唱旋律，再決定和聲人聲：</li>
+<li>初階最常用：三度和聲（上/下三度）</li>
+<li>進階：用對位式和聲（讓和聲聲部也像旋律）</li>
+</ul>
+<h3 id="daw_4">DAW 製作思維<a class="headerlink" href="#daw_4" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>旋律先用單音色（鋼琴或單音 lead）完成。</li>
+<li>再決定旋律「落點」是否需要被放大：</li>
+<li>用 automation 在落點加亮度/加 layer</li>
+<li>或用短 delay/reverb 讓句尾更有空間</li>
+</ul>
+<h2 id="_61">譜例（以文字描述即可）<a class="headerlink" href="#_61" title="連結到此段落">&para;</a></h2>
+<h3 id="1-ivviivcgamf">1) 在 I–V–vi–IV（C–G–Am–F）上的落點示例<a class="headerlink" href="#1-ivviivcgamf" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>每小節第 1 拍落點（示例一）：</li>
+<li>C：E（3）</li>
+<li>G：B（3）</li>
+<li>Am：C（3）</li>
+<li>F：A（3）</li>
+</ul>
+<p>把落點串成旋律時，你可以：
+- 在兩個落點之間用順階經過音連起來
+- 在某些落點前加先現音（提前唱下一和弦的和弦音）</p>
+<h3 id="2-v7_1">2) 在 V7 上做掛留（最常見也最好用）<a class="headerlink" href="#2-v7_1" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>G7 上旋律先唱 C（4）→ 再解決到 B（3）</li>
+<li>你會聽到：和弦沒換，但情緒往前推了一步。</li>
+</ul>
+<h2 id="_62">常見錯誤與迷思<a class="headerlink" href="#_62" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>錯誤 1：旋律每拍都落和弦音</strong> → 會像背單字，缺乏句子流動。</li>
+<li><strong>錯誤 2：旋律完全不落和弦音</strong> → 會漂浮、像唱錯和弦。</li>
+<li><strong>錯誤 3：即興只跑音階</strong> → 沒有和聲感。入門先練「琶音落點」。</li>
+</ul>
+<h2 id="3_6">習作（至少 3 題）<a class="headerlink" href="#3_6" title="連結到此段落">&para;</a></h2>
+<ol>
+<li>在 I–V–vi–IV 上寫 8 小節旋律：規則是每小節第 1 拍必須落在當下和弦的 1/3/5。</li>
+<li>取一首童謠（8 小節）：
+   - 版本 A：只用 I 與 V 配和聲
+   - 版本 B：加入 IV 與 vi
+   彈回去比較「句法與情緒」差異。</li>
+<li>ii–V–I 即興（Dm7–G7–Cmaj7）：
+   - 第一輪：每拍只用 3 或 7（guide tones）
+   - 第二輪：加入 9/13 作色彩
+   錄音回聽，標出你最像「落地」的那一拍。</li>
+</ol>
+<h2 id="_63">聆聽與分析建議<a class="headerlink" href="#_63" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>旋律句尾落在哪個音？它是和弦音還是張力音？</li>
+<li>旋律是否在屬功能上停留導音/張力音，讓你想等解決？</li>
+<li><strong>注意什麼</strong>：</li>
+<li>好旋律常靠節奏位置說話：同一個音高放在強拍/弱拍，情緒完全不同。</li>
+</ul>
+<hr>
+<h2 id="5">第5章　初階：聆聽與分析範例（如何聽出和聲）<a class="headerlink" href="#5" title="連結到此段落">&para;</a></h2>
+<h2 id="learning-objectives_5">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_5" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>建立一個可重複的初階分析流程：低音 → 和弦品質 → 功能 → 終止。</li>
+<li>能用耳朵辨認 I/IV/V/vi 的常見循環。</li>
+<li>能把聽到的結果「彈回去」驗證。</li>
+</ul>
+<h2 id="_64">核心理論說明<a class="headerlink" href="#_64" title="連結到此段落">&para;</a></h2>
+<h3 id="_65">定義<a class="headerlink" href="#_65" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>聽覺分析</strong>：把聽感轉成可驗證的結構（可寫下、可彈回、可比較）。</li>
+</ul>
+<h3 id="_66">功能<a class="headerlink" href="#_66" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>分析不是為了貼標籤，而是為了：</li>
+<li>快速抓骨架（編曲、翻彈）</li>
+<li>看見推進手段（創作）</li>
+</ul>
+<h3 id="_67">聽覺效果<a class="headerlink" href="#_67" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>初階先抓三件事：</li>
+<li>低音走向</li>
+<li>句尾是否落地（終止）</li>
+<li>是否循環（loop）</li>
+</ul>
+<h2 id="_68">古典／爵士／流行的對照說明<a class="headerlink" href="#_68" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典：終止明確，功能走向常清楚。</li>
+<li>爵士：和弦音多，但低音與 3/7 依然提供清晰方向。</li>
+<li>流行：循環性強，段落差更多靠編曲層次。</li>
+</ul>
+<h2 id="_69">實際編曲／作曲應用<a class="headerlink" href="#_69" title="連結到此段落">&para;</a></h2>
+<h3 id="_70">鋼琴<a class="headerlink" href="#_70" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>先彈「根音」：很多段落只要抓對根音，你就已經掌握 70%。</li>
+</ul>
+<h3 id="band_5">樂團／Band<a class="headerlink" href="#band_5" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>排練抓歌：先讓 Bass 抓根音，鼓抓 groove；和弦品質（大/小/7/sus）再由吉他/鍵盤補。</li>
+</ul>
+<h3 id="daw_5">DAW 製作思維<a class="headerlink" href="#daw_5" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>先做 4 小節 loop 的和弦骨架，再決定音色與節奏層，避免反過來被音色牽著走。</li>
+</ul>
+<h2 id="_71">譜例（以文字描述即可）<a class="headerlink" href="#_71" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>分析流程示例（假設你聽到一段）：
+  1. 低音：C | G | A | F
+  2. 推測和弦：C | G | Am | F
+  3. 功能：T | D | T(相對) | S
+  4. 結尾：若下一小節回到 C，通常形成循環落點</li>
+</ul>
+<h2 id="_72">常見錯誤與迷思<a class="headerlink" href="#_72" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>錯誤 1：一開始就想聽出所有延伸音</strong></li>
+<li>初階先抓根音＋大/小；延伸音是下一階段。</li>
+<li><strong>錯誤 2：只看譜不回聽</strong></li>
+<li>你寫下的必須能彈回去驗證；否則只是猜。</li>
+</ul>
+<h2 id="3_7">習作（至少 3 題）<a class="headerlink" href="#3_7" title="連結到此段落">&para;</a></h2>
+<ol>
+<li>選一首和弦很簡單的歌：只寫 8 小節根音（字母），再補成和弦（大/小）。</li>
+<li>用耳朵辨認 I–V–vi–IV：在鋼琴上隨機彈 4 和弦（只用 C/G/Am/F 轉位），自己盲聽寫下順序，再驗證。</li>
+<li>聽一段古典聖詠（或四部合唱）：標出每句的終止類型（正格/半終止/偽終止/變格）。</li>
+</ol>
+<h2 id="_73">聆聽與分析建議<a class="headerlink" href="#_73" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>古典（入門）</strong>：巴赫聖詠（任一首）。</li>
+<li>聽哪裡：句尾 V–I 的落地。</li>
+<li>注意什麼：導音與七音的規範解決。</li>
+<li><strong>爵士（入門）</strong>：&rdquo;Autumn Leaves&rdquo;。</li>
+<li>聽哪裡：ii–V–I 的循環。</li>
+<li>注意什麼：小調到大調的轉換段。</li>
+<li><strong>流行（入門）</strong>：任選 I–V–vi–IV 循環歌曲。</li>
+<li>聽哪裡：循環如何形成「不必終止也能前進」。</li>
+<li>注意什麼：編曲層次（主歌薄、副歌厚）如何建立段落感。</li>
+</ul>
+<hr>
+<h2 id="6">第6章　初階：習作題目與練習方向（把基礎變成能力）<a class="headerlink" href="#6" title="連結到此段落">&para;</a></h2>
+<h2 id="learning-objectives_6">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_6" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>把「懂」變成「會」：寫得出、彈得出、聽得出、移調得出。</li>
+<li>建立可持續的每週練習系統。</li>
+</ul>
+<h2 id="_74">核心理論說明<a class="headerlink" href="#_74" title="連結到此段落">&para;</a></h2>
+<h3 id="_75">定義<a class="headerlink" href="#_75" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>技術性知識</strong>：你能說出名詞。</li>
+<li><strong>聽覺性能力</strong>：你能在音樂裡辨認、並在創作中使用。</li>
+</ul>
+<h3 id="_76">功能<a class="headerlink" href="#_76" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>初階最重要成果：</li>
+<li>你能用 I/IV/V/vi 在任何調上做伴奏。</li>
+<li>你能聽到 V→I 的落地（或聽到它被刻意延後）。</li>
+</ul>
+<h3 id="_77">聽覺效果<a class="headerlink" href="#_77" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>若耳朵沒有建立「張力—釋放」地圖，所有套路都只是死記。</li>
+</ul>
+<h2 id="_78">古典／爵士／流行的對照說明<a class="headerlink" href="#_78" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典：四部和聲是「連接」訓練器。</li>
+<li>爵士：藍調與 ii–V–I 是「推進」訓練器。</li>
+<li>流行：循環與伴奏型是「穩定輸出」訓練器。</li>
+</ul>
+<h2 id="_79">實際編曲／作曲應用<a class="headerlink" href="#_79" title="連結到此段落">&para;</a></h2>
+<h3 id="_80">鋼琴<a class="headerlink" href="#_80" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>每天 10 分鐘：12 調 I–IV–V–I（先慢、再穩）。</li>
+</ul>
+<h3 id="band_6">樂團／Band<a class="headerlink" href="#band_6" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>同一進行做 3 種 groove（直八、shuffle、切分），感受節奏如何改變和聲推進的體感。</li>
+</ul>
+<h3 id="daw_6">DAW 製作思維<a class="headerlink" href="#daw_6" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>建立一個「和弦庫」：</li>
+<li>每個調存一條 I–V–vi–IV MIDI</li>
+<li>方便快速試旋律、試編曲層次</li>
+</ul>
+<h2 id="_81">譜例（以文字描述即可）<a class="headerlink" href="#_81" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>每週模板：</li>
+<li>週一：和弦構成（寫）</li>
+<li>週二：基本進行（彈）</li>
+<li>週三：聽寫（聽）</li>
+<li>週四：四部和聲（寫＋彈）</li>
+<li>週五：即興（彈＋錄）</li>
+</ul>
+<h2 id="_82">常見錯誤與迷思<a class="headerlink" href="#_82" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>練很多首歌但不總結：每週至少寫 8 小節分析與心得。</li>
+<li>只練手不練耳：每次彈和聲最後都要「唱出導音的解決」。</li>
+</ul>
+<h2 id="3_8">習作（至少 3 題）<a class="headerlink" href="#3_8" title="連結到此段落">&para;</a></h2>
+<ol>
+<li>和弦構成：任選 2 個大調、2 個小調，寫出 diatonic 三和弦並標註功能（T/S/D）。</li>
+<li>聖詠配和聲：用 8 小節旋律配四部（先只用 I/IV/V，再加 vi）。</li>
+<li>流行聽寫：找 1 首簡單歌，寫出 16 小節和弦並驗證（彈回去）。</li>
+</ol>
+<h2 id="_83">聆聽與分析建議<a class="headerlink" href="#_83" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：同一段落反覆聽 5 次以上，直到你能哼唱低音走向。</li>
+<li><strong>注意什麼</strong>：不要一次聽很多首；要把一首聽到「能寫、能彈」。</li>
+</ul>
+<hr>
+<h2 id="7">第7章　中階：和聲語彙的擴展與進階技術（七和弦／副屬／借用／轉調／非和弦音）<a class="headerlink" href="#7" title="連結到此段落">&para;</a></h2>
+<h2 id="learning-objectives_7">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_7" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>能系統理解七和弦種類與「為什麼 3/7 是核心」；在鋼琴/編曲中做出乾淨 voicing。</li>
+<li>熟練副屬和弦（Secondary Dominants）的辨識、標記（V/x）與寫作。</li>
+<li>理解借用和弦（Modal Mixture/Interchange）如何改變情緒光線，並能在流行/配樂中實用。</li>
+<li>掌握同系轉調（Closely related modulation）與共同和弦樞紐（pivot chord）。</li>
+<li>能在不換和弦時用非和弦音推進（掛留、倚音、經過音），把「對位思維」接到和聲實務。</li>
+</ul>
+<h2 id="_84">核心理論說明<a class="headerlink" href="#_84" title="連結到此段落">&para;</a></h2>
+<h3 id="_85">定義<a class="headerlink" href="#_85" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>七和弦（7th chord）</strong>：三和弦＋七音。</li>
+<li><strong>Diatonic 七和弦</strong>：調內自然生成的七和弦（大調、小調各有不同）。</li>
+<li><strong>副屬（Secondary Dominant）</strong>：把某個調內和弦暫時當作主角，使用它的屬和弦（V/x）。</li>
+<li><strong>借用（Modal Mixture / Modal Interchange）</strong>：從平行大小調或平行調式借來的和弦（如大調借用 iv、♭VI、♭VII）。</li>
+<li><strong>轉調（Modulation）</strong>：調性中心改變，可能短暫（臨時）或確立（結構性）。</li>
+<li><strong>非和弦音（Non-chord tones）</strong>：不屬於當下和弦構成音的旋律/內聲音。</li>
+</ul>
+<h3 id="_86">功能（為什麼這些東西會讓音樂「更像音樂」？）<a class="headerlink" href="#_86" title="連結到此段落">&para;</a></h3>
+<h4 id="1_3">1) 七和弦：把張力變得更精細<a class="headerlink" href="#1_3" title="連結到此段落">&para;</a></h4>
+<ul>
+<li>三和弦的世界像黑白：清楚但顏色少。</li>
+<li>七和弦加入「內建張力」：</li>
+<li>Imaj7 比 I 更柔、更帶懸念</li>
+<li>V7 比 V 更必然</li>
+<li>m7♭5（半減）比 m7 更不穩</li>
+</ul>
+<blockquote>
+<p>你可以把 7 音想成「情緒的纖維」：它不是裝飾，而是讓和弦表情更立體。</p>
+</blockquote>
+<h4 id="2-37">2) 為什麼 3、7 是爵士與現代編曲的核心<a class="headerlink" href="#2-37" title="連結到此段落">&para;</a></h4>
+<ul>
+<li>3 決定大/小；7 決定 maj7 / dom7 / m7 等品質。</li>
+<li>很多時候你只要聽到 3、7 的移動，就能聽出進行（尤其 ii–V–I）。</li>
+</ul>
+<h4 id="3_9">3) 副屬：局部加速器<a class="headerlink" href="#3_9" title="連結到此段落">&para;</a></h4>
+<ul>
+<li>副屬等於在句中加一個「小型 V–I」：讓推進更像被拉著走。</li>
+<li>它的強度來自「臨時導音」：你會突然聽到不屬於本調的變音，像路標指向下一個目標。</li>
+</ul>
+<h4 id="4_1">4) 借用：調色盤<a class="headerlink" href="#4_1" title="連結到此段落">&para;</a></h4>
+<ul>
+<li>借用不一定改變調性中心，但會改變光線：</li>
+<li>大調借 iv：轉暗、溫柔、懷舊</li>
+<li>大調借 ♭VII：搖滾/民謠的鬆弛（Mixolydian 味）</li>
+<li>小調借 I 大（Picardy third）：結尾轉亮</li>
+</ul>
+<h4 id="5_1">5) 非和弦音：不換和弦也能推進<a class="headerlink" href="#5_1" title="連結到此段落">&para;</a></h4>
+<ul>
+<li>初階常靠換和弦推進；中階開始學「靠線條推進」。</li>
+<li>掛留/倚音的本質：刻意把解決延後，讓時間感變強。</li>
+</ul>
+<h3 id="_87">聽覺效果（你應該能聽到的變化）<a class="headerlink" href="#_87" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>V/V：像突然「更推」；下一個和弦像被聚光燈照亮。</li>
+<li>iv（大調借用）：像情緒突然陰影化，常很適合抒情段落或橋段。</li>
+<li>掛留：像憋住一口氣，再放下。</li>
+</ul>
+<h2 id="_88">古典／爵士／流行的對照說明<a class="headerlink" href="#_88" title="連結到此段落">&para;</a></h2>
+<h3 id="_89">古典<a class="headerlink" href="#_89" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>七和弦與非和弦音有較明確規範：</li>
+<li>導音常上行</li>
+<li>七音常下行</li>
+<li>掛留要按固定方式解決</li>
+<li>副屬與轉調服務曲式推進。</li>
+</ul>
+<h3 id="_90">爵士<a class="headerlink" href="#_90" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>七和弦是常態；延伸音（9/11/13）是日常語彙。</li>
+<li>副屬與臨時轉調頻繁：次屬 ii–V（為了短暫確立新中心）。</li>
+<li>非和弦音可更自由，但「語句落點」仍是生命線。</li>
+</ul>
+<h3 id="_91">流行<a class="headerlink" href="#_91" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>借用常用來做段落情緒轉折（尤其橋段/預副歌）。</li>
+<li>副屬常作推進與高潮前加速；升 key 是典型轉調。</li>
+<li>sus/add9 常是「非和弦音思想」的口語版本：不用改骨架，就能有變化。</li>
+</ul>
+<h2 id="_92">實際編曲／作曲應用<a class="headerlink" href="#_92" title="連結到此段落">&para;</a></h2>
+<h3 id="_93">鋼琴<a class="headerlink" href="#_93" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>
+<p>七和弦 voicing 入門（很實用的順序）：
+  1. 先彈根音（左手）
+  2. 右手只抓 3、7（guide tones）
+  3. 再加 9 或 13（色彩）</p>
+</li>
+<li>
+<p>副屬練法（C 大調）：</p>
+</li>
+<li>| C | D7 | G | C |</li>
+<li>第一步只彈根音：C–D–G–C</li>
+<li>第二步加 3、7：D7 的 F#、C 會讓你立刻聽到「更推」</li>
+</ul>
+<h3 id="band_7">樂團／Band<a class="headerlink" href="#band_7" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>副屬出現時，Bass 走根音能最大化推進。</li>
+<li>借用要讓顏色被聽見：</li>
+<li>把關鍵變音（♭3、♭6、♭7）放到中高音，不要藏在低頻。</li>
+</ul>
+<h3 id="daw_7">DAW 製作思維<a class="headerlink" href="#daw_7" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>副屬＝加速器：可以搭配動態設計（鼓加密、pad 加亮）。</li>
+<li>借用＝換色：可以搭配空間/濾波設計（瞬間轉暗、回來再變亮）。</li>
+</ul>
+<h2 id="_94">譜例（以文字描述即可）<a class="headerlink" href="#_94" title="連結到此段落">&para;</a></h2>
+<h3 id="1-diatonic-c">1) 大調 diatonic 七和弦（以 C 大調示意）<a class="headerlink" href="#1-diatonic-c" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Imaj7：C–E–G–B</li>
+<li>iim7：D–F–A–C</li>
+<li>iiim7：E–G–B–D</li>
+<li>IVmaj7：F–A–C–E</li>
+<li>V7：G–B–D–F</li>
+<li>vim7：A–C–E–G</li>
+<li>viiø7：B–D–F–A（半減）</li>
+</ul>
+<blockquote>
+<p>聽覺提示：大調裡「vii 是半減」很關鍵，它天生不穩，常導向 I。</p>
+</blockquote>
+<h3 id="2_2">2) 小調（常見以和聲小調/旋律小調混用）<a class="headerlink" href="#2_2" title="連結到此段落">&para;</a></h3>
+<p>以 a 小調為例（概念提示）：
+- 若升導音（G#），V 會變成 E7，更強導向 i（Am）。
+- ii 常見變成半減（Bø7）或其他變形，視語境。</p>
+<h3 id="3-c_1">3) 副屬（C 大調）<a class="headerlink" href="#3-c_1" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>| C | D7 | G | C |</li>
+<li>Roman：| I | V/V | V | I |</li>
+</ul>
+<h3 id="4-c">4) 借用（C 大調）<a class="headerlink" href="#4-c" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>| C | Fm | G | C |</li>
+<li>Roman：| I | iv（借自 C 小調）| V | I |</li>
+</ul>
+<h3 id="5_2">5) 掛留示例（概念）<a class="headerlink" href="#5_2" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>在 G7 上旋律停 C（4）→ 解決到 B（3）。</li>
+</ul>
+<h2 id="_95">常見錯誤與迷思<a class="headerlink" href="#_95" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>錯誤 1：七和弦一律彈滿</strong></li>
+<li>很快就混濁。先抓 3、7，再加色彩。</li>
+<li><strong>錯誤 2：副屬一出現就覺得離調</strong></li>
+<li>副屬多半是「短暫聚光燈」：目標清楚就不會迷路。</li>
+<li><strong>錯誤 3：借用和弦沒有回收</strong></li>
+<li>借用要有「回來」的策略：回到 V–I、或回到主和弦配置與節奏。</li>
+<li><strong>錯誤 4：非和弦音亂塞</strong></li>
+<li>非和弦音要有來有去：從哪個和弦音出發、到哪個和弦音落地。</li>
+</ul>
+<h2 id="3_10">習作（由易到難，至少 3 題）<a class="headerlink" href="#3_10" title="連結到此段落">&para;</a></h2>
+<ol>
+<li>在 3 個調寫出 diatonic 七和弦（I～vii），並標註品質（maj7/m7/7/ø7）。</li>
+<li>在任意大調寫 8 小節：至少包含 2 個副屬（V/V、V/ii 或 V/IV），並標羅馬數字。</li>
+<li>把一段 I–vi–IV–V 改寫成陰影版：至少加入 iv 或 ♭VI 或 ♭VII（借用），彈兩版並寫聽感差異。</li>
+<li>寫 4 小節旋律：限制和聲只用 I（不換和弦），但旋律必須用掛留/倚音/經過音做出 2 次張力→解決。</li>
+</ol>
+<h2 id="_96">聆聽與分析建議<a class="headerlink" href="#_96" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>突然更推的地方（常是副屬或次屬 ii–V）。</li>
+<li>突然變暗/復古的地方（常是借用 iv、♭VI、♭VII）。</li>
+<li><strong>注意什麼</strong>：</li>
+<li>先唱低音，再找內聲（3/7）是否半音連接；那通常就是「好聽的原因」。</li>
+</ul>
+<hr>
+<h2 id="8-sus">第8章　中階：各風格中階和聲語法與特色（古典序進／爵士替代與延伸／流行借用與sus）<a class="headerlink" href="#8-sus" title="連結到此段落">&para;</a></h2>
+<h2 id="learning-objectives_8">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_8" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典：理解和聲小調、偽終止、序進（sequence）如何推動段落與曲式。</li>
+<li>爵士：掌握三全音替代（tritone sub）、常見代理與過渡、延伸音與避音的思維。</li>
+<li>流行：能運用借用、驚奇和弦、套路變體、sus/add、調式色彩，並保持可唱性。</li>
+</ul>
+<h2 id="_97">核心理論說明<a class="headerlink" href="#_97" title="連結到此段落">&para;</a></h2>
+<h3 id="_98">定義<a class="headerlink" href="#_98" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>序進（Sequence）</strong>：同一型態的和聲/旋律，按固定級數移位重複。</li>
+<li><strong>三全音替代（Tritone Substitution）</strong>：用 ♭II7 代替 V7（兩者共享三全音）。</li>
+<li><strong>Backdoor dominant（後門屬）</strong>（爵士常見概念）：以 ♭VII7 → I 形成另一種回家路線。</li>
+<li><strong>套路變體</strong>：把熟悉循環做小改寫（例如 I–vi–IV–V → I–vi–ii–V）。</li>
+<li><strong>sus/add</strong>：把非三度音當作色彩（與掛留/非和弦音相通）。</li>
+</ul>
+<h3 id="_99">功能（為什麼這些語法很常見？）<a class="headerlink" href="#_99" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>序進提供「持續推進」與「統一感」：你不用一直想新材料，也能走很遠。</li>
+<li>Tritone sub 保留屬功能但改變根音路徑：常形成半音下行，聲響更滑、更都市。</li>
+<li>流行套路變體在不破壞可唱性下提升推進：比直接加很多和弦更安全。</li>
+<li>sus/add 提供「同一骨架不同表情」：尤其適合吉他/鋼琴伴奏。</li>
+</ul>
+<h3 id="_100">聽覺效果<a class="headerlink" href="#_100" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>序進：像樓梯，一階一階。</li>
+<li>Tritone sub：像換一條暗一點、更滑的捷徑。</li>
+<li>sus4→3：像把三音暫時遮住（大/小模糊），再揭曉。</li>
+</ul>
+<h2 id="_101">古典／爵士／流行的對照說明<a class="headerlink" href="#_101" title="連結到此段落">&para;</a></h2>
+<h3 id="_102">古典（中階語法重點）<a class="headerlink" href="#_102" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>和聲小調</strong>：升導音讓 V 更像 V（推力更強）。</li>
+<li><strong>偽終止（V→VI）</strong>：句中驚喜，常用來延長段落。</li>
+<li><strong>序進</strong>：推進段與發展段常用。</li>
+<li>常見思路：根音沿五度圈或階梯下行；上聲部可保持動機一致。</li>
+</ul>
+<h3 id="_103">爵士（中階語法重點）<a class="headerlink" href="#_103" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>延伸音與變化音</strong>：9/11/13、以及 V7 的 ♭9/♯9/♭5/♯5。</li>
+<li><strong>Tritone sub</strong>：用 ♭II7 代替 V7。</li>
+<li><strong>Backdoor</strong>：♭VII7 → I（常有靈魂/R&amp;B/爵士的「後門回家」味）。</li>
+<li><strong>代理（Substitution）</strong>：用共享關鍵音（多為 3/7）的和弦互換角色。</li>
+</ul>
+<h3 id="_104">流行（中階語法重點）<a class="headerlink" href="#_104" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>借用</strong>：大調借 iv、♭VI、♭VII；小調借 I 大等。</li>
+<li><strong>驚奇和弦</strong>：突然出現 ♭III、♭VI 等色彩（重點是段落情緒，而非嚴格分析）。</li>
+<li><strong>套路變體</strong>：I–vi–ii–V、或把某個和弦換成 sus/add 版本。</li>
+<li><strong>調式色彩</strong>：Mixolydian（♭7）、Dorian（#6）常見於搖滾/民謠/R&amp;B。</li>
+</ul>
+<h2 id="_105">實際編曲／作曲應用<a class="headerlink" href="#_105" title="連結到此段落">&para;</a></h2>
+<h3 id="_106">鋼琴<a class="headerlink" href="#_106" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>爵士：右手抓 3、7、9、13，左手交給 Bass（或只彈根音）。</li>
+<li>流行：把 sus4→3 做成固定手感（例如 Gsus4→G），並用旋律配合揭曉。</li>
+</ul>
+<h3 id="band_8">樂團／Band<a class="headerlink" href="#band_8" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Tritone sub 時，Bass 半音下行會非常有力（D♭→C）。</li>
+<li>流行借用時，可用音色與空間拉出顏色（例如 iv 出現時 pad 更濃、更暗）。</li>
+</ul>
+<h3 id="daw_8">DAW 製作思維<a class="headerlink" href="#daw_8" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>序進段落用 layer 逐層加厚強化樓梯感。</li>
+<li>sus/add 的細微變化在 DAW 常會被壓縮或混音吃掉：要用音域與音色把它放大（例如把 sus 的音放高八度）。</li>
+</ul>
+<h2 id="_107">譜例（以文字描述即可）<a class="headerlink" href="#_107" title="連結到此段落">&para;</a></h2>
+<h3 id="1-tritone-subc">1) Tritone sub（C 調）<a class="headerlink" href="#1-tritone-subc" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>原：| Dm7 | G7 | Cmaj7 |</li>
+<li>替代：| Dm7 | D♭7 | Cmaj7 |</li>
+</ul>
+<h3 id="2_3">2) 流行套路變體<a class="headerlink" href="#2_3" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>| C | Am | Dm | G |（I–vi–ii–V）</li>
+<li>用途：常作橋段或句尾回到副歌的推進。</li>
+</ul>
+<h3 id="3-susadd">3) sus/add<a class="headerlink" href="#3-susadd" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Cadd9：C–E–G–D（明亮、透明，適合主歌）</li>
+<li>Gsus4→G：G–C–D → G–B–D（揭曉大三度，推進很有戲）</li>
+</ul>
+<h3 id="4-backdoor">4) Backdoor（概念示意）<a class="headerlink" href="#4-backdoor" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>在 C：B♭7 → C（♭VII7→I）</li>
+</ul>
+<h2 id="_108">常見錯誤與迷思<a class="headerlink" href="#_108" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>錯誤 1：Maj7 上硬加 11</strong></li>
+<li>11 常撞三音；若要這種色彩，多用 #11 或改配置避開衝突。</li>
+<li><strong>錯誤 2：把調式當成「只要換音階」</strong></li>
+<li>調式色彩常由「旋律重心＋借用和弦」共同造成。</li>
+<li><strong>錯誤 3：驚奇和弦沒有銜接</strong></li>
+<li>驚奇不是亂跳：至少靠低音線、共同音或節奏停頓讓聽者跟上。</li>
+</ul>
+<h2 id="3_11">習作（至少 3 題）<a class="headerlink" href="#3_11" title="連結到此段落">&para;</a></h2>
+<ol>
+<li>把一段 ii–V–I 改成含 tritone sub 的版本，彈兩版比較推進與色彩差。</li>
+<li>寫 8 小節流行副歌：必須包含 1 個借用（iv 或 ♭VII），以及 1 次 sus4→3 揭曉。</li>
+<li>寫 8 小節古典序進：每兩小節重複同一型態並下移（或沿五度圈），句尾回正格終止。</li>
+<li>爵士練習：在 4 小節 turnaround（I–vi–ii–V）中，至少一處改成 backdoor（♭VII7→I）或 tritone sub，並錄音盲聽差異。</li>
+</ol>
+<h2 id="_109">聆聽與分析建議<a class="headerlink" href="#_109" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>序進段落：是否像樓梯？它靠什麼保持統一（動機/節奏/低音）？</li>
+<li>Tritone sub：是否出現半音下行的根音路徑？</li>
+<li>sus：是否有「遮住三音」再揭曉的瞬間？</li>
+<li><strong>注意什麼</strong>：</li>
+<li>同一標準曲找兩個不同演奏版本，比較替代和弦差異（爵士語彙就是這樣長出來的）。</li>
+</ul>
+<hr>
+<h2 id="9">第9章　中階：編曲與聲響設計（七和弦配置／配器擴張／低音線／節奏動機）<a class="headerlink" href="#9" title="連結到此段落">&para;</a></h2>
+<h2 id="learning-objectives_9">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_9" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>能把七和弦/延伸音配置得清楚、不混濁，知道哪些音可以省略。</li>
+<li>能以低音線先行設計和聲骨架（bass-first），提升段落線條感。</li>
+<li>能把和聲與節奏動機結合，讓進行「被聽成一個段落」，而不是一串和弦。</li>
+</ul>
+<h2 id="_110">核心理論說明<a class="headerlink" href="#_110" title="連結到此段落">&para;</a></h2>
+<h3 id="_111">定義<a class="headerlink" href="#_111" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>Guide tones（3、7）</strong>：決定和弦品質與功能方向的核心音。</li>
+<li><strong>Harmonic density（和聲密度）</strong>：同一時刻堆多少音、堆在哪個音域。</li>
+<li><strong>節奏動機（Rhythmic motif）</strong>：固定的切分/節奏型，能把和聲串成可辨識語句。</li>
+</ul>
+<h3 id="_112">功能（中階編曲的真正任務）<a class="headerlink" href="#_112" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>讓聽者在「音色很多、聲部很多」的狀態下，仍然聽得懂：</li>
+<li>這段在推進</li>
+<li>這段在落地</li>
+<li>這段在換色</li>
+</ul>
+<p>換句話說：你在編的是「方向感」與「空間感」。</p>
+<h3 id="_113">聽覺效果<a class="headerlink" href="#_113" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>低音線好：和聲像有重力方向（走路有地面）。</li>
+<li>內聲半音連接好：推進感會變得「順」且「必然」。</li>
+<li>節奏動機一致：和聲再複雜也會被聽成同一段落。</li>
+</ul>
+<h2 id="_114">古典／爵士／流行的對照說明<a class="headerlink" href="#_114" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典：聲部線條優先；配器分層清楚（低弦/中弦/木管/銅管分工）。</li>
+<li>爵士：省略根音/五度常見；3、7 與延伸音的排列是風格核心。</li>
+<li>流行：層次靠音色與節奏；和弦色彩常由 pad/keys 承擔，吉他更偏節奏化。</li>
+</ul>
+<h2 id="_115">實際編曲／作曲應用<a class="headerlink" href="#_115" title="連結到此段落">&para;</a></h2>
+<h3 id="_116">鋼琴<a class="headerlink" href="#_116" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>
+<p>最乾淨的中階 voicing 順序：
+  1. 左手：根音（必要時加五度）
+  2. 右手：3、7（必須清楚）
+  3. 再加 9 或 13（挑 1–2 個主角色彩音）</p>
+</li>
+<li>
+<p>一個非常實用的觀念：<strong>低音區越少音越高級</strong>。</p>
+</li>
+</ul>
+<h3 id="band_9">樂團／Band<a class="headerlink" href="#band_9" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>常見分工（讓聲音立刻清楚）：</li>
+<li>Bass：根音/低音線</li>
+<li>Guitar：3/7（或 3/5）+ 節奏</li>
+<li>Keys：9/13/#11（挑選）+ 長音或切分</li>
+<li>若主唱旋律很忙：和聲可以更簡；若主唱很長音：和聲可以更花。</li>
+</ul>
+<h3 id="daw_9">DAW 製作思維<a class="headerlink" href="#daw_9" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>先用 MIDI 確認 voicing，再用混音確保分層：</li>
+<li>EQ 切掉 pad 低頻</li>
+<li>Sidechain 讓 pad 不壓住主旋律或 kick</li>
+<li>用 automation 做段落能量：</li>
+<li>同一和弦循環也能從主歌推到副歌</li>
+</ul>
+<h2 id="_117">譜例（以文字描述即可）<a class="headerlink" href="#_117" title="連結到此段落">&para;</a></h2>
+<h3 id="1-cmaj9">1) Cmaj9 的乾淨配置<a class="headerlink" href="#1-cmaj9" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Bass：C</li>
+<li>Keys：E–B–D（3–7–9）</li>
+<li>省略 G（5）通常更乾淨</li>
+</ul>
+<h3 id="2-dm11">2) Dm11 的乾淨配置<a class="headerlink" href="#2-dm11" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Bass：D</li>
+<li>Keys：F–C–E（3–7–9）</li>
+<li>11（G）放高八度或交給另一層音色（更不會糊）</li>
+</ul>
+<h3 id="3_12">3) 低音線先行（示意）<a class="headerlink" href="#3_12" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>先寫低音：C – B – A – G</li>
+<li>再配和弦：C | G/B | Am | G</li>
+<li>你會得到「低音順階」帶來的自然推進。</li>
+</ul>
+<h2 id="_118">常見錯誤與迷思<a class="headerlink" href="#_118" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>錯誤 1：延伸音放太低</strong></li>
+<li>9/11/13 放低音會糊；把色彩放中高音。</li>
+<li><strong>錯誤 2：每個樂器都彈滿</strong></li>
+<li>會失去層次與空間；改成分工與留白。</li>
+<li><strong>錯誤 3：節奏每個樂器都很忙</strong></li>
+<li>會讓推進失焦。讓一個樂器負責節奏動機，其他樂器讓位。</li>
+</ul>
+<h2 id="3_13">習作（至少 3 題）<a class="headerlink" href="#3_13" title="連結到此段落">&para;</a></h2>
+<ol>
+<li>把同一段 8 小節和聲做兩版：
+   - A：封閉配置＋高密度
+   - B：開放配置＋低密度
+   比較哪版更像主歌、哪版更像副歌。</li>
+<li>先寫 8 小節低音線（先不寫和弦），再依低音線選和弦，要求至少一次順階走向。</li>
+<li>設計 2 小節節奏動機（切分），把它擴展成 8 小節：和弦可變，但節奏動機必須一致。</li>
+</ol>
+<h2 id="_119">聆聽與分析建議<a class="headerlink" href="#_119" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>內聲（3、7）是否有半音滑動？那通常是「最爵士/最高級」的地方。</li>
+<li>低音是否像一條旋律？</li>
+<li><strong>注意什麼</strong>：</li>
+<li>若覺得混濁：先減少低音區的音，再調整混音；通常不是和弦本身的錯。</li>
+</ul>
+<hr>
+<h2 id="10-key">第10章　中階：作曲與即興應用（轉調／升 key／再和聲化／即興系統化）<a class="headerlink" href="#10-key" title="連結到此段落">&para;</a></h2>
+<h2 id="learning-objectives_10">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_10" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>能寫出含一次轉調的 16 小節作品，並用共同和弦或半音策略銜接。</li>
+<li>能設計流行「升 key」的過渡（尤其最後副歌），讓情緒真的是升上去。</li>
+<li>能用基本爵士套路（turnaround、ii–V、替代）做再和聲化，並維持旋律可唱。</li>
+<li>建立即興練習系統：慢速→落點→語句→速度（錄音回聽）。</li>
+</ul>
+<h2 id="_120">核心理論說明<a class="headerlink" href="#_120" title="連結到此段落">&para;</a></h2>
+<h3 id="_121">定義<a class="headerlink" href="#_121" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>轉調（Modulation）</strong>：調性中心改變。中階先以同系轉調為主（屬調、下屬調、關係大小調）。</li>
+<li><strong>樞紐和弦（Pivot chord）</strong>：同時屬於兩個調的和弦，用來平滑轉調。</li>
+<li><strong>升 key（Key change / Truck driver modulation）</strong>：常見於流行最後副歌，半音或全音上移。</li>
+<li><strong>Turnaround</strong>：句尾回到 I 的套路（常見 I–vi–ii–V）。</li>
+<li><strong>Reharmonization（再和聲化）</strong>：旋律不變，改和聲骨架。</li>
+</ul>
+<h3 id="_122">功能（為什麼要轉調/再和聲化？）<a class="headerlink" href="#_122" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>轉調是「換場景」：同一旋律在不同重力中心會有新意。</li>
+<li>升 key 是「加能量」：把同一材料推進更高張力區，通常連帶提高音域與密度。</li>
+<li>再和聲化是「改敘事角度」：不改台詞（旋律），改鏡頭與燈光（和聲）。</li>
+</ul>
+<h3 id="_123">聽覺效果<a class="headerlink" href="#_123" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>平滑轉調：像鏡頭慢慢轉向新風景。</li>
+<li>突轉/升 key：像突然把舞台抬高、燈打亮。</li>
+<li>再和聲化：同一旋律突然變成熟、變爵士、或變陰影。</li>
+</ul>
+<h2 id="_124">古典／爵士／流行的對照說明<a class="headerlink" href="#_124" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典：轉調常服務曲式（呈示部到屬調、發展段遠調、再現回主調）。</li>
+<li>爵士：常用次屬 ii–V 快速確立新中心；轉調像呼吸一樣頻繁。</li>
+<li>流行：橋段轉調與最後副歌升 key 常見；重點是情緒曲線與可唱性。</li>
+</ul>
+<h2 id="_125">實際編曲／作曲應用<a class="headerlink" href="#_125" title="連結到此段落">&para;</a></h2>
+<h3 id="_126">鋼琴<a class="headerlink" href="#_126" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>
+<p>寫作流程（建議照做）：
+  1. 先寫 8 小節主調句子（含句尾落點）
+  2. 設計 1–2 小節過渡（樞紐或副屬）
+  3. 再寫 8 小節新調句子並落地（用 V–I 或 ii–V–I 坐實）</p>
+</li>
+<li>
+<p>再和聲化流程：</p>
+</li>
+<li>先保留旋律強拍落點</li>
+<li>再替換「功能等價」和弦（如 vi 代理 I、iii 代理 I 等）</li>
+<li>最後加入副屬/ii–V/替代增加推進</li>
+</ul>
+<h3 id="band_10">樂團／Band<a class="headerlink" href="#band_10" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>升 key 的常見過渡：</li>
+<li>用 V/新 I 作門（例如升半音時用新調的 V7）</li>
+<li>或用 break + 直接進新調（靠編曲停頓讓突轉合理）</li>
+</ul>
+<h3 id="daw_10">DAW 製作思維<a class="headerlink" href="#daw_10" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>升 key 的三件套（很常見、也很有效）：</li>
+<li>和弦整體移調</li>
+<li>主旋律高八度或更高音域</li>
+<li>加 layer + 加亮度（高頻）</li>
+</ul>
+<h2 id="_127">譜例（以文字描述即可）<a class="headerlink" href="#_127" title="連結到此段落">&para;</a></h2>
+<h3 id="1-gd">1) 樞紐轉調（G→D）<a class="headerlink" href="#1-gd" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Em7 在 G：vi7</li>
+<li>Em7 在 D：ii7</li>
+<li>因此 Em7 可作樞紐帶你進 D。</li>
+</ul>
+<h3 id="2-turnaroundc">2) Turnaround（C 調）<a class="headerlink" href="#2-turnaroundc" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Cmaj7 | Am7 | Dm7 | G7</li>
+</ul>
+<h3 id="3-i">3) 再和聲化：把一小節 I 撐滿<a class="headerlink" href="#3-i" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>原：| C |（一小節 I）</li>
+<li>改：| C | A7 | Dm7 | G7 |（把 I 拆成 I–VI7–ii–V，形成推進）</li>
+</ul>
+<h2 id="_128">常見錯誤與迷思<a class="headerlink" href="#_128" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>錯誤 1：轉調只有硬接</strong></li>
+<li>先掌握樞紐法，再練突轉；突轉需要編曲配合（break/停頓/鼓 fill）。</li>
+<li><strong>錯誤 2：再和聲化把旋律弄唱不下去</strong></li>
+<li>旋律可唱性第一；尤其強拍落點不要被不協和音逼得太尖。</li>
+<li><strong>錯誤 3：升 key 只有移調</strong></li>
+<li>若密度/音域/亮度沒一起升，聽者會覺得「只是換調」，而不是情緒升。</li>
+</ul>
+<h2 id="3_14">習作（至少 3 題）<a class="headerlink" href="#3_14" title="連結到此段落">&para;</a></h2>
+<ol>
+<li>寫 16 小節：前 8 小節 G 大調，後 8 小節轉 D 大調再回 G（至少一個共同和弦樞紐）。</li>
+<li>寫 32 小節 AABA：最後一次 A 升高大二度（Key up），用 V/新 I 做過渡；並設計編曲層次一起上升。</li>
+<li>把童謠做再和聲化：
+   - 至少加入 2 次 ii–V
+   - 句尾加入 turnaround
+   - 再做一版「陰影版」：加入 1 個借用（iv/♭VI/♭VII）</li>
+</ol>
+<h2 id="_129">聆聽與分析建議<a class="headerlink" href="#_129" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>轉調點之前是否有預告（副屬/旋律變音/樞紐和弦）？</li>
+<li>升 key 後是否真的更高亢（音域、密度、亮度）？</li>
+<li><strong>注意什麼</strong>：</li>
+<li>轉調確立通常要落地手段（V–I 或 ii–V–I）；若沒有，可能只是短暫借用色彩。</li>
+</ul>
+<hr>
+<h2 id="11">第11章　中階：聆聽與分析範例（副屬／轉調／五度圈）<a class="headerlink" href="#11" title="連結到此段落">&para;</a></h2>
+<h2 id="learning-objectives_11">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_11" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>能在實際曲目中辨認副屬（V/x）、借用、轉調與五度圈推進。</li>
+<li>能用「聽哪裡」的方法快速抓重點，而不是被細節淹沒。</li>
+</ul>
+<h2 id="_130">核心理論說明<a class="headerlink" href="#_130" title="連結到此段落">&para;</a></h2>
+<h3 id="_131">定義<a class="headerlink" href="#_131" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>五度圈推進</strong>：根音以五度關係連續移動（或等效的四度上行）。</li>
+</ul>
+<h3 id="_132">功能<a class="headerlink" href="#_132" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>五度圈像齒輪：每一步都在準備下一步，推進感穩定且必然。</li>
+</ul>
+<h3 id="_133">聽覺效果<a class="headerlink" href="#_133" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>你會感到音樂「一直被往前拉」，而不是原地踏步。</li>
+</ul>
+<h2 id="_134">古典／爵士／流行的對照說明<a class="headerlink" href="#_134" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典：副屬常用來強化段落推進（例如 V/IV、V/V）。</li>
+<li>爵士：ii–V 串連就是五度圈的語法化。</li>
+<li>流行：五度圈可能被簡化或藏起來，但副屬常作為亮點。</li>
+</ul>
+<h2 id="_135">實際編曲／作曲應用<a class="headerlink" href="#_135" title="連結到此段落">&para;</a></h2>
+<h3 id="_136">鋼琴<a class="headerlink" href="#_136" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>只彈根音練五度圈：先唱低音再彈和弦，耳朵會長很快。</li>
+</ul>
+<h3 id="band_11">樂團／Band<a class="headerlink" href="#band_11" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Bass 把根音線走順後，吉他/鍵盤再加色彩音，推進會更穩。</li>
+</ul>
+<h3 id="daw_11">DAW 製作思維<a class="headerlink" href="#daw_11" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>用 MIDI 做五度圈 loop，試兩種內聲：</li>
+<li>版本 A：都彈滿</li>
+<li>版本 B：只留 3/7（你會更清楚聽到推進核心）</li>
+</ul>
+<h2 id="_137">譜例（以文字描述即可）<a class="headerlink" href="#_137" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>&ldquo;Fly Me to the Moon&rdquo; 常見一段（示意）：</li>
+<li>Am7–D7–Gmaj7–Cmaj7–F#ø7–B7–Em7–A7…</li>
+</ul>
+<h2 id="_138">常見錯誤與迷思<a class="headerlink" href="#_138" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>只看和弦名稱不看功能：同樣的 D7 可能是 V/V、也可能是 tritone sub 的替代語境。</li>
+</ul>
+<h2 id="3_15">習作（至少 3 題）<a class="headerlink" href="#3_15" title="連結到此段落">&para;</a></h2>
+<ol>
+<li>找一首含副屬的歌：標出所有非調內的屬七和弦，寫成 V/x。</li>
+<li>找一首五度圈明顯的曲：只寫根音（不寫和弦品質），並唱出根音線。</li>
+<li>任選 8 小節：把其中兩個和弦改成副屬或次屬 ii–V，並比較推進力。</li>
+</ol>
+<h2 id="_139">聆聽與分析建議<a class="headerlink" href="#_139" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>古典</strong>：貝多芬《C 小調第五號交響曲》第一樂章中推進段。</li>
+<li>聽哪裡：哪裡突然更「逼近」終止。</li>
+<li><strong>爵士</strong>：&rdquo;All The Things You Are&rdquo;。</li>
+<li>聽哪裡：頻繁轉調如何仍然順。</li>
+<li><strong>流行</strong>：&rdquo;Yesterday&rdquo;、&rdquo;Just the Way You Are&rdquo;。</li>
+<li>聽哪裡：副屬如何讓旋律更有方向。</li>
+<li><strong>跨界</strong>：Gershwin《Rhapsody in Blue》開頭。</li>
+<li>聽哪裡：藍調旋律背後和聲如何同時有古典結構與爵士色彩。</li>
+</ul>
+<hr>
+<h2 id="12">第12章　中階：習作題目與練習方向（副屬／借用／轉調／改編）<a class="headerlink" href="#12" title="連結到此段落">&para;</a></h2>
+<h2 id="learning-objectives_12">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_12" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>讓中階語彙變成可操作能力：你能主動選擇「推進」或「顏色」。</li>
+<li>建立改編與再和聲化的工作流程。</li>
+</ul>
+<h2 id="_140">核心理論說明<a class="headerlink" href="#_140" title="連結到此段落">&para;</a></h2>
+<h3 id="_141">定義<a class="headerlink" href="#_141" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>中階能力標準</strong>：你不只會做，還能說清楚「為什麼這樣更推／更暗／更亮」。</li>
+</ul>
+<h3 id="_142">功能<a class="headerlink" href="#_142" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>副屬＝加速器</li>
+<li>借用＝調色盤</li>
+<li>轉調＝換場景</li>
+<li>非和弦音＝局部推進（不換和弦也能前進）</li>
+</ul>
+<h3 id="_143">聽覺效果<a class="headerlink" href="#_143" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>你應能明確聽出：</li>
+<li>哪裡是「更推」（副屬/次屬）</li>
+<li>哪裡是「轉暗/復古」（借用）</li>
+<li>哪裡是「換場景」（轉調）</li>
+</ul>
+<h2 id="_144">古典／爵士／流行的對照說明<a class="headerlink" href="#_144" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典：更重視規範下的控制（解決、聲部導向）。</li>
+<li>爵士：更重視色彩選擇與即時反應。</li>
+<li>流行：更重視段落情緒與可唱性。</li>
+</ul>
+<h2 id="_145">實際編曲／作曲應用<a class="headerlink" href="#_145" title="連結到此段落">&para;</a></h2>
+<h3 id="_146">鋼琴<a class="headerlink" href="#_146" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>每次改寫都做 A/B 比較：</li>
+<li>原版</li>
+<li>改寫版（副屬/借用/轉調）</li>
+<li>彈回去盲聽，寫下哪個更符合情緒目標。</li>
+</ul>
+<h3 id="band_12">樂團／Band<a class="headerlink" href="#band_12" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>改編排練法：同一段副歌做兩個版本演一次，讓團員直接聽差異再決策。</li>
+</ul>
+<h3 id="daw_12">DAW 製作思維<a class="headerlink" href="#daw_12" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>改和聲時，同步改配置與音色：同一個借用和弦，如果配置錯或音色太厚，顏色可能被淹沒。</li>
+</ul>
+<h2 id="_147">譜例（以文字描述即可）<a class="headerlink" href="#_147" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>把 I–vi–IV–V 插入 V/V：I–II7–vi–IV–V（C–D7–Am–F–G）。</li>
+</ul>
+<h2 id="_148">常見錯誤與迷思<a class="headerlink" href="#_148" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>改編只追求更複雜：複雜不等於更好；更好通常是「更清楚、更有方向」。</li>
+</ul>
+<h2 id="3_16">習作（至少 3 題）<a class="headerlink" href="#3_16" title="連結到此段落">&para;</a></h2>
+<ol>
+<li>副屬練習：給 I–vi–IV–V，插入 V/V 與 V/ii 各一次，寫兩種版本並比較。</li>
+<li>借用練習：把大調副歌改成陰影版（至少 iv 或 ♭VI），再寫回明亮版（去掉借用），比較情緒曲線。</li>
+<li>轉調練習：設計 8 小節，包含一次轉調（共同和弦法），標出轉調點與確立手段（V–I 或 ii–V–I）。</li>
+</ol>
+<h2 id="_149">聆聽與分析建議<a class="headerlink" href="#_149" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>每次聽到「突然更推」或「突然轉暗」都先暫停，回放 3 次：</li>
+<li>第 1 次只聽低音</li>
+<li>第 2 次只聽內聲（3/7）</li>
+<li>第 3 次整體聽，確認你的解釋是否成立</li>
+</ul>
+<hr>
+<h2 id="13-passacaglia-ground-bass">第13章　Passacaglia 專章：低音反覆（Ground Bass）與變奏的和聲引擎<a class="headerlink" href="#13-passacaglia-ground-bass" title="連結到此段落">&para;</a></h2>
+<blockquote>
+<p>分析曲目：Passacaglia（常見為 Handel g 小調鍵盤組曲中的 Passacaglia）</p>
+</blockquote>
+<h2 id="learning-objectives_13">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_13" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>理解 Passacaglia 的歷史與體裁背景，以及它為何能「用重複撐起大結構」。</li>
+<li>能用 Roman Numeral 建立 ground bass 的和聲骨架，並指出功能邏輯。</li>
+<li>能拆解變奏層次：節奏層、聲部層、和聲裝飾層、對位與非和弦音。</li>
+<li>能設計張力：學會「不換和弦也能推進」的手段（掛留、倚音、延後解決、密度控制）。</li>
+<li>能把 Passacaglia 概念轉譯到：電影配樂、流行副歌、電子 loop、爵士 modal vamp。</li>
+</ul>
+<h2 id="_150">核心理論說明<a class="headerlink" href="#_150" title="連結到此段落">&para;</a></h2>
+<h3 id="_151">定義<a class="headerlink" href="#_151" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>Passacaglia</strong>：以固定低音（ground bass）或固定和聲循環作支架，進行連續變奏的形式。</li>
+<li><strong>Ground Bass</strong>：反覆的低音旋律（通常 4～8 小節）。它同時是：</li>
+<li>和聲地基（決定功能方向）</li>
+<li>節奏地基（決定每輪的時間感）</li>
+<li>記憶地基（讓聽者知道「你回到第幾輪」）</li>
+</ul>
+<h3 id="_152">功能（為什麼這種形式有力量？）<a class="headerlink" href="#_152" title="連結到此段落">&para;</a></h3>
+<p>Passacaglia 的力量來自一個悖論：<strong>地基越固定，上層越自由</strong>。</p>
+<ul>
+<li>低音反覆讓聽者永遠有「定位系統」，不會迷路。</li>
+<li>作曲家因此可以：</li>
+<li>在上方做大量變化（節奏、音域、裝飾、對位）</li>
+<li>甚至在表面製造「好像要崩壞」的張力</li>
+<li>但只要地基回來，整體就會被收束</li>
+</ul>
+<p>你可以把它想成建築：</p>
+<ul>
+<li>ground bass 是鋼骨結構</li>
+<li>變奏是燈光、家具、走線、裝飾</li>
+</ul>
+<h3 id="_153">聽覺效果<a class="headerlink" href="#_153" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>低音反覆帶來兩種同時存在的感受：</li>
+<li>熟悉與安定（你知道它會回來）</li>
+<li>被拖著走的期待（因為它一直回來但不結束）</li>
+</ul>
+<p>這也是它很適合做「宿命感」「時間機械」「必然推進」的原因。</p>
+<h2 id="_154">古典／爵士／流行的對照說明<a class="headerlink" href="#_154" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典：Passacaglia 是「曲式」。重點是低音反覆作為結構，變奏靠聲部、裝飾音與句法落點（終止區）支撐。</li>
+<li>爵士：最接近的是 ostinato / modal vamp。骨架固定，但表層可用 voicing、節奏互動、upper structure 推進。</li>
+<li>流行／電子：最接近的是 loop。推進更多靠音色層次、密度、automation、drop/return，而不是古典式終止句法。</li>
+</ul>
+<h2 id="1_4">1️⃣ 歷史與體裁背景<a class="headerlink" href="#1_4" title="連結到此段落">&para;</a></h2>
+<h3 id="passacaglia">Passacaglia 的起源（概念性）<a class="headerlink" href="#passacaglia" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Passacaglia 與 Chaconne 都與巴洛克舞曲與變奏傳統相關。</li>
+<li>巴洛克的 basso continuo 思維強調：<strong>低音是語法主幹</strong>，上方是裝飾與線條。</li>
+</ul>
+<h3 id="chaconne">與 Chaconne 的異同（實務角度）<a class="headerlink" href="#chaconne" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Passacaglia 常更強調「低音反覆」的可辨識性。</li>
+<li>Chaconne 常見以固定和聲循環為中心。</li>
+<li>但在實際作品裡兩者邊界並不總是絕對：很多時候你可以把它們視為同一族群的兩種取向。</li>
+</ul>
+<h3 id="_155">為何「低音反覆」在巴洛克具有結構性意義<a class="headerlink" href="#_155" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>在長篇變奏中，最容易散掉的是「方向感」。</li>
+<li>低音反覆讓聽者在每輪都能重新對齊：</li>
+<li>你現在在哪一格</li>
+<li>你還離終點多遠</li>
+</ul>
+<h2 id="2_4">2️⃣ 和聲骨架分析<a class="headerlink" href="#2_4" title="連結到此段落">&para;</a></h2>
+<h3 id="ground-bass">Ground Bass 的音級與功能（分析流程）<a class="headerlink" href="#ground-bass" title="連結到此段落">&para;</a></h3>
+<blockquote>
+<p>不同版本在細節（裝飾、轉位、局部替代）可能不同；以下示範一個可套用到任何版本的分析流程。</p>
+</blockquote>
+<ol>
+<li><strong>先寫低音</strong>：以每小節（或每兩拍）為單位寫出低音音名。</li>
+<li><strong>推測和弦品質</strong>：看是否出現導音、是否有屬七、是否有借用變音。</li>
+<li><strong>標 Roman Numeral</strong>：在 g 小調語境標 i、iv、V、♭VI…</li>
+<li><strong>找句法落點</strong>：每輪通常會在 V 或 i 附近形成「收束/重啟」。</li>
+</ol>
+<h3 id="_156">為何這種進行能承載大量變奏而不崩壞<a class="headerlink" href="#_156" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>功能骨架多半穩定：你總能回到「S→D→T」的主幹。</li>
+<li>低音常有方向性（下行/回到起點），提供強時間感。</li>
+<li>即使表面變得很華麗，聽者仍會被低音帶著走。</li>
+</ul>
+<h2 id="3_17">3️⃣ 變奏層次拆解<a class="headerlink" href="#3_17" title="連結到此段落">&para;</a></h2>
+<p>你可以把變奏拆成四種層：</p>
+<h3 id="a-rhythm-layer">A) 節奏層（Rhythm layer）<a class="headerlink" href="#a-rhythm-layer" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>不換和聲，改變密度與切分：</li>
+<li>八分→十六分</li>
+<li>加附點</li>
+<li>加切分</li>
+<li>這是最安全、最直接能讓音樂「變快／變緊」的方法。</li>
+</ul>
+<h3 id="b-voicingregisters-layer">B) 聲部層（Voicing/Registers layer）<a class="headerlink" href="#b-voicingregisters-layer" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>變換上聲部音域、分句方式、對位線條。</li>
+<li>同一素材上移八度會「變亮」；下移八度會「變沉」。</li>
+</ul>
+<h3 id="c-ornament-layer">C) 和聲裝飾層（Ornament layer）<a class="headerlink" href="#c-ornament-layer" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>用掛留、倚音、經過音、先現音「製造摩擦」。</li>
+<li>注意：</li>
+<li>古典語境下，摩擦要有解決策略</li>
+<li>摩擦越多，你越需要清楚的落點（否則會糊）</li>
+</ul>
+<h3 id="d-counterpoint-layer">D) 對位與非和弦音（Counterpoint layer）<a class="headerlink" href="#d-counterpoint-layer" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>對位不是額外的裝飾，而是「推進引擎」：</li>
+<li>你可以不換和弦，但讓聲部線條持續走向下一個落點。</li>
+</ul>
+<h2 id="4_2">4️⃣ 和聲張力設計：如何「不換和聲也能推進」<a class="headerlink" href="#4_2" title="連結到此段落">&para;</a></h2>
+<h3 id="vs">穩定 vs 不穩定的配置<a class="headerlink" href="#vs" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>穩定：強拍落和弦音、配置乾淨、密度低。</li>
+<li>不穩定：</li>
+<li>強拍刻意放色彩音（7/9/4）</li>
+<li>或用掛留把解決延後</li>
+<li>或把密度堆高（讓空間變擁擠）</li>
+</ul>
+<h3 id="_157">延遲音、倚音、經過音的角色<a class="headerlink" href="#_157" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>掛留（suspension）</strong>：最像「巴洛克的呼吸控制」。</li>
+<li>例如 4-3：在屬和弦上先停在 4，再解到 3。</li>
+<li><strong>倚音（appoggiatura）</strong>：更尖的張力。</li>
+<li>強拍落錯音，再回來，像先撞一下再安放。</li>
+<li><strong>經過音（passing tone）</strong>：最像「走路」。</li>
+<li>你會感到時間在流動，而不是原地站著。</li>
+</ul>
+<h3 id="_158">一個很實用的張力公式<a class="headerlink" href="#_158" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>同一輪地基不變</strong>，但每輪至少改變一項：</li>
+<li>節奏密度 / 音域 / 裝飾摩擦 / 配器層數</li>
+<li>這樣聽者會覺得「一直往前」，卻仍然「沒有迷路」。</li>
+</ul>
+<h2 id="_159">實際編曲／作曲應用<a class="headerlink" href="#_159" title="連結到此段落">&para;</a></h2>
+<h3 id="_160">鋼琴<a class="headerlink" href="#_160" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>先把左手 ground bass 練到「像鼓點」：穩、可預期、力度一致。</li>
+<li>右手做變奏時，先從兩個旋鈕開始：</li>
+<li>節奏密度（八分→十六分）</li>
+<li>音域（上移八度＝變亮；下移八度＝變沉）</li>
+<li>再加第三個旋鈕：掛留/倚音（延後解決），讓你在不換和弦時仍能推進。</li>
+</ul>
+<h3 id="band_13">樂團／Band<a class="headerlink" href="#band_13" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Bass：把 ostinato 寫得可唱，並維持「輪次」的辨識度（不要每輪都改到認不出來）。</li>
+<li>Drums：把變奏主要交給節奏與動態（fill、open/closed hi-hat、ghost notes），不要一開始就靠換和弦。</li>
+<li>Keys/Guitar：</li>
+<li>先負責骨架（3、7 的連接）</li>
+<li>再逐輪加入色彩（9/11/13 或 sus/add）</li>
+<li>用 call-and-response 與旋律互動，讓變奏像對話。</li>
+</ul>
+<h3 id="daw_13">DAW 製作思維<a class="headerlink" href="#daw_13" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>把 Passacaglia 想成「loop 的變奏編曲」：</li>
+<li>地基不動（bass loop + 1 層和聲）</li>
+<li>上方逐輪加：音色層、節奏層、空間層（reverb/delay）、濾波 automation</li>
+<li>很有效的一個做法：每輪只改 1–2 個參數（密度/亮度/空間），避免一次改太多失去「同一地基」的辨識度。</li>
+</ul>
+<h2 id="5_3">5️⃣ 現代應用延伸<a class="headerlink" href="#5_3" title="連結到此段落">&para;</a></h2>
+<h3 id="_161">電影配樂<a class="headerlink" href="#_161" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>固定低音循環＝宿命/倒數/時間機械。</li>
+<li>上方用配器逐輪加厚、加亮，能做出「不可逆推進」。</li>
+</ul>
+<h3 id="_162">流行歌副歌<a class="headerlink" href="#_162" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>副歌常需要「反覆但上升」：</li>
+<li>地基固定（和弦循環/低音動機）</li>
+<li>上方靠旋律與編曲層次逐輪抬升</li>
+</ul>
+<h3 id="loop">電子音樂 Loop<a class="headerlink" href="#loop" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>8 小節 loop 固定：</li>
+<li>用濾波、空間、節奏層與音色變形做變奏</li>
+<li>其實就是 Passacaglia 的現代聲響版</li>
+</ul>
+<h3 id="jazz-modal-vamp">Jazz modal vamp<a class="headerlink" href="#jazz-modal-vamp" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>長時間停留在某和聲板塊（例如 Dm7）：</li>
+<li>用 voicing、upper structure、節奏互動推進</li>
+<li>等同「地形固定，上層自由」</li>
+</ul>
+<h2 id="_163">習作<a class="headerlink" href="#_163" title="連結到此段落">&para;</a></h2>
+<h3 id="6-3">6️⃣ 創作練習（由易到難，至少 3 題）<a class="headerlink" href="#6-3" title="連結到此段落">&para;</a></h3>
+<ol>
+<li><strong>寫一個 8 小節 ground bass</strong>（任意調）：
+   - 低音線可唱（你能哼出來）
+   - 最後 2 小節必須導向 V→I（或 V→i）</li>
+<li><strong>在不換和聲下做 3 種變奏</strong>：
+   - 變奏 A：改節奏密度
+   - 變奏 B：改音域（高八度／低八度）
+   - 變奏 C：加入掛留/倚音，延後解決</li>
+<li><strong>同一 ground bass 改寫三種風格</strong>：
+   - 古典：四部和聲＋清楚解決
+   - 爵士：加入 ii–V 語彙（可替代）＋延伸音 voicing
+   - 流行：和弦符號簡化＋用音色層次推進</li>
+</ol>
+<h2 id="_164">譜例（以文字描述即可）<a class="headerlink" href="#_164" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>Ground bass（示意）：8 小節低音反覆；第 7～8 小節形成導向 V→i 的落點。</li>
+<li>變奏示意（同一地基三輪）：</li>
+<li>第 1 輪：右手分解和弦（八分）</li>
+<li>第 2 輪：右手改切分 block chords</li>
+<li>第 3 輪：右手加對位線條＋掛留（4-3、9-8）</li>
+</ul>
+<h2 id="_165">常見錯誤與迷思<a class="headerlink" href="#_165" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>低音寫得不可唱：ground bass 失去身份，變奏再多也像散掉。</li>
+<li>變奏只做「加更多音」：真正有效常是節奏、音域、密度、對位的改寫。</li>
+<li>摩擦沒有落點：掛留/倚音要有解決策略，否則張力會變噪音。</li>
+</ul>
+<h2 id="_166">聆聽與分析建議<a class="headerlink" href="#_166" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>低音每輪回來時，你是否仍清楚感到「同一地基」？</li>
+<li>哪些輪次在不換和聲下仍讓你覺得「更緊/更亮」？</li>
+<li><strong>注意什麼</strong>：</li>
+<li>掛留如何延後解決（張力如何被拉長）</li>
+<li>對位線條如何在不破壞骨架下推進時間</li>
+</ul>
+<hr>
+<h2 id="14">第14章　高階：複雜和聲技法與現代和聲語彙<a class="headerlink" href="#14" title="連結到此段落">&para;</a></h2>
+<h2 id="learning-objectives_14">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_14" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典/近代：理解 Neapolitan、增六和弦、遠關係轉調、planing、調性模糊的核心思維與聽感。</li>
+<li>爵士：掌握 altered dominants、upper structures、polychords、Coltrane changes 的「可操作」方法。</li>
+<li>流行/配樂：理解高階色彩如何在可聽性底線下落地（R&amp;B、City Pop、電影配樂）。</li>
+</ul>
+<h2 id="_167">核心理論說明<a class="headerlink" href="#_167" title="連結到此段落">&para;</a></h2>
+<h3 id="_168">定義<a class="headerlink" href="#_168" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>Neapolitan（♭II）</strong>：多在小調作下屬色彩（常見 ♭II⁶）。</li>
+<li><strong>增六和弦（Augmented Sixth Chords）</strong>：包含增六度張力，強烈導向 V。</li>
+<li><strong>遠關係轉調</strong>：轉向非同系調（常見三度關係，如 C→A♭）。</li>
+<li><strong>Planing（平行和弦）</strong>：同構和弦平行移動，弱化功能。</li>
+<li><strong>Altered dominant</strong>：V7 上使用 ♭9/♯9/♭5/♯5 等變化音。</li>
+<li><strong>Upper structure</strong>：把和弦視為「低音基礎＋上方三和弦/結構」。</li>
+<li><strong>Polychord/Polytonality</strong>：疊加兩個和弦或兩個調性感。</li>
+<li><strong>Coltrane changes</strong>：以三度關係快速輪轉中心的和聲系統化語彙。</li>
+</ul>
+<h3 id="_169">功能（為什麼高階和聲不是「更複雜」而已？）<a class="headerlink" href="#_169" title="連結到此段落">&para;</a></h3>
+<p>高階和聲的共同點，是把控制從「和弦是哪個」提升到：</p>
+<ul>
+<li>張力由什麼音程造成？（三全音、增六、半音摩擦）</li>
+<li>解決被延後到哪裡？（延遲解決、重寫解決）</li>
+<li>色彩主角是哪一個音？（#11、♭9、13…）</li>
+<li>音色與排列如何讓聽者仍能理解方向？</li>
+</ul>
+<p>換句話說：高階和聲是「音響設計」與「長距離敘事」的結合。</p>
+<h3 id="_170">聽覺效果<a class="headerlink" href="#_170" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>♭II（Neapolitan）：莊嚴、沉重、古典戲劇感。</li>
+<li>增六：像把導向 V 的磁力放大（「快要落地但還沒落」）。</li>
+<li>Planing：朦朧、漂浮、像色彩雲。</li>
+<li>Altered V：尖銳、刺激、推力強，適合高潮前或強轉折。</li>
+<li>Polychord：厚、野、帶現代感；若配置不清楚會變糊。</li>
+</ul>
+<h2 id="_171">古典／爵士／流行的對照說明<a class="headerlink" href="#_171" title="連結到此段落">&para;</a></h2>
+<h3 id="_172">古典（浪漫→近代）<a class="headerlink" href="#_172" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Neapolitan/增六常服務終止區：把回到 V 的力量放大。</li>
+<li>遠關係轉調用於擴張色彩世界（浪漫派常見三度關係）。</li>
+<li>近代（印象派）開始以 planing 與音響連續性弱化功能。</li>
+</ul>
+<h3 id="_173">爵士<a class="headerlink" href="#_173" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>altered/upper structure/polychord 是色彩語彙；功能可被替代與代理重寫。</li>
+<li>高級感很多來自：</li>
+<li>guide tones 的半音連接</li>
+<li>色彩音的取捨（不是全塞）</li>
+</ul>
+<h3 id="_174">流行／配樂<a class="headerlink" href="#_174" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>可聽性底線：旋律要站得住、低頻要乾淨、段落要清楚。</li>
+<li>高階色彩常被「藏在配置」：</li>
+<li>例如用 Cmaj7(9,#11) 但不把所有音都塞進去</li>
+<li>用音色與空間讓色彩變柔和</li>
+</ul>
+<h2 id="_175">實際編曲／作曲應用<a class="headerlink" href="#_175" title="連結到此段落">&para;</a></h2>
+<h3 id="_176">鋼琴<a class="headerlink" href="#_176" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Altered dominant 練法（先聽推力，再談理論）：</li>
+<li>在 C 調：| Dm7 | G7(♭9) | Cmaj7 |</li>
+<li>再換：G7(♯9)、G7(♭5)、G7(♯5)</li>
+<li>
+<p>盲聽比較：哪個更尖？哪個更暗？哪個更「爵士」？</p>
+</li>
+<li>
+<p>Upper structure 練法：</p>
+</li>
+<li>在 Cmaj7 上，右手彈 D 大三和弦（D–F#–A）→ 你會得到 #11 色彩。</li>
+<li>目標是「把色彩音當旋律一樣聽見」。</li>
+</ul>
+<h3 id="band_14">樂團／Band<a class="headerlink" href="#band_14" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Polychord 分配（很重要）：</li>
+<li>不要讓同一個樂器在同一音域塞兩套和弦</li>
+<li>把上層結構交給一個音色（Keys/Brass），下層交給另一個（Guitar/Strings），Bass 定根音。</li>
+</ul>
+<h3 id="daw_14">DAW 製作思維<a class="headerlink" href="#daw_14" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Planing 段落非常適合用合成器/Pad：</li>
+<li>同一 voicing 平行移動</li>
+<li>用濾波與空間的漸變，讓「不靠功能」也能推進</li>
+<li>遠轉調在配樂常與畫面切換綁在一起：轉調點可以搭配音色突變或環境音切換。</li>
+</ul>
+<h2 id="_177">譜例（以文字描述即可）<a class="headerlink" href="#_177" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>Neapolitan（a 小調示意）：B♭/D（♭II⁶）→ E7（V7）→ Am（i）</li>
+<li>增六（概念示意）：</li>
+<li>在小調終止前使用增六度音程，將兩音半音推向屬和弦音（導向 V）。</li>
+<li>Altered（C 調示意）：Dm7 | G7(♭9♯5) | Cmaj9</li>
+<li>Upper structure：Cmaj7 + 右手 D triad（D–F#–A）</li>
+<li>Polychord（概念示意）：</li>
+<li>下層：Fmaj</li>
+<li>上層：E♭maj</li>
+<li>疊加形成厚重聚合色彩（配置要分音域）。</li>
+</ul>
+<h2 id="_178">常見錯誤與迷思<a class="headerlink" href="#_178" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>迷思 1：高階=堆滿</strong></li>
+<li>高階其實是「取捨」：選一個色彩主角，其餘音讓位。</li>
+<li><strong>迷思 2：印象派=沒有功能</strong></li>
+<li>常是功能被弱化，但仍有連續性（音程結構、聲響走向）。</li>
+<li><strong>迷思 3：多調性=亂</strong></li>
+<li>多調性若成立，通常是因為配置分明、節奏/動機穩定，讓聽者抓得到核心。</li>
+</ul>
+<h2 id="3_18">習作（至少 3 題）<a class="headerlink" href="#3_18" title="連結到此段落">&para;</a></h2>
+<ol>
+<li>寫 8 小節小調終止段：必須包含 ♭II⁶ 或增六概念，導向 V→i。</li>
+<li>寫 8 小節爵士進行：至少包含 1 個 altered V 與 1 個 upper structure（以右手三和弦標註）。</li>
+<li>做 8 小節 planing：選一個四音 voicing 平行移動；並用音色/空間/密度做推進（不要只靠換和弦）。</li>
+</ol>
+<h2 id="_179">聆聽與分析建議<a class="headerlink" href="#_179" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>你感到「張力被延後」的地方（常是色彩和聲＋延遲解決）。</li>
+<li>你感到「漂浮」的地方（planing/調性模糊）。</li>
+<li><strong>注意什麼</strong>：</li>
+<li>高階分析先抓：穩定點、張力來源、回收方式。不要一開始就想標完所有和弦。</li>
+</ul>
+<hr>
+<h2 id="15-91113drop-2">第15章　高階：編曲與配器技巧（9/11/13／Drop-2／旋律優先／對位融合）<a class="headerlink" href="#15-91113drop-2" title="連結到此段落">&para;</a></h2>
+<h2 id="learning-objectives_15">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_15" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>能把 9/11/13 配得清楚、不糊，並能說清楚你為什麼留/省某些音。</li>
+<li>了解 Close / Open / Drop-2 的排列思維，並能在鋼琴與合奏中落地。</li>
+<li>讓旋律永遠最清楚：配置服務旋律與段落，而不是掩蓋。</li>
+<li>能把對位思維融入和聲編曲（伴奏也像旋律）。</li>
+</ul>
+<h2 id="_180">核心理論說明<a class="headerlink" href="#_180" title="連結到此段落">&para;</a></h2>
+<h3 id="_181">定義<a class="headerlink" href="#_181" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>Drop-2</strong>：把四聲部中「第二高音」下移八度，形成更開闊的排列（合奏常用）。</li>
+<li><strong>對位式伴奏（Counter-melody）</strong>：伴奏聲部本身有旋律線條，但合起來仍暗示和弦。</li>
+</ul>
+<h3 id="_182">功能（高階配器在做什麼？）<a class="headerlink" href="#_182" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>把和弦翻譯成「可被合奏清楚演出的聲響」：</li>
+<li>誰負責功能（3/7）</li>
+<li>誰負責色彩（9/13/#11）</li>
+<li>誰負責地基（根音）</li>
+<li>旋律優先：</li>
+<li>如果旋律聽不清楚，再華麗的和聲都會失效。</li>
+</ul>
+<h3 id="_183">聽覺效果<a class="headerlink" href="#_183" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Drop-2：更寬、更像合奏、呼吸感更大。</li>
+<li>色彩音（9/13/#11）若放在高音域，會像「光澤」；放低音域容易變成「濁」。</li>
+<li>對位式伴奏會讓段落更有生命力（不是只在和弦格子裡換）。</li>
+</ul>
+<h2 id="_184">古典／爵士／流行的對照說明<a class="headerlink" href="#_184" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典：聲部清晰與音色分層；九和弦常以配器分散呈現。</li>
+<li>爵士：根音多交給貝斯；3/7/9/13 分配到不同聲部；排列法是聲響設計核心。</li>
+<li>流行：用 layer 與空間做厚度；用留白、停頓與齊入做戲劇對比。</li>
+</ul>
+<h2 id="_185">實際編曲／作曲應用<a class="headerlink" href="#_185" title="連結到此段落">&para;</a></h2>
+<h3 id="_186">鋼琴<a class="headerlink" href="#_186" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>大和弦配置建議（最不容易糊）：</li>
+<li>左手：根音（必要時加五度）</li>
+<li>右手：3、7（一定要有）</li>
+<li>右手再加：9 或 13（挑 1–2 個主色彩）</li>
+</ul>
+<h3 id="band_15">樂團／Band<a class="headerlink" href="#band_15" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>旋律優先的兩個原則：</li>
+<li>不要讓和弦最高音長時間壓在旋律同區域</li>
+<li>色彩音由次要音色承擔並控制音量（讓它像光澤，不像主角）</li>
+</ul>
+<h3 id="daw_15">DAW 製作思維<a class="headerlink" href="#daw_15" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>漸進加厚（非常有效）：</li>
+<li>主歌：三和弦/少音</li>
+<li>預副歌：加 7 或 add9</li>
+<li>副歌：加 9/13 + layer</li>
+<li>留白與齊入：</li>
+<li>抽掉和聲只留旋律 1 小節</li>
+<li>下一小節全樂器齊入（強終止或強落點）</li>
+</ul>
+<h2 id="_187">譜例（以文字描述即可）<a class="headerlink" href="#_187" title="連結到此段落">&para;</a></h2>
+<h3 id="1-c13cegbda">1) C13（C–E–G–B♭–D–A）分工示例<a class="headerlink" href="#1-c13cegbda" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Bass：C</li>
+<li>Keys：E–B♭–D–A（3–7–9–13）</li>
+<li>Guitar：可彈 B♭–E–A（7–3–13）或加入 D（9）</li>
+</ul>
+<h3 id="2-drop-2">2) Drop-2 概念示意<a class="headerlink" href="#2-drop-2" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>假設四聲部由高到低是：S–A–T–B</li>
+<li>Drop-2：把「第二高音（A）」下移八度 → 你會得到更開闊的排列（合奏更好聽）。</li>
+</ul>
+<h3 id="3_19">3) 對位式伴奏示意<a class="headerlink" href="#3_19" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>低音線：C–B–A–G</li>
+<li>上方對位線：E–F–E–D</li>
+<li>合起來仍可解釋為 I–V6–vi–V（或相近功能），但聽感像兩條旋律互動。</li>
+</ul>
+<h2 id="_188">常見錯誤與迷思<a class="headerlink" href="#_188" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>錯誤 1：9/11/13 全塞</strong></li>
+<li>會糊。先選主角（例如只選 9 與 13），其餘音讓位。</li>
+<li><strong>錯誤 2：色彩音放太低</strong></li>
+<li>低音區色彩音容易變濁；把它上移八度通常立刻改善。</li>
+<li><strong>錯誤 3：對位＝亂跑</strong></li>
+<li>對位線條仍要服務旋律與段落，不要搶主角。</li>
+</ul>
+<h2 id="3_20">習作（至少 3 題）<a class="headerlink" href="#3_20" title="連結到此段落">&para;</a></h2>
+<ol>
+<li>把一段 8 小節和聲（含 9/13）寫成三種配器：
+   - 鋼琴獨奏
+   - Band（Bass/Guitar/Keys/Drums）
+   - 管弦（至少分低弦、中層、高音旋律）</li>
+<li>寫 4 小節對位式伴奏：要求每拍合起來仍可解釋為同一和弦進行。</li>
+<li>做一段「漸進加和聲」：同一旋律從單音到九和弦逐步加厚，最後做一次強終止。</li>
+</ol>
+<h2 id="_189">聆聽與分析建議<a class="headerlink" href="#_189" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>旋律是否被托住（更清楚、更亮），還是被和聲淹沒？</li>
+<li>色彩音由哪個音色呈現？（誰在負責#11/13）</li>
+<li><strong>注意什麼</strong>：</li>
+<li>你想學的是「聲響如何做到」：分工、音域、密度、空間，而不只是和弦名字。</li>
+</ul>
+<hr>
+<h2 id="16">第16章　高階：作曲與即興應用（風格融合／多次轉調／高難度即興／大型曲構思）<a class="headerlink" href="#16" title="連結到此段落">&para;</a></h2>
+<h2 id="learning-objectives_16">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_16" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>能以同一主題（動機）做跨風格改寫：古典句法、爵士色彩、流行段落能量。</li>
+<li>能設計多次轉調但仍連貫的和聲旅程（長距離張力控制）。</li>
+<li>能用系統練習法處理高難度 changes 的即興：慢速落點→語句→速度。</li>
+<li>能以「和聲走向圖」規劃大型作品（例如奏鳴曲式或長篇段落）。</li>
+</ul>
+<h2 id="_190">核心理論說明<a class="headerlink" href="#_190" title="連結到此段落">&para;</a></h2>
+<h3 id="_191">定義<a class="headerlink" href="#_191" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>動機（Motif）</strong>：可辨識、可變形的最小材料（節奏特徵、音程特徵、輪廓）。</li>
+<li><strong>長距離和聲組織</strong>：不是兩小節的好聽，而是整段如何鋪排穩定點與張力點。</li>
+</ul>
+<h3 id="_192">功能<a class="headerlink" href="#_192" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>高階創作最常遇到的問題不是「我不會很多和弦」，而是：</li>
+<li>我怎麼把聽者帶走（變化、轉調、色彩）</li>
+<li>我怎麼把聽者帶回來（回收、落地、動機回歸）</li>
+</ul>
+<h3 id="_193">聽覺效果<a class="headerlink" href="#_193" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>成功的多次轉調會讓人覺得：</li>
+<li>世界在變（色彩/重心改變）</li>
+<li>但故事仍延續（動機/節奏/音色連續性）</li>
+</ul>
+<h2 id="_194">古典／爵士／流行的對照說明<a class="headerlink" href="#_194" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典：以曲式安排轉調（呈示部到屬調、發展段遠調、再現回主調）。</li>
+<li>爵士：以 changes 驅動即興（快速換地形），多靠 guide tones 與語句落點維持連貫。</li>
+<li>流行：以段落能量（主歌/預副歌/副歌/橋段）維持連貫；複雜常被藏在配置與色彩裡。</li>
+</ul>
+<h2 id="_195">實際編曲／作曲應用<a class="headerlink" href="#_195" title="連結到此段落">&para;</a></h2>
+<h3 id="_196">鋼琴<a class="headerlink" href="#_196" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>先把主題寫成可變形動機：</li>
+<li>節奏特徵要清楚（例如「短短長」或「切分」）</li>
+<li>音程特徵要清楚（例如上行小二度、下行小三度）</li>
+<li>再做三種變形：</li>
+<li>轉調不變形（同主題換調）</li>
+<li>節奏變形（增值/減值）</li>
+<li>輪廓變形（倒影/反行/移位）</li>
+</ul>
+<h3 id="band_16">樂團／Band<a class="headerlink" href="#band_16" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>風格融合時先固定一件事：</li>
+<li>固定主題（旋律不變）改語法（和聲/節奏/音色）</li>
+<li>或固定 groove（節奏不變）改和聲色彩</li>
+<li>避免「全部都變」造成聽者失焦。</li>
+</ul>
+<h3 id="daw_16">DAW 製作思維<a class="headerlink" href="#daw_16" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>多次轉調段落要維持「世界一致」：</li>
+<li>讓核心音色/空間一致</li>
+<li>把轉調感交給和聲與低音線</li>
+<li>用 automation 做長距離張力：</li>
+<li>濾波逐步打開</li>
+<li>密度逐步加厚</li>
+<li>最後回收（drop 或終止）</li>
+</ul>
+<h2 id="_197">譜例（以文字描述即可）<a class="headerlink" href="#_197" title="連結到此段落">&para;</a></h2>
+<h3 id="1_5">1) 「奏鳴曲呈示部」和聲藍圖（概念）<a class="headerlink" href="#1_5" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>主題（主調）：I（穩定）</li>
+<li>橋段：用副屬/序進逐步轉向 V</li>
+<li>第二主題（屬調）：V（新中心確立）</li>
+<li>結尾：以屬調終止（留期待）</li>
+</ul>
+<h3 id="2_5">2) 「多次轉調但連貫」的策略清單<a class="headerlink" href="#2_5" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>策略 A：動機不變、只轉調</li>
+<li>策略 B：低音線連續（半音/順階），和弦在上方換</li>
+<li>策略 C：用共同音當「線」把兩個遠調綁起來</li>
+</ul>
+<h2 id="_198">常見錯誤與迷思<a class="headerlink" href="#_198" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>風格融合＝拼貼：更成熟的方法是「同一主題用不同語法說」。</li>
+<li>高難度即興只靠手速：先把 3/7 落點練到穩，再加速度與裝飾。</li>
+<li>大型曲構思只靠直覺：直覺很重要，但你需要一張「和聲地圖」避免走散。</li>
+</ul>
+<h2 id="3_21">習作（至少 3 題）<a class="headerlink" href="#3_21" title="連結到此段落">&para;</a></h2>
+<ol>
+<li><strong>風格融合</strong>：用同一 8 小節主題寫三版：
+   - 古典：功能清楚、句尾終止明確
+   - 爵士：加入替代與延伸（至少 1 個 altered 或 tritone sub）
+   - 流行：循環化＋hook（段落能量清楚）</li>
+<li><strong>多次轉調</strong>：每兩小節轉調一次（可沿五度圈或三度關係），最後回主調；要求每次轉調都有落地手段（V–I 或 ii–V–I）。</li>
+<li><strong>即興深化</strong>：選一段高難度 changes：
+   - 第 1 週：每拍只彈 3 或 7（落點）
+   - 第 2 週：加入經過音/包圍音（enclosure）
+   - 第 3 週：加入節奏語句並加速
+   每週錄音、回聽、標出「最像落地」的點。</li>
+</ol>
+<h2 id="_199">聆聽與分析建議<a class="headerlink" href="#_199" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>作品如何「回家」：終止？動機回歸？低音回到主音？</li>
+<li>轉調再多，聽者仍能跟上靠的是什麼（動機/節奏/音色/低音）？</li>
+<li><strong>注意什麼</strong>：</li>
+<li>高階作品的關鍵不一定是和弦更怪，而是張力回收更精準。</li>
+</ul>
+<hr>
+<h2 id="17">第17章　高階：聆聽與分析範例（浪漫／印象派／多調性／現代爵士／前衛流行）<a class="headerlink" href="#17" title="連結到此段落">&para;</a></h2>
+<h2 id="learning-objectives_17">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_17" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>能把高階作品的聽感翻譯成結構：穩定點、張力來源、回收方式。</li>
+<li>能在「不一定有清楚功能」的段落中，仍然抓到推進邏輯（音響連續性、動機、密度）。</li>
+</ul>
+<h2 id="_200">核心理論說明<a class="headerlink" href="#_200" title="連結到此段落">&para;</a></h2>
+<h3 id="_201">定義<a class="headerlink" href="#_201" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>高階分析</strong>：不只標和弦，更要說明「為何這樣安排能成立」。</li>
+<li><strong>穩定點（Stability anchor）</strong>：聽者覺得站得住的位置，可能是主音、可能是重複低音、也可能是音色中心。</li>
+</ul>
+<h3 id="_202">功能<a class="headerlink" href="#_202" title="連結到此段落">&para;</a></h3>
+<p>高階作品常把「功能」弱化或延後，分析時建議用兩層眼鏡：</p>
+<ol>
+<li>功能層：哪裡仍像 S→D→T？哪裡仍有終止？</li>
+<li>音響層：若功能模糊，靠什麼成立？（音程結構、planing、持續低音、節奏/音色連續性）</li>
+</ol>
+<h3 id="_203">聽覺效果<a class="headerlink" href="#_203" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>張力可能不再靠「換到屬」而來，而是靠：</li>
+<li>延遲解決</li>
+<li>半音摩擦</li>
+<li>平行和弦</li>
+<li>多調性疊加</li>
+<li>密度與音色變形</li>
+</ul>
+<h2 id="_204">古典／爵士／流行的對照說明<a class="headerlink" href="#_204" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典（浪漫/近代）：延遲解決、遠轉調、調性模糊，張力更長距離。</li>
+<li>爵士（現代）：色彩語彙極豐富，功能可被替代重寫。</li>
+<li>流行/配樂：用製作與段落能量包住複雜和聲，讓大眾仍能跟上。</li>
+</ul>
+<h2 id="_205">實際編曲／作曲應用<a class="headerlink" href="#_205" title="連結到此段落">&para;</a></h2>
+<h3 id="_206">鋼琴<a class="headerlink" href="#_206" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>分析高階段落時，先做兩件事：</li>
+<li>只彈低音（找重心）</li>
+<li>只彈內聲（3/7/#11/13 等）找張力來源</li>
+</ul>
+<h3 id="band_17">樂團／Band<a class="headerlink" href="#band_17" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>研究「誰在演色彩音」：高階聲響常是配器分工產物，而不是鋼琴把所有音塞滿。</li>
+</ul>
+<h3 id="daw_17">DAW 製作思維<a class="headerlink" href="#daw_17" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>高階推進常靠 automation：</li>
+<li>濾波、空間、密度、瞬間留白</li>
+<li>這些等價於古典的「延遲解決」與「長距離張力」</li>
+</ul>
+<h2 id="_207">譜例（以文字描述即可）<a class="headerlink" href="#_207" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>多調性疊加示意：</li>
+<li>低音與伴奏形成一個屬七色彩</li>
+<li>上方旋律/和聲同時暗示另一三和弦色彩</li>
+<li>你會聽到強摩擦，但若節奏/動機穩定，整體仍成立</li>
+</ul>
+<h2 id="_208">常見錯誤與迷思<a class="headerlink" href="#_208" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>聽不懂就放棄：先抓「穩定點」與「張力來源」，不用一開始就抓完整和弦。</li>
+<li>只用理論不寫聽感：高階分析需要把「我聽到什麼」寫進去，否則只是貼標籤。</li>
+</ul>
+<h2 id="3_22">習作（至少 3 題）<a class="headerlink" href="#3_22" title="連結到此段落">&para;</a></h2>
+<ol>
+<li>選一段印象派作品：找出 planing 段落，描述它如何模糊調性（靠同構平行、靠音色、靠重複）。</li>
+<li>選 &ldquo;Maiden Voyage&rdquo; 一段：描述 modal vamp 如何用配置與節奏推進（和弦不變但能量在變）。</li>
+<li>選一首和聲前衛流行段落：標出借用/轉調點，並描述它在情緒曲線上做了什麼（更亮、更暗、更推、或更漂浮）。</li>
+</ol>
+<h2 id="_209">聆聽與分析建議<a class="headerlink" href="#_209" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>古典</strong>：瓦格納《崔斯坦》、德布西《月光》、史特拉汶斯基《春之祭》。</li>
+<li>聽哪裡：張力延後、planing、多調性衝擊。</li>
+<li>注意什麼：穩定點在哪？是主音？是動機？是音色中心？</li>
+<li><strong>爵士</strong>：&rdquo;Giant Steps&rdquo;、&rdquo;Maiden Voyage&rdquo;、Maria Schneider。</li>
+<li>聽哪裡：調性輪轉、modal 板塊、和聲排列。</li>
+<li>注意什麼：guide tones 如何保持連貫。</li>
+<li><strong>流行/配樂</strong>：&rdquo;Bohemian Rhapsody&rdquo;、Stevie Wonder、久石讓。</li>
+<li>聽哪裡：段落轉場與轉調如何仍統一。</li>
+<li>注意什麼：製作層次如何替和聲「翻譯成情緒」。</li>
+</ul>
+<hr>
+<h2 id="18">第18章　高階：習作題目與發展方向（混搭編曲／管弦配器／論文分析／作品集）<a class="headerlink" href="#18" title="連結到此段落">&para;</a></h2>
+<h2 id="learning-objectives_18">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_18" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>把技法收束成可展示成果：編曲、配器、分析、創作。</li>
+<li>建立個人和聲語彙庫：你知道自己在不同情緒下會選什麼手段。</li>
+</ul>
+<h2 id="_210">核心理論說明<a class="headerlink" href="#_210" title="連結到此段落">&para;</a></h2>
+<h3 id="_211">定義<a class="headerlink" href="#_211" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>成果導向</strong>：不是再學更多名詞，而是能完成一個完整作品/完整分析並自我解釋。</li>
+</ul>
+<h3 id="_212">功能<a class="headerlink" href="#_212" title="連結到此段落">&para;</a></h3>
+<p>高階練習的目的在於「整合與取捨」：</p>
+<ul>
+<li>你要能說清楚：</li>
+<li>我這段為什麼用副屬？（推進）</li>
+<li>我這段為什麼用借用？（換色）</li>
+<li>我這段為什麼延後解決？（拉張力）</li>
+<li>我這段為什麼用某種配置？（讓旋律站住、讓聲響乾淨）</li>
+</ul>
+<h3 id="_213">聽覺效果<a class="headerlink" href="#_213" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>作品級能力會讓聽者覺得：</li>
+<li>你不是在「堆技巧」，而是在「講故事」</li>
+</ul>
+<h2 id="_214">古典／爵士／流行的對照說明<a class="headerlink" href="#_214" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典：長距離結構與配器分層。</li>
+<li>爵士：色彩決策與即興語句。</li>
+<li>流行：段落能量與製作翻譯（讓複雜仍可聽）。</li>
+</ul>
+<h2 id="_215">實際編曲／作曲應用<a class="headerlink" href="#_215" title="連結到此段落">&para;</a></h2>
+<h3 id="_216">鋼琴<a class="headerlink" href="#_216" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>任何作品都先用鋼琴做出「能成立」版本：</li>
+<li>低音線清楚</li>
+<li>旋律站得住</li>
+<li>句尾有落點</li>
+</ul>
+<h3 id="band_18">樂團／Band<a class="headerlink" href="#band_18" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>混搭編曲時：</li>
+<li>先固定節奏骨架與主題</li>
+<li>再替換和聲語彙與配器語彙</li>
+</ul>
+<h3 id="daw_18">DAW 製作思維<a class="headerlink" href="#daw_18" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>作品集最好包含：</li>
+<li>MIDI 工程（可修改/可教學）</li>
+<li>音訊 demo（可播放）</li>
+<li>短文分析（你怎麼做、為什麼這樣做）</li>
+</ul>
+<h2 id="_217">譜例（以文字描述即可）<a class="headerlink" href="#_217" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>作品集每首曲後附 5 行註記（建議格式）：
+  1. 調性/速度/拍號
+  2. 主要進行（8 小節骨架）
+  3. 使用技法（副屬/借用/轉調/替代/planing…）
+  4. 段落能量設計（主歌→副歌如何加厚）
+  5. 最滿意的一個小節：你聽到什麼？為什麼有效？</li>
+</ul>
+<h2 id="_218">常見錯誤與迷思<a class="headerlink" href="#_218" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>只做練習不做作品：作品會逼你面對「取捨」，這才是高階。</li>
+<li>作品只靠音色：音色能加分，但不能掩蓋和聲與配置問題。</li>
+</ul>
+<h2 id="3_23">習作（至少 3 題）<a class="headerlink" href="#3_23" title="連結到此段落">&para;</a></h2>
+<ol>
+<li><strong>風格混搭編曲習作</strong>：選一首民謠/聖歌，改成三段連續：
+   - A：古典弦四（功能清楚、聲部流暢）
+   - B：爵士 Big Band（延伸音與排列）
+   - C：搖滾/流行 band（段落能量與音色層）
+   要求三段之間轉場有策略（共同音/共同節奏/停頓）。</li>
+<li><strong>管弦配器和聲</strong>：給 8 小節鋼琴和聲，改編為管弦：
+   - 標出每個和弦的分工（低音/3/7/色彩）由哪些樂器負責
+   - 設計力度與音域變化（讓段落有呼吸）</li>
+<li><strong>大型和聲分析論文（2000 字以上）</strong>：選一首作品，分析：
+   - 和聲骨架（主要進行與終止）
+   - 色彩手段（借用/副屬/替代/planing）
+   - 你的聽覺描述（哪裡緊、哪裡鬆、為什麼）</li>
+</ol>
+<h2 id="_219">聆聽與分析建議<a class="headerlink" href="#_219" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>建議建立「每週一首」和聲日記：</li>
+<li>每週挑 4–8 小節寫下進行與亮點</li>
+<li>彈回去驗證</li>
+<li>下週嘗試改寫成自己的版本（最有效的學習方式）</li>
+</ul>
+<hr>
+<h2 id="19">第19章　結語：把和聲變成你的語言<a class="headerlink" href="#19" title="連結到此段落">&para;</a></h2>
+<h2 id="learning-objectives_19">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives_19" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>從分析 → 模仿 → 變形 → 創作，建立可持續路線。</li>
+<li>在古典、爵士、流行之間形成互補的和聲觀。</li>
+</ul>
+<h2 id="_220">核心理論說明<a class="headerlink" href="#_220" title="連結到此段落">&para;</a></h2>
+<h3 id="_221">定義<a class="headerlink" href="#_221" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>和聲語言</strong>：你在不同情緒、不同段落、不同編制下，會選哪些和弦、怎麼配置、怎麼推進。</li>
+</ul>
+<h3 id="_222">功能<a class="headerlink" href="#_222" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>古典給你句法與聲部；爵士給你色彩與替代；流行給你段落與聲響設計。</li>
+<li>三者不是互斥，而是同一件事的三個視角。</li>
+</ul>
+<h3 id="_223">聽覺效果<a class="headerlink" href="#_223" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>成熟的和聲控制會讓聽者覺得：</li>
+<li>緊張是有原因的</li>
+<li>解決是必然的</li>
+<li>轉暗/轉亮是有目的的</li>
+</ul>
+<h2 id="_224">古典／爵士／流行的對照說明<a class="headerlink" href="#_224" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>若你以古典為根：你會更擅長控制解決與句法。</li>
+<li>若你以爵士為根：你會更擅長控制色彩與推進。</li>
+<li>若你以流行為根：你會更擅長控制段落能量與聲響。</li>
+</ul>
+<h2 id="_225">實際編曲／作曲應用<a class="headerlink" href="#_225" title="連結到此段落">&para;</a></h2>
+<h3 id="_226">鋼琴<a class="headerlink" href="#_226" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>維持「每天可做」的練習：12 調、ii–V–I、借用與副屬。</li>
+</ul>
+<h3 id="band_19">樂團／Band<a class="headerlink" href="#band_19" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>每次排練選一個和聲亮點做 A/B 版本比較，讓耳朵帶路。</li>
+</ul>
+<h3 id="daw_19">DAW 製作思維<a class="headerlink" href="#daw_19" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>把和聲當成可自動化的情緒曲線：不只和弦，還有密度、音色、空間與節奏。</li>
+</ul>
+<h2 id="_227">譜例（以文字描述即可）<a class="headerlink" href="#_227" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>成熟的 8 小節設計（示意）：</li>
+<li>句中用副屬推進</li>
+<li>句尾用借用轉暗</li>
+<li>最後回到清楚終止</li>
+</ul>
+<h2 id="_228">常見錯誤與迷思<a class="headerlink" href="#_228" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>以為學完就結束：和聲是一生的耳朵工程。</li>
+</ul>
+<h2 id="3_24">習作（至少 3 題）<a class="headerlink" href="#3_24" title="連結到此段落">&para;</a></h2>
+<ol>
+<li>寫一首 1 分鐘小品：至少包含 1 次副屬、1 次借用、1 次轉調或升 key。</li>
+<li>同一旋律做三種和聲版本（古典／爵士／流行），並各寫一句「你想像的畫面」。</li>
+<li>每週聽寫一段你喜歡的和聲（4 小節即可），建立個人資料庫。</li>
+</ol>
+<h2 id="_229">聆聽與分析建議<a class="headerlink" href="#_229" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>選你真正喜歡的音樂：你願意反覆聽、反覆彈、反覆改寫，能力才會長出來。</li>
+</ul>
+<hr>
+        <div class="footer">來源：講義/（分章） → 和聲學講義.md（合併） → 和聲學講義.html（RWD）</div>
+      </article>
+    </div>
+  </main>
+
+  <div class="backtop"><a href="#top" title="回到頂部">↑</a></div>
+</body>
+</html>

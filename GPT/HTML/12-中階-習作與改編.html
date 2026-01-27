@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>第12章　中階：習作題目與練習方向（副屬／借用／轉調／改編）</title>
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --panel: #0f1420;
+      --text: #e8eefc;
+      --muted: #a9b4cc;
+      --border: rgba(255,255,255,.10);
+      --accent: #7aa2ff;
+      --accent-2: #7ef0c6;
+      --code-bg: rgba(255,255,255,.06);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 14px;
+      --content-max: 920px;
+      --toc-max: 320px;
+      --lh: 1.8;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f7fb;
+        --panel: #ffffff;
+        --text: #111827;
+        --muted: #4b5563;
+        --border: rgba(17,24,39,.12);
+        --accent: #2b5bff;
+        --accent-2: #00a97f;
+        --code-bg: rgba(17,24,39,.06);
+        --shadow: 0 10px 30px rgba(17,24,39,.10);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 900px at 10% -10%, rgba(122,162,255,.25), transparent 55%),
+                  radial-gradient(1000px 800px at 100% 0%, rgba(126,240,198,.18), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      line-height: var(--lh);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      padding: 18px 16px 10px;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: color-mix(in oklab, var(--bg) 70%, transparent);
+      border-bottom: 1px solid var(--border);
+      z-index: 30;
+    }
+
+    .topbar {
+      max-width: calc(var(--content-max) + var(--toc-max) + 56px);
+      margin: 0 auto;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .brand .title {
+      font-size: 14px;
+      letter-spacing: .2px;
+      color: var(--text);
+      font-weight: 650;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand .subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chip {
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+      white-space: nowrap;
+    }
+
+    main {
+      max-width: calc(var(--content-max) + var(--toc-max) + 56px);
+      margin: 0 auto;
+      padding: 18px 16px 64px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    @media (min-width: 1024px) {
+      .layout {
+        grid-template-columns: minmax(0, var(--toc-max)) minmax(0, 1fr);
+        align-items: start;
+      }
+    }
+
+    .panel {
+      background: color-mix(in oklab, var(--panel) 92%, transparent);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .toc-panel {
+      display: none;
+      padding: 14px 14px 10px;
+    }
+
+    @media (min-width: 1024px) {
+      .toc-panel {
+        display: block;
+      }
+    }
+
+    .toc-panel h2 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      letter-spacing: .2px;
+    }
+
+    .toc-panel nav {
+      max-height: calc(100vh - 140px);
+      overflow: auto;
+      padding-right: 6px;
+    }
+
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .toc li {
+      margin: 6px 0;
+    }
+
+    .toc a {
+      display: block;
+      padding: 6px 8px;
+      border-radius: 10px;
+      color: var(--muted);
+      border: 1px solid transparent;
+      line-height: 1.4;
+    }
+
+    .toc a:hover {
+      color: var(--text);
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+      border-color: var(--border);
+      text-decoration: none;
+    }
+
+    .toc ul ul {
+      padding-left: 14px;
+      margin-top: 6px;
+      border-left: 1px dashed var(--border);
+    }
+
+    /* Mobile TOC as collapsible */
+    details.toc-mobile {
+      display: block;
+    }
+
+    @media (min-width: 1024px) {
+      details.toc-mobile { display: none; }
+    }
+
+    details.toc-mobile summary {
+      cursor: pointer;
+      user-select: none;
+      padding: 12px 14px;
+      font-weight: 650;
+      border-bottom: 1px solid var(--border);
+    }
+
+    details.toc-mobile summary::marker {
+      color: var(--muted);
+    }
+
+    details.toc-mobile .toc-body {
+      padding: 10px 14px 14px;
+      max-height: 60vh;
+      overflow: auto;
+    }
+
+    .content {
+      padding: 18px 18px 22px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    @media (min-width: 768px) {
+      .content { padding: 24px 28px 30px; }
+    }
+
+    .content > :first-child { margin-top: 0; }
+
+    h1, h2, h3, h4 {
+      line-height: 1.25;
+      scroll-margin-top: 84px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 18px 0 12px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin: 22px 0 10px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin: 18px 0 8px;
+      color: color-mix(in oklab, var(--text) 92%, var(--muted));
+    }
+
+    h4 {
+      font-size: 14px;
+      margin: 14px 0 6px;
+      color: var(--muted);
+    }
+
+    p { margin: 10px 0; }
+
+    ul, ol {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+
+    li { margin: 6px 0; }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 22px 0;
+    }
+
+    blockquote {
+      margin: 14px 0;
+      padding: 12px 14px;
+      border-left: 3px solid var(--accent);
+      background: color-mix(in oklab, var(--panel) 75%, transparent);
+      border-radius: 12px;
+      color: color-mix(in oklab, var(--text) 92%, var(--muted));
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2px 6px;
+      font-size: 0.92em;
+    }
+
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      overflow: auto;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    pre code {
+      background: transparent;
+      border: 0;
+      padding: 0;
+      border-radius: 0;
+      font-size: 0.92em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: color-mix(in oklab, var(--panel) 88%, transparent);
+      display: block;
+    }
+
+    @media (min-width: 600px) {
+      table { display: table; }
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 10px;
+      vertical-align: top;
+    }
+
+    th {
+      text-align: left;
+      color: var(--text);
+      font-weight: 650;
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .permalink {
+      opacity: .0;
+      margin-left: 8px;
+      font-size: .9em;
+      color: var(--muted);
+    }
+
+    h1:hover .permalink,
+    h2:hover .permalink,
+    h3:hover .permalink,
+    h4:hover .permalink {
+      opacity: .9;
+    }
+
+    .footer {
+      margin-top: 18px;
+      padding: 12px 14px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .backtop {
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      z-index: 40;
+    }
+
+    .backtop a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--panel) 85%, transparent);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .backtop a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a id="top"></a>
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <div class="title">第12章　中階：習作題目與練習方向（副屬／借用／轉調／改編）</div>
+        <div class="subtitle">來源：講義/12-中階-習作與改編.md  →  HTML/12-中階-習作與改編.html</div>
+      </div>
+      <a class="chip" href="index.html" style="text-decoration:none">← 目錄</a>
+      <div class="chip">最後更新：2026-01-27 14:28</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="layout">
+      <section class="panel">
+        <details class="toc-mobile">
+          <summary>本頁目錄（點開）</summary>
+          <div class="toc-body"><div class="toc">
+<ul>
+<li><a href="#12">第12章 中階：習作題目與練習方向（副屬／借用／轉調／改編）</a><ul>
+<li><a href="#learning-objectives">章節目標（Learning Objectives）</a></li>
+<li><a href="#_1">核心理論說明</a><ul>
+<li><a href="#_2">定義</a></li>
+<li><a href="#_3">功能</a></li>
+<li><a href="#_4">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_5">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_6">實際編曲／作曲應用</a><ul>
+<li><a href="#_7">鋼琴</a></li>
+<li><a href="#band">樂團／Band</a></li>
+<li><a href="#daw">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_8">譜例（以文字描述即可）</a></li>
+<li><a href="#_9">常見錯誤與迷思</a></li>
+<li><a href="#3">習作（至少 3 題）</a></li>
+<li><a href="#_10">聆聽與分析建議</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+        </details>
+        <div class="toc-panel" aria-label="目錄">
+          <h2>本頁目錄</h2>
+          <nav><div class="toc">
+<ul>
+<li><a href="#12">第12章 中階：習作題目與練習方向（副屬／借用／轉調／改編）</a><ul>
+<li><a href="#learning-objectives">章節目標（Learning Objectives）</a></li>
+<li><a href="#_1">核心理論說明</a><ul>
+<li><a href="#_2">定義</a></li>
+<li><a href="#_3">功能</a></li>
+<li><a href="#_4">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_5">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_6">實際編曲／作曲應用</a><ul>
+<li><a href="#_7">鋼琴</a></li>
+<li><a href="#band">樂團／Band</a></li>
+<li><a href="#daw">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_8">譜例（以文字描述即可）</a></li>
+<li><a href="#_9">常見錯誤與迷思</a></li>
+<li><a href="#3">習作（至少 3 題）</a></li>
+<li><a href="#_10">聆聽與分析建議</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+        </div>
+      </section>
+
+      <article class="panel content" aria-label="正文">
+        <h1 id="12">第12章　中階：習作題目與練習方向（副屬／借用／轉調／改編）<a class="headerlink" href="#12" title="連結到此段落">&para;</a></h1>
+<h2 id="learning-objectives">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>讓中階語彙變成可操作能力：你能主動選擇「推進」或「顏色」。</li>
+<li>建立改編與再和聲化的工作流程。</li>
+</ul>
+<h2 id="_1">核心理論說明<a class="headerlink" href="#_1" title="連結到此段落">&para;</a></h2>
+<h3 id="_2">定義<a class="headerlink" href="#_2" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>中階能力標準</strong>：你不只會做，還能說清楚「為什麼這樣更推／更暗／更亮」。</li>
+</ul>
+<h3 id="_3">功能<a class="headerlink" href="#_3" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>副屬＝加速器</li>
+<li>借用＝調色盤</li>
+<li>轉調＝換場景</li>
+<li>非和弦音＝局部推進（不換和弦也能前進）</li>
+</ul>
+<h3 id="_4">聽覺效果<a class="headerlink" href="#_4" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>你應能明確聽出：</li>
+<li>哪裡是「更推」（副屬/次屬）</li>
+<li>哪裡是「轉暗/復古」（借用）</li>
+<li>哪裡是「換場景」（轉調）</li>
+</ul>
+<h2 id="_5">古典／爵士／流行的對照說明<a class="headerlink" href="#_5" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典：更重視規範下的控制（解決、聲部導向）。</li>
+<li>爵士：更重視色彩選擇與即時反應。</li>
+<li>流行：更重視段落情緒與可唱性。</li>
+</ul>
+<h2 id="_6">實際編曲／作曲應用<a class="headerlink" href="#_6" title="連結到此段落">&para;</a></h2>
+<h3 id="_7">鋼琴<a class="headerlink" href="#_7" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>每次改寫都做 A/B 比較：</li>
+<li>原版</li>
+<li>改寫版（副屬/借用/轉調）</li>
+<li>彈回去盲聽，寫下哪個更符合情緒目標。</li>
+</ul>
+<h3 id="band">樂團／Band<a class="headerlink" href="#band" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>改編排練法：同一段副歌做兩個版本演一次，讓團員直接聽差異再決策。</li>
+</ul>
+<h3 id="daw">DAW 製作思維<a class="headerlink" href="#daw" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>改和聲時，同步改配置與音色：同一個借用和弦，如果配置錯或音色太厚，顏色可能被淹沒。</li>
+</ul>
+<h2 id="_8">譜例（以文字描述即可）<a class="headerlink" href="#_8" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>把 I–vi–IV–V 插入 V/V：I–II7–vi–IV–V（C–D7–Am–F–G）。</li>
+</ul>
+<h2 id="_9">常見錯誤與迷思<a class="headerlink" href="#_9" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>改編只追求更複雜：複雜不等於更好；更好通常是「更清楚、更有方向」。</li>
+</ul>
+<h2 id="3">習作（至少 3 題）<a class="headerlink" href="#3" title="連結到此段落">&para;</a></h2>
+<ol>
+<li>副屬練習：給 I–vi–IV–V，插入 V/V 與 V/ii 各一次，寫兩種版本並比較。</li>
+<li>借用練習：把大調副歌改成陰影版（至少 iv 或 ♭VI），再寫回明亮版（去掉借用），比較情緒曲線。</li>
+<li>轉調練習：設計 8 小節，包含一次轉調（共同和弦法），標出轉調點與確立手段（V–I 或 ii–V–I）。</li>
+</ol>
+<h2 id="_10">聆聽與分析建議<a class="headerlink" href="#_10" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>每次聽到「突然更推」或「突然轉暗」都先暫停，回放 3 次：</li>
+<li>第 1 次只聽低音</li>
+<li>第 2 次只聽內聲（3/7）</li>
+<li>第 3 次整體聽，確認你的解釋是否成立</li>
+</ul>
+        <div class="footer">來源：講義/12-中階-習作與改編.md  →  HTML/12-中階-習作與改編.html</div>
+      </article>
+    </div>
+  </main>
+
+  <div class="backtop"><a href="#top" title="回到頂部">↑</a></div>
+</body>
+</html>

@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>第16章　高階：作曲與即興應用（風格融合／多次轉調／高難度即興／大型曲構思）</title>
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --panel: #0f1420;
+      --text: #e8eefc;
+      --muted: #a9b4cc;
+      --border: rgba(255,255,255,.10);
+      --accent: #7aa2ff;
+      --accent-2: #7ef0c6;
+      --code-bg: rgba(255,255,255,.06);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 14px;
+      --content-max: 920px;
+      --toc-max: 320px;
+      --lh: 1.8;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f7fb;
+        --panel: #ffffff;
+        --text: #111827;
+        --muted: #4b5563;
+        --border: rgba(17,24,39,.12);
+        --accent: #2b5bff;
+        --accent-2: #00a97f;
+        --code-bg: rgba(17,24,39,.06);
+        --shadow: 0 10px 30px rgba(17,24,39,.10);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 900px at 10% -10%, rgba(122,162,255,.25), transparent 55%),
+                  radial-gradient(1000px 800px at 100% 0%, rgba(126,240,198,.18), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      line-height: var(--lh);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      padding: 18px 16px 10px;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: color-mix(in oklab, var(--bg) 70%, transparent);
+      border-bottom: 1px solid var(--border);
+      z-index: 30;
+    }
+
+    .topbar {
+      max-width: calc(var(--content-max) + var(--toc-max) + 56px);
+      margin: 0 auto;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .brand .title {
+      font-size: 14px;
+      letter-spacing: .2px;
+      color: var(--text);
+      font-weight: 650;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand .subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chip {
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+      white-space: nowrap;
+    }
+
+    main {
+      max-width: calc(var(--content-max) + var(--toc-max) + 56px);
+      margin: 0 auto;
+      padding: 18px 16px 64px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    @media (min-width: 1024px) {
+      .layout {
+        grid-template-columns: minmax(0, var(--toc-max)) minmax(0, 1fr);
+        align-items: start;
+      }
+    }
+
+    .panel {
+      background: color-mix(in oklab, var(--panel) 92%, transparent);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .toc-panel {
+      display: none;
+      padding: 14px 14px 10px;
+    }
+
+    @media (min-width: 1024px) {
+      .toc-panel {
+        display: block;
+      }
+    }
+
+    .toc-panel h2 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      letter-spacing: .2px;
+    }
+
+    .toc-panel nav {
+      max-height: calc(100vh - 140px);
+      overflow: auto;
+      padding-right: 6px;
+    }
+
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .toc li {
+      margin: 6px 0;
+    }
+
+    .toc a {
+      display: block;
+      padding: 6px 8px;
+      border-radius: 10px;
+      color: var(--muted);
+      border: 1px solid transparent;
+      line-height: 1.4;
+    }
+
+    .toc a:hover {
+      color: var(--text);
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+      border-color: var(--border);
+      text-decoration: none;
+    }
+
+    .toc ul ul {
+      padding-left: 14px;
+      margin-top: 6px;
+      border-left: 1px dashed var(--border);
+    }
+
+    /* Mobile TOC as collapsible */
+    details.toc-mobile {
+      display: block;
+    }
+
+    @media (min-width: 1024px) {
+      details.toc-mobile { display: none; }
+    }
+
+    details.toc-mobile summary {
+      cursor: pointer;
+      user-select: none;
+      padding: 12px 14px;
+      font-weight: 650;
+      border-bottom: 1px solid var(--border);
+    }
+
+    details.toc-mobile summary::marker {
+      color: var(--muted);
+    }
+
+    details.toc-mobile .toc-body {
+      padding: 10px 14px 14px;
+      max-height: 60vh;
+      overflow: auto;
+    }
+
+    .content {
+      padding: 18px 18px 22px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    @media (min-width: 768px) {
+      .content { padding: 24px 28px 30px; }
+    }
+
+    .content > :first-child { margin-top: 0; }
+
+    h1, h2, h3, h4 {
+      line-height: 1.25;
+      scroll-margin-top: 84px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 18px 0 12px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin: 22px 0 10px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin: 18px 0 8px;
+      color: color-mix(in oklab, var(--text) 92%, var(--muted));
+    }
+
+    h4 {
+      font-size: 14px;
+      margin: 14px 0 6px;
+      color: var(--muted);
+    }
+
+    p { margin: 10px 0; }
+
+    ul, ol {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+
+    li { margin: 6px 0; }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 22px 0;
+    }
+
+    blockquote {
+      margin: 14px 0;
+      padding: 12px 14px;
+      border-left: 3px solid var(--accent);
+      background: color-mix(in oklab, var(--panel) 75%, transparent);
+      border-radius: 12px;
+      color: color-mix(in oklab, var(--text) 92%, var(--muted));
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2px 6px;
+      font-size: 0.92em;
+    }
+
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      overflow: auto;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    pre code {
+      background: transparent;
+      border: 0;
+      padding: 0;
+      border-radius: 0;
+      font-size: 0.92em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: color-mix(in oklab, var(--panel) 88%, transparent);
+      display: block;
+    }
+
+    @media (min-width: 600px) {
+      table { display: table; }
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 10px;
+      vertical-align: top;
+    }
+
+    th {
+      text-align: left;
+      color: var(--text);
+      font-weight: 650;
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .permalink {
+      opacity: .0;
+      margin-left: 8px;
+      font-size: .9em;
+      color: var(--muted);
+    }
+
+    h1:hover .permalink,
+    h2:hover .permalink,
+    h3:hover .permalink,
+    h4:hover .permalink {
+      opacity: .9;
+    }
+
+    .footer {
+      margin-top: 18px;
+      padding: 12px 14px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .backtop {
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      z-index: 40;
+    }
+
+    .backtop a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--panel) 85%, transparent);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .backtop a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a id="top"></a>
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <div class="title">第16章　高階：作曲與即興應用（風格融合／多次轉調／高難度即興／大型曲構思）</div>
+        <div class="subtitle">來源：講義/16-高階-大型創作與即興.md  →  HTML/16-高階-大型創作與即興.html</div>
+      </div>
+      <a class="chip" href="index.html" style="text-decoration:none">← 目錄</a>
+      <div class="chip">最後更新：2026-01-27 14:40</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="layout">
+      <section class="panel">
+        <details class="toc-mobile">
+          <summary>本頁目錄（點開）</summary>
+          <div class="toc-body"><div class="toc">
+<ul>
+<li><a href="#16">第16章 高階：作曲與即興應用（風格融合／多次轉調／高難度即興／大型曲構思）</a><ul>
+<li><a href="#learning-objectives">章節目標（Learning Objectives）</a></li>
+<li><a href="#_1">核心理論說明</a><ul>
+<li><a href="#_2">定義</a></li>
+<li><a href="#_3">功能</a></li>
+<li><a href="#_4">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_5">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_6">實際編曲／作曲應用</a><ul>
+<li><a href="#_7">鋼琴</a></li>
+<li><a href="#band">樂團／Band</a></li>
+<li><a href="#daw">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_8">譜例（以文字描述即可）</a><ul>
+<li><a href="#1">1) 「奏鳴曲呈示部」和聲藍圖（概念）</a></li>
+<li><a href="#2">2) 「多次轉調但連貫」的策略清單</a></li>
+</ul>
+</li>
+<li><a href="#_9">常見錯誤與迷思</a></li>
+<li><a href="#3">習作（至少 3 題）</a></li>
+<li><a href="#_10">聆聽與分析建議</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+        </details>
+        <div class="toc-panel" aria-label="目錄">
+          <h2>本頁目錄</h2>
+          <nav><div class="toc">
+<ul>
+<li><a href="#16">第16章 高階：作曲與即興應用（風格融合／多次轉調／高難度即興／大型曲構思）</a><ul>
+<li><a href="#learning-objectives">章節目標（Learning Objectives）</a></li>
+<li><a href="#_1">核心理論說明</a><ul>
+<li><a href="#_2">定義</a></li>
+<li><a href="#_3">功能</a></li>
+<li><a href="#_4">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_5">古典／爵士／流行的對照說明</a></li>
+<li><a href="#_6">實際編曲／作曲應用</a><ul>
+<li><a href="#_7">鋼琴</a></li>
+<li><a href="#band">樂團／Band</a></li>
+<li><a href="#daw">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_8">譜例（以文字描述即可）</a><ul>
+<li><a href="#1">1) 「奏鳴曲呈示部」和聲藍圖（概念）</a></li>
+<li><a href="#2">2) 「多次轉調但連貫」的策略清單</a></li>
+</ul>
+</li>
+<li><a href="#_9">常見錯誤與迷思</a></li>
+<li><a href="#3">習作（至少 3 題）</a></li>
+<li><a href="#_10">聆聽與分析建議</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+        </div>
+      </section>
+
+      <article class="panel content" aria-label="正文">
+        <h1 id="16">第16章　高階：作曲與即興應用（風格融合／多次轉調／高難度即興／大型曲構思）<a class="headerlink" href="#16" title="連結到此段落">&para;</a></h1>
+<h2 id="learning-objectives">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>能以同一主題（動機）做跨風格改寫：古典句法、爵士色彩、流行段落能量。</li>
+<li>能設計多次轉調但仍連貫的和聲旅程（長距離張力控制）。</li>
+<li>能用系統練習法處理高難度 changes 的即興：慢速落點→語句→速度。</li>
+<li>能以「和聲走向圖」規劃大型作品（例如奏鳴曲式或長篇段落）。</li>
+</ul>
+<h2 id="_1">核心理論說明<a class="headerlink" href="#_1" title="連結到此段落">&para;</a></h2>
+<h3 id="_2">定義<a class="headerlink" href="#_2" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>動機（Motif）</strong>：可辨識、可變形的最小材料（節奏特徵、音程特徵、輪廓）。</li>
+<li><strong>長距離和聲組織</strong>：不是兩小節的好聽，而是整段如何鋪排穩定點與張力點。</li>
+</ul>
+<h3 id="_3">功能<a class="headerlink" href="#_3" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>高階創作最常遇到的問題不是「我不會很多和弦」，而是：</li>
+<li>我怎麼把聽者帶走（變化、轉調、色彩）</li>
+<li>我怎麼把聽者帶回來（回收、落地、動機回歸）</li>
+</ul>
+<h3 id="_4">聽覺效果<a class="headerlink" href="#_4" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>成功的多次轉調會讓人覺得：</li>
+<li>世界在變（色彩/重心改變）</li>
+<li>但故事仍延續（動機/節奏/音色連續性）</li>
+</ul>
+<h2 id="_5">古典／爵士／流行的對照說明<a class="headerlink" href="#_5" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典：以曲式安排轉調（呈示部到屬調、發展段遠調、再現回主調）。</li>
+<li>爵士：以 changes 驅動即興（快速換地形），多靠 guide tones 與語句落點維持連貫。</li>
+<li>流行：以段落能量（主歌/預副歌/副歌/橋段）維持連貫；複雜常被藏在配置與色彩裡。</li>
+</ul>
+<h2 id="_6">實際編曲／作曲應用<a class="headerlink" href="#_6" title="連結到此段落">&para;</a></h2>
+<h3 id="_7">鋼琴<a class="headerlink" href="#_7" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>先把主題寫成可變形動機：</li>
+<li>節奏特徵要清楚（例如「短短長」或「切分」）</li>
+<li>音程特徵要清楚（例如上行小二度、下行小三度）</li>
+<li>再做三種變形：</li>
+<li>轉調不變形（同主題換調）</li>
+<li>節奏變形（增值/減值）</li>
+<li>輪廓變形（倒影/反行/移位）</li>
+</ul>
+<h3 id="band">樂團／Band<a class="headerlink" href="#band" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>風格融合時先固定一件事：</li>
+<li>固定主題（旋律不變）改語法（和聲/節奏/音色）</li>
+<li>或固定 groove（節奏不變）改和聲色彩</li>
+<li>避免「全部都變」造成聽者失焦。</li>
+</ul>
+<h3 id="daw">DAW 製作思維<a class="headerlink" href="#daw" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>多次轉調段落要維持「世界一致」：</li>
+<li>讓核心音色/空間一致</li>
+<li>把轉調感交給和聲與低音線</li>
+<li>用 automation 做長距離張力：</li>
+<li>濾波逐步打開</li>
+<li>密度逐步加厚</li>
+<li>最後回收（drop 或終止）</li>
+</ul>
+<h2 id="_8">譜例（以文字描述即可）<a class="headerlink" href="#_8" title="連結到此段落">&para;</a></h2>
+<h3 id="1">1) 「奏鳴曲呈示部」和聲藍圖（概念）<a class="headerlink" href="#1" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>主題（主調）：I（穩定）</li>
+<li>橋段：用副屬/序進逐步轉向 V</li>
+<li>第二主題（屬調）：V（新中心確立）</li>
+<li>結尾：以屬調終止（留期待）</li>
+</ul>
+<h3 id="2">2) 「多次轉調但連貫」的策略清單<a class="headerlink" href="#2" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>策略 A：動機不變、只轉調</li>
+<li>策略 B：低音線連續（半音/順階），和弦在上方換</li>
+<li>策略 C：用共同音當「線」把兩個遠調綁起來</li>
+</ul>
+<h2 id="_9">常見錯誤與迷思<a class="headerlink" href="#_9" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>風格融合＝拼貼：更成熟的方法是「同一主題用不同語法說」。</li>
+<li>高難度即興只靠手速：先把 3/7 落點練到穩，再加速度與裝飾。</li>
+<li>大型曲構思只靠直覺：直覺很重要，但你需要一張「和聲地圖」避免走散。</li>
+</ul>
+<h2 id="3">習作（至少 3 題）<a class="headerlink" href="#3" title="連結到此段落">&para;</a></h2>
+<ol>
+<li><strong>風格融合</strong>：用同一 8 小節主題寫三版：
+   - 古典：功能清楚、句尾終止明確
+   - 爵士：加入替代與延伸（至少 1 個 altered 或 tritone sub）
+   - 流行：循環化＋hook（段落能量清楚）</li>
+<li><strong>多次轉調</strong>：每兩小節轉調一次（可沿五度圈或三度關係），最後回主調；要求每次轉調都有落地手段（V–I 或 ii–V–I）。</li>
+<li><strong>即興深化</strong>：選一段高難度 changes：
+   - 第 1 週：每拍只彈 3 或 7（落點）
+   - 第 2 週：加入經過音/包圍音（enclosure）
+   - 第 3 週：加入節奏語句並加速
+   每週錄音、回聽、標出「最像落地」的點。</li>
+</ol>
+<h2 id="_10">聆聽與分析建議<a class="headerlink" href="#_10" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>作品如何「回家」：終止？動機回歸？低音回到主音？</li>
+<li>轉調再多，聽者仍能跟上靠的是什麼（動機/節奏/音色/低音）？</li>
+<li><strong>注意什麼</strong>：</li>
+<li>高階作品的關鍵不一定是和弦更怪，而是張力回收更精準。</li>
+</ul>
+        <div class="footer">來源：講義/16-高階-大型創作與即興.md  →  HTML/16-高階-大型創作與即興.html</div>
+      </article>
+    </div>
+  </main>
+
+  <div class="backtop"><a href="#top" title="回到頂部">↑</a></div>
+</body>
+</html>

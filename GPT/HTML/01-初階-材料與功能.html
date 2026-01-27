@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>第1章　初階：核心概念與基本和弦結構</title>
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --panel: #0f1420;
+      --text: #e8eefc;
+      --muted: #a9b4cc;
+      --border: rgba(255,255,255,.10);
+      --accent: #7aa2ff;
+      --accent-2: #7ef0c6;
+      --code-bg: rgba(255,255,255,.06);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 14px;
+      --content-max: 920px;
+      --toc-max: 320px;
+      --lh: 1.8;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f7fb;
+        --panel: #ffffff;
+        --text: #111827;
+        --muted: #4b5563;
+        --border: rgba(17,24,39,.12);
+        --accent: #2b5bff;
+        --accent-2: #00a97f;
+        --code-bg: rgba(17,24,39,.06);
+        --shadow: 0 10px 30px rgba(17,24,39,.10);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 900px at 10% -10%, rgba(122,162,255,.25), transparent 55%),
+                  radial-gradient(1000px 800px at 100% 0%, rgba(126,240,198,.18), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      line-height: var(--lh);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      padding: 18px 16px 10px;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: color-mix(in oklab, var(--bg) 70%, transparent);
+      border-bottom: 1px solid var(--border);
+      z-index: 30;
+    }
+
+    .topbar {
+      max-width: calc(var(--content-max) + var(--toc-max) + 56px);
+      margin: 0 auto;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .brand .title {
+      font-size: 14px;
+      letter-spacing: .2px;
+      color: var(--text);
+      font-weight: 650;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand .subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chip {
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+      white-space: nowrap;
+    }
+
+    main {
+      max-width: calc(var(--content-max) + var(--toc-max) + 56px);
+      margin: 0 auto;
+      padding: 18px 16px 64px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    @media (min-width: 1024px) {
+      .layout {
+        grid-template-columns: minmax(0, var(--toc-max)) minmax(0, 1fr);
+        align-items: start;
+      }
+    }
+
+    .panel {
+      background: color-mix(in oklab, var(--panel) 92%, transparent);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .toc-panel {
+      display: none;
+      padding: 14px 14px 10px;
+    }
+
+    @media (min-width: 1024px) {
+      .toc-panel {
+        display: block;
+      }
+    }
+
+    .toc-panel h2 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      letter-spacing: .2px;
+    }
+
+    .toc-panel nav {
+      max-height: calc(100vh - 140px);
+      overflow: auto;
+      padding-right: 6px;
+    }
+
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .toc li {
+      margin: 6px 0;
+    }
+
+    .toc a {
+      display: block;
+      padding: 6px 8px;
+      border-radius: 10px;
+      color: var(--muted);
+      border: 1px solid transparent;
+      line-height: 1.4;
+    }
+
+    .toc a:hover {
+      color: var(--text);
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+      border-color: var(--border);
+      text-decoration: none;
+    }
+
+    .toc ul ul {
+      padding-left: 14px;
+      margin-top: 6px;
+      border-left: 1px dashed var(--border);
+    }
+
+    /* Mobile TOC as collapsible */
+    details.toc-mobile {
+      display: block;
+    }
+
+    @media (min-width: 1024px) {
+      details.toc-mobile { display: none; }
+    }
+
+    details.toc-mobile summary {
+      cursor: pointer;
+      user-select: none;
+      padding: 12px 14px;
+      font-weight: 650;
+      border-bottom: 1px solid var(--border);
+    }
+
+    details.toc-mobile summary::marker {
+      color: var(--muted);
+    }
+
+    details.toc-mobile .toc-body {
+      padding: 10px 14px 14px;
+      max-height: 60vh;
+      overflow: auto;
+    }
+
+    .content {
+      padding: 18px 18px 22px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    @media (min-width: 768px) {
+      .content { padding: 24px 28px 30px; }
+    }
+
+    .content > :first-child { margin-top: 0; }
+
+    h1, h2, h3, h4 {
+      line-height: 1.25;
+      scroll-margin-top: 84px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 18px 0 12px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin: 22px 0 10px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin: 18px 0 8px;
+      color: color-mix(in oklab, var(--text) 92%, var(--muted));
+    }
+
+    h4 {
+      font-size: 14px;
+      margin: 14px 0 6px;
+      color: var(--muted);
+    }
+
+    p { margin: 10px 0; }
+
+    ul, ol {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+
+    li { margin: 6px 0; }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 22px 0;
+    }
+
+    blockquote {
+      margin: 14px 0;
+      padding: 12px 14px;
+      border-left: 3px solid var(--accent);
+      background: color-mix(in oklab, var(--panel) 75%, transparent);
+      border-radius: 12px;
+      color: color-mix(in oklab, var(--text) 92%, var(--muted));
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2px 6px;
+      font-size: 0.92em;
+    }
+
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      overflow: auto;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    pre code {
+      background: transparent;
+      border: 0;
+      padding: 0;
+      border-radius: 0;
+      font-size: 0.92em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: color-mix(in oklab, var(--panel) 88%, transparent);
+      display: block;
+    }
+
+    @media (min-width: 600px) {
+      table { display: table; }
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 10px;
+      vertical-align: top;
+    }
+
+    th {
+      text-align: left;
+      color: var(--text);
+      font-weight: 650;
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .permalink {
+      opacity: .0;
+      margin-left: 8px;
+      font-size: .9em;
+      color: var(--muted);
+    }
+
+    h1:hover .permalink,
+    h2:hover .permalink,
+    h3:hover .permalink,
+    h4:hover .permalink {
+      opacity: .9;
+    }
+
+    .footer {
+      margin-top: 18px;
+      padding: 12px 14px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .backtop {
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      z-index: 40;
+    }
+
+    .backtop a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--panel) 85%, transparent);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .backtop a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a id="top"></a>
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <div class="title">第1章　初階：核心概念與基本和弦結構</div>
+        <div class="subtitle">來源：講義/01-初階-材料與功能.md  →  HTML/01-初階-材料與功能.html</div>
+      </div>
+      <a class="chip" href="index.html" style="text-decoration:none">← 目錄</a>
+      <div class="chip">最後更新：2026-01-27 14:30</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="layout">
+      <section class="panel">
+        <details class="toc-mobile">
+          <summary>本頁目錄（點開）</summary>
+          <div class="toc-body"><div class="toc">
+<ul>
+<li><a href="#1">第1章 初階：核心概念與基本和弦結構</a><ul>
+<li><a href="#learning-objectives">章節目標（Learning Objectives）</a></li>
+<li><a href="#_1">核心理論說明</a><ul>
+<li><a href="#_2">定義</a></li>
+<li><a href="#_3">功能（為什麼存在？）</a><ul>
+<li><a href="#1_1">1) 為什麼要用音級思考</a></li>
+<li><a href="#2">2) 為什麼要用轉位</a></li>
+<li><a href="#3-v7">3) 為什麼 V7 這麼重要</a></li>
+</ul>
+</li>
+<li><a href="#_4">聽覺效果（你要能用耳朵辨認）</a></li>
+</ul>
+</li>
+<li><a href="#_5">古典／爵士／流行的對照說明</a><ul>
+<li><a href="#_6">古典</a></li>
+<li><a href="#_7">爵士</a></li>
+<li><a href="#_8">流行</a></li>
+</ul>
+</li>
+<li><a href="#_9">實際編曲／作曲應用</a><ul>
+<li><a href="#_10">鋼琴</a></li>
+<li><a href="#band">樂團／Band</a></li>
+<li><a href="#daw">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_11">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-c">1) C 大調調內三和弦</a></li>
+<li><a href="#2-v7">2) V7 的趨勢音解決</a></li>
+<li><a href="#3-c">3) 四種終止（C 大調）</a></li>
+</ul>
+</li>
+<li><a href="#_12">常見錯誤與迷思</a></li>
+<li><a href="#3">習作（由易到難，至少 3 題）</a></li>
+<li><a href="#_13">聆聽與分析建議</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+        </details>
+        <div class="toc-panel" aria-label="目錄">
+          <h2>本頁目錄</h2>
+          <nav><div class="toc">
+<ul>
+<li><a href="#1">第1章 初階：核心概念與基本和弦結構</a><ul>
+<li><a href="#learning-objectives">章節目標（Learning Objectives）</a></li>
+<li><a href="#_1">核心理論說明</a><ul>
+<li><a href="#_2">定義</a></li>
+<li><a href="#_3">功能（為什麼存在？）</a><ul>
+<li><a href="#1_1">1) 為什麼要用音級思考</a></li>
+<li><a href="#2">2) 為什麼要用轉位</a></li>
+<li><a href="#3-v7">3) 為什麼 V7 這麼重要</a></li>
+</ul>
+</li>
+<li><a href="#_4">聽覺效果（你要能用耳朵辨認）</a></li>
+</ul>
+</li>
+<li><a href="#_5">古典／爵士／流行的對照說明</a><ul>
+<li><a href="#_6">古典</a></li>
+<li><a href="#_7">爵士</a></li>
+<li><a href="#_8">流行</a></li>
+</ul>
+</li>
+<li><a href="#_9">實際編曲／作曲應用</a><ul>
+<li><a href="#_10">鋼琴</a></li>
+<li><a href="#band">樂團／Band</a></li>
+<li><a href="#daw">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#_11">譜例（以文字描述即可）</a><ul>
+<li><a href="#1-c">1) C 大調調內三和弦</a></li>
+<li><a href="#2-v7">2) V7 的趨勢音解決</a></li>
+<li><a href="#3-c">3) 四種終止（C 大調）</a></li>
+</ul>
+</li>
+<li><a href="#_12">常見錯誤與迷思</a></li>
+<li><a href="#3">習作（由易到難，至少 3 題）</a></li>
+<li><a href="#_13">聆聽與分析建議</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+        </div>
+      </section>
+
+      <article class="panel content" aria-label="正文">
+        <h1 id="1">第1章　初階：核心概念與基本和弦結構<a class="headerlink" href="#1" title="連結到此段落">&para;</a></h1>
+<h2 id="learning-objectives">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>能在任意調上迅速建立：音階級數、三和弦、基本七和弦（至少 V7）。</li>
+<li>了解「轉位」的真正用途：讓低音線與各聲部更流暢。</li>
+<li>能用功能語言（T/S/D）描述和聲角色，而不是只背和弦名稱。</li>
+<li>能辨認並寫出四種常見終止：正格、變格、半終止、偽終止。</li>
+</ul>
+<h2 id="_1">核心理論說明<a class="headerlink" href="#_1" title="連結到此段落">&para;</a></h2>
+<h3 id="_2">定義<a class="headerlink" href="#_2" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>音級（Scale degrees）</strong>：在某調內的第幾級（Ⅰ～Ⅶ）。</li>
+<li><strong>三和弦（Triad）</strong>：根音＋三音＋五音（以三度堆疊）。</li>
+<li><strong>七和弦（Seventh chord）</strong>：三和弦再加七音。</li>
+<li><strong>轉位（Inversion）</strong>：低音不是根音。</li>
+<li>第一轉位：三音在低音（I⁶）</li>
+<li>第二轉位：五音在低音（I⁶⁴）</li>
+<li><strong>屬七和弦（V7）</strong>：屬和弦加七音；在大調最常見且方向最強。</li>
+</ul>
+<h3 id="_3">功能（為什麼存在？）<a class="headerlink" href="#_3" title="連結到此段落">&para;</a></h3>
+<h4 id="1_1">1) 為什麼要用音級思考<a class="headerlink" href="#1_1" title="連結到此段落">&para;</a></h4>
+<ul>
+<li>因為它能「一鍵移調」：</li>
+<li>你只要知道 I–V–vi–IV 是什麼角色，換到任何調都成立。</li>
+<li>因為它能直接連到功能（T/S/D）：</li>
+<li>I 是主，V 是屬，IV/ii 是下屬（最常見情況）。</li>
+</ul>
+<h4 id="2">2) 為什麼要用轉位<a class="headerlink" href="#2" title="連結到此段落">&para;</a></h4>
+<ul>
+<li>轉位不是裝飾，而是「連接工具」：</li>
+<li><strong>讓低音線更像旋律</strong>（順階或小跳）。</li>
+<li><strong>減少聲部跳躍</strong>，保留共同音。</li>
+<li>你可以把它想成：</li>
+<li>根音位置像「站在原地說話」</li>
+<li>轉位像「邊走邊說話」——句子更流暢。</li>
+</ul>
+<h4 id="3-v7">3) 為什麼 V7 這麼重要<a class="headerlink" href="#3-v7" title="連結到此段落">&para;</a></h4>
+<ul>
+<li>V7 同時包含兩個最強的趨勢音：</li>
+<li>導音（7→1）</li>
+<li>七音下行解決（4→3）</li>
+<li>這讓它成為「最像句號」的工具。</li>
+</ul>
+<h3 id="_4">聽覺效果（你要能用耳朵辨認）<a class="headerlink" href="#_4" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>大三和弦</strong>：明亮、穩。</li>
+<li><strong>小三和弦</strong>：陰影、內縮。</li>
+<li><strong>減三和弦</strong>：不安、懸疑（不容易穩住）。</li>
+<li><strong>V7</strong>：期待強、很想回 I。</li>
+</ul>
+<blockquote>
+<p>小技巧：當你不確定和弦「是大是小」，先去找旋律或內聲有沒有「三度」：
+大三度會明亮，小三度會偏暗。</p>
+</blockquote>
+<h2 id="_5">古典／爵士／流行的對照說明<a class="headerlink" href="#_5" title="連結到此段落">&para;</a></h2>
+<h3 id="_6">古典<a class="headerlink" href="#_6" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>重點不是「和弦多不多」，而是聲部怎麼走：</li>
+<li>導音多半上行到主音。</li>
+<li>七音多半下行一步解決。</li>
+<li>避免平行五度／八度（因為會讓兩個聲部失去獨立性）。</li>
+</ul>
+<h3 id="_7">爵士<a class="headerlink" href="#_7" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>七和弦是起點：</li>
+<li>I 常寫 Imaj7（主七）。</li>
+<li>3、7 是功能核心（guide tones）。</li>
+<li>很多 voicing 會省略五度，甚至省略根音（由貝斯負責）。</li>
+</ul>
+<h3 id="_8">流行<a class="headerlink" href="#_8" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>三和弦與循環常見：I–V–vi–IV。</li>
+<li>V7 多是「選配」：想更有句尾推力就加，不想太古典就不用。</li>
+<li>有些音色（失真吉他、厚 pad）會弱化三度，這時你要靠低音與旋律來維持調性感。</li>
+</ul>
+<h2 id="_9">實際編曲／作曲應用<a class="headerlink" href="#_9" title="連結到此段落">&para;</a></h2>
+<h3 id="_10">鋼琴<a class="headerlink" href="#_10" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>初階最有效練法</strong>：
+  1. 左手：根音（每小節 1 或 2 次）
+  2. 右手：三和弦（先根音位置）
+  3. 右手：改成最小移動（用轉位把手留在小音域）</li>
+<li><strong>V7 解決練習</strong>：</li>
+<li>彈 G7 → C，右手刻意聽 B→C、F→E 的解決。</li>
+</ul>
+<h3 id="band">樂團／Band<a class="headerlink" href="#band" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Bass：先穩定根音。</li>
+<li>Guitar：可用三和弦或 power chord；Keys 補三度/七度讓和弦性格清楚。</li>
+<li>若主唱旋律已唱出三度（例如唱 E），伴奏可以省略三度或改配置，避免太厚。</li>
+</ul>
+<h3 id="daw">DAW 製作思維<a class="headerlink" href="#daw" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>編 MIDI 和弦時：</li>
+<li>先寫低音線（根音走向）。</li>
+<li>再加 3、7（決定性音）。</li>
+<li>最後才加 5 或延伸音。</li>
+<li>低音區避免同時堆 pad 的根音與鋼琴左手根音（容易糊）。</li>
+</ul>
+<h2 id="_11">譜例（以文字描述即可）<a class="headerlink" href="#_11" title="連結到此段落">&para;</a></h2>
+<h3 id="1-c">1) C 大調調內三和弦<a class="headerlink" href="#1-c" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>I：C–E–G（C）</li>
+<li>ii：D–F–A（Dm）</li>
+<li>iii：E–G–B（Em）</li>
+<li>IV：F–A–C（F）</li>
+<li>V：G–B–D（G）</li>
+<li>vi：A–C–E（Am）</li>
+<li>vii°：B–D–F（B°）</li>
+</ul>
+<h3 id="2-v7">2) V7 的趨勢音解決<a class="headerlink" href="#2-v7" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>G7（G–B–D–F）→ C（C–E–G）</li>
+<li>B（導音）→ C（上行）</li>
+<li>F（七音）→ E（下行）</li>
+</ul>
+<h3 id="3-c">3) 四種終止（C 大調）<a class="headerlink" href="#3-c" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>正格終止：G7 → C</li>
+<li>變格終止：F → C</li>
+<li>半終止：… → G（句尾停在 V）</li>
+<li>偽終止：G7 → Am（V7→vi）</li>
+</ul>
+<h2 id="_12">常見錯誤與迷思<a class="headerlink" href="#_12" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>錯誤 1：只背和弦種類，不會在調上建立</strong></li>
+<li>解法：每週固定練 3 個調，把 I～vii° 全寫一遍。</li>
+<li><strong>錯誤 2：轉位亂用，低音線更跳</strong></li>
+<li>原則：轉位要服務低音線；先決定低音要怎麼走，再選轉位。</li>
+<li><strong>錯誤 3：V7 解決不乾淨</strong></li>
+<li>最常見是七音不上不下。請刻意聽「七音下行」與「導音上行」。</li>
+</ul>
+<h2 id="3">習作（由易到難，至少 3 題）<a class="headerlink" href="#3" title="連結到此段落">&para;</a></h2>
+<ol>
+<li><strong>調內和弦建立</strong>：任選 3 個調（含 1 個降號調），寫出 I～vii° 三和弦（音名＋和弦性質）。</li>
+<li><strong>終止聽感比較</strong>：在同一調寫 4 種終止各 2 小節，彈出來並用一句話描述差異（像句號、像逗號、像轉彎…）。</li>
+<li><strong>四部和聲入門</strong>：把 | I | IV | V7 | I | 寫成四部：
+   - 導音上行、七音下行
+   - 共同音盡量保留
+   - 避免明顯平行五八度</li>
+</ol>
+<h2 id="_13">聆聽與分析建議<a class="headerlink" href="#_13" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>導音（7→1）在哪個聲部出現（旋律？內聲？低音？）。</li>
+<li>V7 的七音解決是否明確（4→3）。</li>
+<li><strong>注意什麼</strong>：</li>
+<li>流行歌曲若不用 V7，仍可聽低音是否形成「回家」或「續航」。</li>
+</ul>
+        <div class="footer">來源：講義/01-初階-材料與功能.md  →  HTML/01-初階-材料與功能.html</div>
+      </article>
+    </div>
+  </main>
+
+  <div class="backtop"><a href="#top" title="回到頂部">↑</a></div>
+</body>
+</html>

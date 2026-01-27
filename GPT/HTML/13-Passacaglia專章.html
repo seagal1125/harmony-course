@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>第13章　Passacaglia 專章：低音反覆（Ground Bass）與變奏的和聲引擎</title>
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --panel: #0f1420;
+      --text: #e8eefc;
+      --muted: #a9b4cc;
+      --border: rgba(255,255,255,.10);
+      --accent: #7aa2ff;
+      --accent-2: #7ef0c6;
+      --code-bg: rgba(255,255,255,.06);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 14px;
+      --content-max: 920px;
+      --toc-max: 320px;
+      --lh: 1.8;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f7fb;
+        --panel: #ffffff;
+        --text: #111827;
+        --muted: #4b5563;
+        --border: rgba(17,24,39,.12);
+        --accent: #2b5bff;
+        --accent-2: #00a97f;
+        --code-bg: rgba(17,24,39,.06);
+        --shadow: 0 10px 30px rgba(17,24,39,.10);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 900px at 10% -10%, rgba(122,162,255,.25), transparent 55%),
+                  radial-gradient(1000px 800px at 100% 0%, rgba(126,240,198,.18), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      line-height: var(--lh);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      padding: 18px 16px 10px;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: color-mix(in oklab, var(--bg) 70%, transparent);
+      border-bottom: 1px solid var(--border);
+      z-index: 30;
+    }
+
+    .topbar {
+      max-width: calc(var(--content-max) + var(--toc-max) + 56px);
+      margin: 0 auto;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .brand .title {
+      font-size: 14px;
+      letter-spacing: .2px;
+      color: var(--text);
+      font-weight: 650;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand .subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chip {
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+      white-space: nowrap;
+    }
+
+    main {
+      max-width: calc(var(--content-max) + var(--toc-max) + 56px);
+      margin: 0 auto;
+      padding: 18px 16px 64px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    @media (min-width: 1024px) {
+      .layout {
+        grid-template-columns: minmax(0, var(--toc-max)) minmax(0, 1fr);
+        align-items: start;
+      }
+    }
+
+    .panel {
+      background: color-mix(in oklab, var(--panel) 92%, transparent);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .toc-panel {
+      display: none;
+      padding: 14px 14px 10px;
+    }
+
+    @media (min-width: 1024px) {
+      .toc-panel {
+        display: block;
+      }
+    }
+
+    .toc-panel h2 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      letter-spacing: .2px;
+    }
+
+    .toc-panel nav {
+      max-height: calc(100vh - 140px);
+      overflow: auto;
+      padding-right: 6px;
+    }
+
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .toc li {
+      margin: 6px 0;
+    }
+
+    .toc a {
+      display: block;
+      padding: 6px 8px;
+      border-radius: 10px;
+      color: var(--muted);
+      border: 1px solid transparent;
+      line-height: 1.4;
+    }
+
+    .toc a:hover {
+      color: var(--text);
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+      border-color: var(--border);
+      text-decoration: none;
+    }
+
+    .toc ul ul {
+      padding-left: 14px;
+      margin-top: 6px;
+      border-left: 1px dashed var(--border);
+    }
+
+    /* Mobile TOC as collapsible */
+    details.toc-mobile {
+      display: block;
+    }
+
+    @media (min-width: 1024px) {
+      details.toc-mobile { display: none; }
+    }
+
+    details.toc-mobile summary {
+      cursor: pointer;
+      user-select: none;
+      padding: 12px 14px;
+      font-weight: 650;
+      border-bottom: 1px solid var(--border);
+    }
+
+    details.toc-mobile summary::marker {
+      color: var(--muted);
+    }
+
+    details.toc-mobile .toc-body {
+      padding: 10px 14px 14px;
+      max-height: 60vh;
+      overflow: auto;
+    }
+
+    .content {
+      padding: 18px 18px 22px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    @media (min-width: 768px) {
+      .content { padding: 24px 28px 30px; }
+    }
+
+    .content > :first-child { margin-top: 0; }
+
+    h1, h2, h3, h4 {
+      line-height: 1.25;
+      scroll-margin-top: 84px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 18px 0 12px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin: 22px 0 10px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin: 18px 0 8px;
+      color: color-mix(in oklab, var(--text) 92%, var(--muted));
+    }
+
+    h4 {
+      font-size: 14px;
+      margin: 14px 0 6px;
+      color: var(--muted);
+    }
+
+    p { margin: 10px 0; }
+
+    ul, ol {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+
+    li { margin: 6px 0; }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 22px 0;
+    }
+
+    blockquote {
+      margin: 14px 0;
+      padding: 12px 14px;
+      border-left: 3px solid var(--accent);
+      background: color-mix(in oklab, var(--panel) 75%, transparent);
+      border-radius: 12px;
+      color: color-mix(in oklab, var(--text) 92%, var(--muted));
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2px 6px;
+      font-size: 0.92em;
+    }
+
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      overflow: auto;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    pre code {
+      background: transparent;
+      border: 0;
+      padding: 0;
+      border-radius: 0;
+      font-size: 0.92em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: color-mix(in oklab, var(--panel) 88%, transparent);
+      display: block;
+    }
+
+    @media (min-width: 600px) {
+      table { display: table; }
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 10px;
+      vertical-align: top;
+    }
+
+    th {
+      text-align: left;
+      color: var(--text);
+      font-weight: 650;
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .permalink {
+      opacity: .0;
+      margin-left: 8px;
+      font-size: .9em;
+      color: var(--muted);
+    }
+
+    h1:hover .permalink,
+    h2:hover .permalink,
+    h3:hover .permalink,
+    h4:hover .permalink {
+      opacity: .9;
+    }
+
+    .footer {
+      margin-top: 18px;
+      padding: 12px 14px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .backtop {
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      z-index: 40;
+    }
+
+    .backtop a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--panel) 85%, transparent);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .backtop a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a id="top"></a>
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <div class="title">第13章　Passacaglia 專章：低音反覆（Ground Bass）與變奏的和聲引擎</div>
+        <div class="subtitle">來源：講義/13-Passacaglia專章.md  →  HTML/13-Passacaglia專章.html</div>
+      </div>
+      <a class="chip" href="index.html" style="text-decoration:none">← 目錄</a>
+      <div class="chip">最後更新：2026-01-27 14:43</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="layout">
+      <section class="panel">
+        <details class="toc-mobile">
+          <summary>本頁目錄（點開）</summary>
+          <div class="toc-body"><div class="toc">
+<ul>
+<li><a href="#13-passacaglia-ground-bass">第13章 Passacaglia 專章：低音反覆（Ground Bass）與變奏的和聲引擎</a><ul>
+<li><a href="#learning-objectives">章節目標（Learning Objectives）</a></li>
+<li><a href="#_1">核心理論說明</a><ul>
+<li><a href="#_2">定義</a></li>
+<li><a href="#_3">功能（為什麼這種形式有力量？）</a></li>
+<li><a href="#_4">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_5">古典／爵士／流行的對照說明</a></li>
+<li><a href="#1">1️⃣ 歷史與體裁背景</a><ul>
+<li><a href="#passacaglia">Passacaglia 的起源（概念性）</a></li>
+<li><a href="#chaconne">與 Chaconne 的異同（實務角度）</a></li>
+<li><a href="#_6">為何「低音反覆」在巴洛克具有結構性意義</a></li>
+</ul>
+</li>
+<li><a href="#2">2️⃣ 和聲骨架分析</a><ul>
+<li><a href="#ground-bass">Ground Bass 的音級與功能（分析流程）</a></li>
+<li><a href="#_7">為何這種進行能承載大量變奏而不崩壞</a></li>
+</ul>
+</li>
+<li><a href="#3">3️⃣ 變奏層次拆解</a><ul>
+<li><a href="#a-rhythm-layer">A) 節奏層（Rhythm layer）</a></li>
+<li><a href="#b-voicingregisters-layer">B) 聲部層（Voicing/Registers layer）</a></li>
+<li><a href="#c-ornament-layer">C) 和聲裝飾層（Ornament layer）</a></li>
+<li><a href="#d-counterpoint-layer">D) 對位與非和弦音（Counterpoint layer）</a></li>
+</ul>
+</li>
+<li><a href="#4">4️⃣ 和聲張力設計：如何「不換和聲也能推進」</a><ul>
+<li><a href="#vs">穩定 vs 不穩定的配置</a></li>
+<li><a href="#_8">延遲音、倚音、經過音的角色</a></li>
+<li><a href="#_9">一個很實用的張力公式</a></li>
+</ul>
+</li>
+<li><a href="#_10">實際編曲／作曲應用</a><ul>
+<li><a href="#_11">鋼琴</a></li>
+<li><a href="#band">樂團／Band</a></li>
+<li><a href="#daw">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#5">5️⃣ 現代應用延伸</a><ul>
+<li><a href="#_12">電影配樂</a></li>
+<li><a href="#_13">流行歌副歌</a></li>
+<li><a href="#loop">電子音樂 Loop</a></li>
+<li><a href="#jazz-modal-vamp">Jazz modal vamp</a></li>
+</ul>
+</li>
+<li><a href="#_14">習作</a><ul>
+<li><a href="#6-3">6️⃣ 創作練習（由易到難，至少 3 題）</a></li>
+</ul>
+</li>
+<li><a href="#_15">譜例（以文字描述即可）</a></li>
+<li><a href="#_16">常見錯誤與迷思</a></li>
+<li><a href="#_17">聆聽與分析建議</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+        </details>
+        <div class="toc-panel" aria-label="目錄">
+          <h2>本頁目錄</h2>
+          <nav><div class="toc">
+<ul>
+<li><a href="#13-passacaglia-ground-bass">第13章 Passacaglia 專章：低音反覆（Ground Bass）與變奏的和聲引擎</a><ul>
+<li><a href="#learning-objectives">章節目標（Learning Objectives）</a></li>
+<li><a href="#_1">核心理論說明</a><ul>
+<li><a href="#_2">定義</a></li>
+<li><a href="#_3">功能（為什麼這種形式有力量？）</a></li>
+<li><a href="#_4">聽覺效果</a></li>
+</ul>
+</li>
+<li><a href="#_5">古典／爵士／流行的對照說明</a></li>
+<li><a href="#1">1️⃣ 歷史與體裁背景</a><ul>
+<li><a href="#passacaglia">Passacaglia 的起源（概念性）</a></li>
+<li><a href="#chaconne">與 Chaconne 的異同（實務角度）</a></li>
+<li><a href="#_6">為何「低音反覆」在巴洛克具有結構性意義</a></li>
+</ul>
+</li>
+<li><a href="#2">2️⃣ 和聲骨架分析</a><ul>
+<li><a href="#ground-bass">Ground Bass 的音級與功能（分析流程）</a></li>
+<li><a href="#_7">為何這種進行能承載大量變奏而不崩壞</a></li>
+</ul>
+</li>
+<li><a href="#3">3️⃣ 變奏層次拆解</a><ul>
+<li><a href="#a-rhythm-layer">A) 節奏層（Rhythm layer）</a></li>
+<li><a href="#b-voicingregisters-layer">B) 聲部層（Voicing/Registers layer）</a></li>
+<li><a href="#c-ornament-layer">C) 和聲裝飾層（Ornament layer）</a></li>
+<li><a href="#d-counterpoint-layer">D) 對位與非和弦音（Counterpoint layer）</a></li>
+</ul>
+</li>
+<li><a href="#4">4️⃣ 和聲張力設計：如何「不換和聲也能推進」</a><ul>
+<li><a href="#vs">穩定 vs 不穩定的配置</a></li>
+<li><a href="#_8">延遲音、倚音、經過音的角色</a></li>
+<li><a href="#_9">一個很實用的張力公式</a></li>
+</ul>
+</li>
+<li><a href="#_10">實際編曲／作曲應用</a><ul>
+<li><a href="#_11">鋼琴</a></li>
+<li><a href="#band">樂團／Band</a></li>
+<li><a href="#daw">DAW 製作思維</a></li>
+</ul>
+</li>
+<li><a href="#5">5️⃣ 現代應用延伸</a><ul>
+<li><a href="#_12">電影配樂</a></li>
+<li><a href="#_13">流行歌副歌</a></li>
+<li><a href="#loop">電子音樂 Loop</a></li>
+<li><a href="#jazz-modal-vamp">Jazz modal vamp</a></li>
+</ul>
+</li>
+<li><a href="#_14">習作</a><ul>
+<li><a href="#6-3">6️⃣ 創作練習（由易到難，至少 3 題）</a></li>
+</ul>
+</li>
+<li><a href="#_15">譜例（以文字描述即可）</a></li>
+<li><a href="#_16">常見錯誤與迷思</a></li>
+<li><a href="#_17">聆聽與分析建議</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+        </div>
+      </section>
+
+      <article class="panel content" aria-label="正文">
+        <h1 id="13-passacaglia-ground-bass">第13章　Passacaglia 專章：低音反覆（Ground Bass）與變奏的和聲引擎<a class="headerlink" href="#13-passacaglia-ground-bass" title="連結到此段落">&para;</a></h1>
+<blockquote>
+<p>分析曲目：Passacaglia（常見為 Handel g 小調鍵盤組曲中的 Passacaglia）</p>
+</blockquote>
+<h2 id="learning-objectives">章節目標（Learning Objectives）<a class="headerlink" href="#learning-objectives" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>理解 Passacaglia 的歷史與體裁背景，以及它為何能「用重複撐起大結構」。</li>
+<li>能用 Roman Numeral 建立 ground bass 的和聲骨架，並指出功能邏輯。</li>
+<li>能拆解變奏層次：節奏層、聲部層、和聲裝飾層、對位與非和弦音。</li>
+<li>能設計張力：學會「不換和弦也能推進」的手段（掛留、倚音、延後解決、密度控制）。</li>
+<li>能把 Passacaglia 概念轉譯到：電影配樂、流行副歌、電子 loop、爵士 modal vamp。</li>
+</ul>
+<h2 id="_1">核心理論說明<a class="headerlink" href="#_1" title="連結到此段落">&para;</a></h2>
+<h3 id="_2">定義<a class="headerlink" href="#_2" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>Passacaglia</strong>：以固定低音（ground bass）或固定和聲循環作支架，進行連續變奏的形式。</li>
+<li><strong>Ground Bass</strong>：反覆的低音旋律（通常 4～8 小節）。它同時是：</li>
+<li>和聲地基（決定功能方向）</li>
+<li>節奏地基（決定每輪的時間感）</li>
+<li>記憶地基（讓聽者知道「你回到第幾輪」）</li>
+</ul>
+<h3 id="_3">功能（為什麼這種形式有力量？）<a class="headerlink" href="#_3" title="連結到此段落">&para;</a></h3>
+<p>Passacaglia 的力量來自一個悖論：<strong>地基越固定，上層越自由</strong>。</p>
+<ul>
+<li>低音反覆讓聽者永遠有「定位系統」，不會迷路。</li>
+<li>作曲家因此可以：</li>
+<li>在上方做大量變化（節奏、音域、裝飾、對位）</li>
+<li>甚至在表面製造「好像要崩壞」的張力</li>
+<li>但只要地基回來，整體就會被收束</li>
+</ul>
+<p>你可以把它想成建築：</p>
+<ul>
+<li>ground bass 是鋼骨結構</li>
+<li>變奏是燈光、家具、走線、裝飾</li>
+</ul>
+<h3 id="_4">聽覺效果<a class="headerlink" href="#_4" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>低音反覆帶來兩種同時存在的感受：</li>
+<li>熟悉與安定（你知道它會回來）</li>
+<li>被拖著走的期待（因為它一直回來但不結束）</li>
+</ul>
+<p>這也是它很適合做「宿命感」「時間機械」「必然推進」的原因。</p>
+<h2 id="_5">古典／爵士／流行的對照說明<a class="headerlink" href="#_5" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>古典：Passacaglia 是「曲式」。重點是低音反覆作為結構，變奏靠聲部、裝飾音與句法落點（終止區）支撐。</li>
+<li>爵士：最接近的是 ostinato / modal vamp。骨架固定，但表層可用 voicing、節奏互動、upper structure 推進。</li>
+<li>流行／電子：最接近的是 loop。推進更多靠音色層次、密度、automation、drop/return，而不是古典式終止句法。</li>
+</ul>
+<h2 id="1">1️⃣ 歷史與體裁背景<a class="headerlink" href="#1" title="連結到此段落">&para;</a></h2>
+<h3 id="passacaglia">Passacaglia 的起源（概念性）<a class="headerlink" href="#passacaglia" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Passacaglia 與 Chaconne 都與巴洛克舞曲與變奏傳統相關。</li>
+<li>巴洛克的 basso continuo 思維強調：<strong>低音是語法主幹</strong>，上方是裝飾與線條。</li>
+</ul>
+<h3 id="chaconne">與 Chaconne 的異同（實務角度）<a class="headerlink" href="#chaconne" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Passacaglia 常更強調「低音反覆」的可辨識性。</li>
+<li>Chaconne 常見以固定和聲循環為中心。</li>
+<li>但在實際作品裡兩者邊界並不總是絕對：很多時候你可以把它們視為同一族群的兩種取向。</li>
+</ul>
+<h3 id="_6">為何「低音反覆」在巴洛克具有結構性意義<a class="headerlink" href="#_6" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>在長篇變奏中，最容易散掉的是「方向感」。</li>
+<li>低音反覆讓聽者在每輪都能重新對齊：</li>
+<li>你現在在哪一格</li>
+<li>你還離終點多遠</li>
+</ul>
+<h2 id="2">2️⃣ 和聲骨架分析<a class="headerlink" href="#2" title="連結到此段落">&para;</a></h2>
+<h3 id="ground-bass">Ground Bass 的音級與功能（分析流程）<a class="headerlink" href="#ground-bass" title="連結到此段落">&para;</a></h3>
+<blockquote>
+<p>不同版本在細節（裝飾、轉位、局部替代）可能不同；以下示範一個可套用到任何版本的分析流程。</p>
+</blockquote>
+<ol>
+<li><strong>先寫低音</strong>：以每小節（或每兩拍）為單位寫出低音音名。</li>
+<li><strong>推測和弦品質</strong>：看是否出現導音、是否有屬七、是否有借用變音。</li>
+<li><strong>標 Roman Numeral</strong>：在 g 小調語境標 i、iv、V、♭VI…</li>
+<li><strong>找句法落點</strong>：每輪通常會在 V 或 i 附近形成「收束/重啟」。</li>
+</ol>
+<h3 id="_7">為何這種進行能承載大量變奏而不崩壞<a class="headerlink" href="#_7" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>功能骨架多半穩定：你總能回到「S→D→T」的主幹。</li>
+<li>低音常有方向性（下行/回到起點），提供強時間感。</li>
+<li>即使表面變得很華麗，聽者仍會被低音帶著走。</li>
+</ul>
+<h2 id="3">3️⃣ 變奏層次拆解<a class="headerlink" href="#3" title="連結到此段落">&para;</a></h2>
+<p>你可以把變奏拆成四種層：</p>
+<h3 id="a-rhythm-layer">A) 節奏層（Rhythm layer）<a class="headerlink" href="#a-rhythm-layer" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>不換和聲，改變密度與切分：</li>
+<li>八分→十六分</li>
+<li>加附點</li>
+<li>加切分</li>
+<li>這是最安全、最直接能讓音樂「變快／變緊」的方法。</li>
+</ul>
+<h3 id="b-voicingregisters-layer">B) 聲部層（Voicing/Registers layer）<a class="headerlink" href="#b-voicingregisters-layer" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>變換上聲部音域、分句方式、對位線條。</li>
+<li>同一素材上移八度會「變亮」；下移八度會「變沉」。</li>
+</ul>
+<h3 id="c-ornament-layer">C) 和聲裝飾層（Ornament layer）<a class="headerlink" href="#c-ornament-layer" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>用掛留、倚音、經過音、先現音「製造摩擦」。</li>
+<li>注意：</li>
+<li>古典語境下，摩擦要有解決策略</li>
+<li>摩擦越多，你越需要清楚的落點（否則會糊）</li>
+</ul>
+<h3 id="d-counterpoint-layer">D) 對位與非和弦音（Counterpoint layer）<a class="headerlink" href="#d-counterpoint-layer" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>對位不是額外的裝飾，而是「推進引擎」：</li>
+<li>你可以不換和弦，但讓聲部線條持續走向下一個落點。</li>
+</ul>
+<h2 id="4">4️⃣ 和聲張力設計：如何「不換和聲也能推進」<a class="headerlink" href="#4" title="連結到此段落">&para;</a></h2>
+<h3 id="vs">穩定 vs 不穩定的配置<a class="headerlink" href="#vs" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>穩定：強拍落和弦音、配置乾淨、密度低。</li>
+<li>不穩定：</li>
+<li>強拍刻意放色彩音（7/9/4）</li>
+<li>或用掛留把解決延後</li>
+<li>或把密度堆高（讓空間變擁擠）</li>
+</ul>
+<h3 id="_8">延遲音、倚音、經過音的角色<a class="headerlink" href="#_8" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>掛留（suspension）</strong>：最像「巴洛克的呼吸控制」。</li>
+<li>例如 4-3：在屬和弦上先停在 4，再解到 3。</li>
+<li><strong>倚音（appoggiatura）</strong>：更尖的張力。</li>
+<li>強拍落錯音，再回來，像先撞一下再安放。</li>
+<li><strong>經過音（passing tone）</strong>：最像「走路」。</li>
+<li>你會感到時間在流動，而不是原地站著。</li>
+</ul>
+<h3 id="_9">一個很實用的張力公式<a class="headerlink" href="#_9" title="連結到此段落">&para;</a></h3>
+<ul>
+<li><strong>同一輪地基不變</strong>，但每輪至少改變一項：</li>
+<li>節奏密度 / 音域 / 裝飾摩擦 / 配器層數</li>
+<li>這樣聽者會覺得「一直往前」，卻仍然「沒有迷路」。</li>
+</ul>
+<h2 id="_10">實際編曲／作曲應用<a class="headerlink" href="#_10" title="連結到此段落">&para;</a></h2>
+<h3 id="_11">鋼琴<a class="headerlink" href="#_11" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>先把左手 ground bass 練到「像鼓點」：穩、可預期、力度一致。</li>
+<li>右手做變奏時，先從兩個旋鈕開始：</li>
+<li>節奏密度（八分→十六分）</li>
+<li>音域（上移八度＝變亮；下移八度＝變沉）</li>
+<li>再加第三個旋鈕：掛留/倚音（延後解決），讓你在不換和弦時仍能推進。</li>
+</ul>
+<h3 id="band">樂團／Band<a class="headerlink" href="#band" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>Bass：把 ostinato 寫得可唱，並維持「輪次」的辨識度（不要每輪都改到認不出來）。</li>
+<li>Drums：把變奏主要交給節奏與動態（fill、open/closed hi-hat、ghost notes），不要一開始就靠換和弦。</li>
+<li>Keys/Guitar：</li>
+<li>先負責骨架（3、7 的連接）</li>
+<li>再逐輪加入色彩（9/11/13 或 sus/add）</li>
+<li>用 call-and-response 與旋律互動，讓變奏像對話。</li>
+</ul>
+<h3 id="daw">DAW 製作思維<a class="headerlink" href="#daw" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>把 Passacaglia 想成「loop 的變奏編曲」：</li>
+<li>地基不動（bass loop + 1 層和聲）</li>
+<li>上方逐輪加：音色層、節奏層、空間層（reverb/delay）、濾波 automation</li>
+<li>很有效的一個做法：每輪只改 1–2 個參數（密度/亮度/空間），避免一次改太多失去「同一地基」的辨識度。</li>
+</ul>
+<h2 id="5">5️⃣ 現代應用延伸<a class="headerlink" href="#5" title="連結到此段落">&para;</a></h2>
+<h3 id="_12">電影配樂<a class="headerlink" href="#_12" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>固定低音循環＝宿命/倒數/時間機械。</li>
+<li>上方用配器逐輪加厚、加亮，能做出「不可逆推進」。</li>
+</ul>
+<h3 id="_13">流行歌副歌<a class="headerlink" href="#_13" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>副歌常需要「反覆但上升」：</li>
+<li>地基固定（和弦循環/低音動機）</li>
+<li>上方靠旋律與編曲層次逐輪抬升</li>
+</ul>
+<h3 id="loop">電子音樂 Loop<a class="headerlink" href="#loop" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>8 小節 loop 固定：</li>
+<li>用濾波、空間、節奏層與音色變形做變奏</li>
+<li>其實就是 Passacaglia 的現代聲響版</li>
+</ul>
+<h3 id="jazz-modal-vamp">Jazz modal vamp<a class="headerlink" href="#jazz-modal-vamp" title="連結到此段落">&para;</a></h3>
+<ul>
+<li>長時間停留在某和聲板塊（例如 Dm7）：</li>
+<li>用 voicing、upper structure、節奏互動推進</li>
+<li>等同「地形固定，上層自由」</li>
+</ul>
+<h2 id="_14">習作<a class="headerlink" href="#_14" title="連結到此段落">&para;</a></h2>
+<h3 id="6-3">6️⃣ 創作練習（由易到難，至少 3 題）<a class="headerlink" href="#6-3" title="連結到此段落">&para;</a></h3>
+<ol>
+<li><strong>寫一個 8 小節 ground bass</strong>（任意調）：
+   - 低音線可唱（你能哼出來）
+   - 最後 2 小節必須導向 V→I（或 V→i）</li>
+<li><strong>在不換和聲下做 3 種變奏</strong>：
+   - 變奏 A：改節奏密度
+   - 變奏 B：改音域（高八度／低八度）
+   - 變奏 C：加入掛留/倚音，延後解決</li>
+<li><strong>同一 ground bass 改寫三種風格</strong>：
+   - 古典：四部和聲＋清楚解決
+   - 爵士：加入 ii–V 語彙（可替代）＋延伸音 voicing
+   - 流行：和弦符號簡化＋用音色層次推進</li>
+</ol>
+<h2 id="_15">譜例（以文字描述即可）<a class="headerlink" href="#_15" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>Ground bass（示意）：8 小節低音反覆；第 7～8 小節形成導向 V→i 的落點。</li>
+<li>變奏示意（同一地基三輪）：</li>
+<li>第 1 輪：右手分解和弦（八分）</li>
+<li>第 2 輪：右手改切分 block chords</li>
+<li>第 3 輪：右手加對位線條＋掛留（4-3、9-8）</li>
+</ul>
+<h2 id="_16">常見錯誤與迷思<a class="headerlink" href="#_16" title="連結到此段落">&para;</a></h2>
+<ul>
+<li>低音寫得不可唱：ground bass 失去身份，變奏再多也像散掉。</li>
+<li>變奏只做「加更多音」：真正有效常是節奏、音域、密度、對位的改寫。</li>
+<li>摩擦沒有落點：掛留/倚音要有解決策略，否則張力會變噪音。</li>
+</ul>
+<h2 id="_17">聆聽與分析建議<a class="headerlink" href="#_17" title="連結到此段落">&para;</a></h2>
+<ul>
+<li><strong>聽哪裡</strong>：</li>
+<li>低音每輪回來時，你是否仍清楚感到「同一地基」？</li>
+<li>哪些輪次在不換和聲下仍讓你覺得「更緊/更亮」？</li>
+<li><strong>注意什麼</strong>：</li>
+<li>掛留如何延後解決（張力如何被拉長）</li>
+<li>對位線條如何在不破壞骨架下推進時間</li>
+</ul>
+        <div class="footer">來源：講義/13-Passacaglia專章.md  →  HTML/13-Passacaglia專章.html</div>
+      </article>
+    </div>
+  </main>
+
+  <div class="backtop"><a href="#top" title="回到頂部">↑</a></div>
+</body>
+</html>
