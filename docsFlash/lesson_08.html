@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第八. 模進的力量 —— 五度圈的連鎖反應 - 和聲的引力</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        
+:root {
+    --bg-color: #fdfdfd;
+    --text-color: #333;
+    --sidebar-bg: #f7f7f7;
+    --sidebar-width: 280px;
+    --accent-color: #2c3e50;
+    --link-color: #3498db;
+    --font-heading: "Playfair Display", Georgia, serif;
+    --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #1a1a1a;
+        --text-color: #e0e0e0;
+        --sidebar-bg: #252525;
+        --accent-color: #ecf0f1;
+        --link-color: #5dade2;
+    }
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    border-right: 1px solid rgba(0,0,0,0.1);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 2rem 1.5rem;
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
+}
+
+.sidebar h1 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--accent-color);
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-links li {
+    margin-bottom: 0.8rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    opacity: 0.8;
+    transition: all 0.2s;
+    display: block;
+    padding: 0.3rem 0;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    opacity: 1;
+    color: var(--link-color);
+    font-weight: 600;
+    transform: translateX(5px);
+}
+
+/* Main Content */
+.main-content {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    padding: 4rem 10%;
+    max-width: 800px;
+}
+
+.markdown-body {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+    font-family: var(--font-heading);
+    color: var(--accent-color);
+    margin-top: 2rem;
+}
+
+.markdown-body h1 { font-size: 2.5rem; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 0.5rem; }
+.markdown-body h2 { font-size: 1.8rem; }
+.markdown-body blockquote {
+    border-left: 4px solid var(--link-color);
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+    background: rgba(52, 152, 219, 0.1);
+    border-radius: 0 4px 4px 0;
+    padding: 1rem;
+}
+
+.markdown-body code {
+    background: rgba(0,0,0,0.05);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+.markdown-body pre code {
+    background: transparent;
+    padding: 0;
+}
+
+.markdown-body pre {
+    background: #2d3436;
+    color: #dfe6e9;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.nav-buttons {
+    margin-top: 4rem;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    background: var(--sidebar-bg);
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background 0.2s;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.btn:hover {
+    background: rgba(0,0,0,0.05);
+    color: var(--link-color);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        z-index: 1000;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    }
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 2rem 1.5rem;
+    }
+    .menu-toggle {
+        display: block;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1001;
+        background: var(--bg-color);
+        border: 1px solid rgba(0,0,0,0.1);
+        padding: 0.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+}
+@media (min-width: 769px) {
+    .menu-toggle { display: none; }
+}
+
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+    <nav class="sidebar">
+        <h1><a href="index.html" style="color: inherit; text-decoration: none;">和聲的引力</a></h1>
+        <ul class="nav-links">
+            <li><a href="lesson_01.html" id="nav-1">第一. 音聲的物理基礎與「引力」的起源</a></li><li><a href="lesson_02.html" id="nav-2">第二. 時間的幾何學 —— 記譜與節奏層級</a></li><li><a href="lesson_03.html" id="nav-3">第三. 調性的導航圖 —— 五度圈深度解析</a></li><li><a href="lesson_04.html" id="nav-4">第四. 小調的變體 —— 憂鬱中的三種靈魂</a></li><li><a href="lesson_05.html" id="nav-5">第五. 縱向結構 —— 音符的建築學 (和弦)</a></li><li><a href="lesson_06.html" id="nav-6">第六. 和聲動力學 —— 解決、磁力與 Sus 和弦</a></li><li><a href="lesson_07.html" id="nav-7">第七. 橫向連接 —— 讓音樂流動的藝術 (聲部進行)</a></li><li><a class="active" href="lesson_08.html" id="nav-8">第八. 模進的力量 —— 五度圈的連鎖反應</a></li><li><a href="lesson_09.html" id="nav-9">第九. 經典分析 I ——《帕薩卡利亞》的結構美學</a></li><li><a href="lesson_10.html" id="nav-10">第十. 經典分析 II ——《枯葉》與爵士 2-5-1 的魅力</a></li><li><a href="lesson_11.html" id="nav-11">第十一. 副屬和弦 —— 音樂中的「暫時引力」</a></li><li><a href="lesson_12.html" id="nav-12">第十二. 調式互換 —— 借用另一個宇宙的顏色</a></li><li><a href="lesson_13.html" id="nav-13">第十三. 進階門檻 —— 突破調性的最後疆界</a></li>
+        </ul>
+    </nav>
+    <main class="main-content">
+        <article class="markdown-body">
+            <h1>第八章：模進的力量 —— 五度圈的連鎖反應</h1>
+<blockquote>
+<p>[!NOTE]<br />
+<strong>學習目標</strong>：為什麼音樂有時候會有一種「停不下來」的衝動？我們將學習如何利用五度圈的重力，製造出像大隊接力一樣的和聲連鎖反應。</p>
+</blockquote>
+<hr />
+<h2>8.1 視覺化描述：和聲的「多米諾骨牌」</h2>
+<p>模進 (Sequence) 指的是將一個簡短的和聲模式，在不同的音高上重複出現。</p>
+<h3>🔄 五度圈模進 (Circle Progression)</h3>
+<p>這是音樂中最強大的模進方式。想像一組多米諾骨牌：<br />
+*   <strong>第一塊</strong>：I (1) 倒向 IV (4)。<br />
+*   <strong>第二塊</strong>：IV (4) 因為被推了，倒向 vii° (7)。<br />
+*   <strong>第三塊</strong>：vii° (7) 倒向 iii (3)...</p>
+<p><strong>完整路徑</strong>：<br />
+<code>I \to IV \to vii° \to iii \to vi \to ii \to V \to I</code></p>
+<blockquote>
+<p><strong>視覺想像</strong>：這就像是在五度圈這個鐘面上，每一次跳躍都往逆時針方向前進一格。這種連續的「解決感」會讓聽眾的耳朵被慣性帶著走，產生極強的敘事性。</p>
+</blockquote>
+<hr />
+<h2>8.2 實例驅動：從古典到《星際效應》的層遞感</h2>
+<h3>🚀 範例：史詩電影的「層遞」</h3>
+<p>在 Hans Zimmer 的配樂中，常會聽到一個簡單的動機不斷重複，但背後的和弦卻在沿著五度圈悄悄下行。<br />
+*   <strong>效果</strong>：這會製造出一種「命運不可阻擋」或「時間在追趕」的感覺。</p>
+<h3>🏮 預測您感興趣的主題：卡農 vs. 五度模進</h3>
+<ul>
+<li><strong>卡農 (Pachelbel's Canon)</strong>：1-5-6-3-4-1-4-5。這包含了「級進」與「跳進」的混合，相對平穩。</li>
+<li><strong>五度模進</strong>：則是完全的「跳進」。對於喜歡「重力感」與「邏輯感」的您來說，五度模進會比卡農帶給您更強的「結構快感」。</li>
+</ul>
+<hr />
+<h2>8.3 深度觀察：為什麼這組進行聽起來「很高級」？</h2>
+<p>當您彈奏 <code>vi - ii - V - I</code> 時，因為每個和弦都是下一個和弦的「屬功能」（引力源），所以音樂會顯得非常自信且有方向感。這就是您在觀察 <code>Am - Dm - G - C</code> 時感受到的那種「耳熟卻又不平凡」的原因。</p>
+<hr />
+<h2>8.4 🎹 在鍵盤上彈彈看！</h2>
+<h3>任務一：五度圈全導航</h3>
+<ol>
+<li>左手只彈根音，右手彈三和弦。</li>
+<li>順序：<strong>C \to F \to Bdim \to Em \to Am \to Dm \to G \to C</strong>。</li>
+<li>感受那種「一個接一個」的重力加速度。</li>
+</ol>
+<h3>任務二：為模進加點「色彩」</h3>
+<ol>
+<li>嘗試把上面的進行全部換成 <strong>七和弦</strong>：<ul>
+<li><strong>CM7 \to FM7 \to Bm7b5 \to Em7 \to Am7 \to Dm7 \to G7 \to CM7</strong>。</li>
+</ul>
+</li>
+<li>聽聽看，是不是瞬間變成了高級的爵士或日系遊戲音樂（如《Final Fantasy》）的質感？</li>
+</ol>
+<h3>任務三：設計您的「模進動機」</h3>
+<ol>
+<li>右手彈一個簡單的旋律（例如：mi - re - do）。</li>
+<li>配合左手的五度跳進。</li>
+<li>嘗試在換和弦時，讓左手也跟著平移。</li>
+</ol>
+<hr />
+<p><strong>下一章預告</strong>：我們已經掌握了模進的引擎。下一章我們將正式對準您的 <strong>「終極課題」</strong> —— 深入解析韓德爾的《帕薩卡利亞》(Passacaglia)！</p>
+        </article>
+        <div class="nav-buttons">
+            <a href="lesson_07.html" class="btn">← 上一章</a>
+            <a href="lesson_09.html" class="btn">下一章 →</a>
+        </div>
+    </main>
+</body>
+</html>

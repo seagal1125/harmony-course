@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第三. 調性的導航圖 —— 五度圈深度解析 - 和聲的引力</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        
+:root {
+    --bg-color: #fdfdfd;
+    --text-color: #333;
+    --sidebar-bg: #f7f7f7;
+    --sidebar-width: 280px;
+    --accent-color: #2c3e50;
+    --link-color: #3498db;
+    --font-heading: "Playfair Display", Georgia, serif;
+    --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #1a1a1a;
+        --text-color: #e0e0e0;
+        --sidebar-bg: #252525;
+        --accent-color: #ecf0f1;
+        --link-color: #5dade2;
+    }
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    border-right: 1px solid rgba(0,0,0,0.1);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 2rem 1.5rem;
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
+}
+
+.sidebar h1 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--accent-color);
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-links li {
+    margin-bottom: 0.8rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    opacity: 0.8;
+    transition: all 0.2s;
+    display: block;
+    padding: 0.3rem 0;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    opacity: 1;
+    color: var(--link-color);
+    font-weight: 600;
+    transform: translateX(5px);
+}
+
+/* Main Content */
+.main-content {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    padding: 4rem 10%;
+    max-width: 800px;
+}
+
+.markdown-body {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+    font-family: var(--font-heading);
+    color: var(--accent-color);
+    margin-top: 2rem;
+}
+
+.markdown-body h1 { font-size: 2.5rem; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 0.5rem; }
+.markdown-body h2 { font-size: 1.8rem; }
+.markdown-body blockquote {
+    border-left: 4px solid var(--link-color);
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+    background: rgba(52, 152, 219, 0.1);
+    border-radius: 0 4px 4px 0;
+    padding: 1rem;
+}
+
+.markdown-body code {
+    background: rgba(0,0,0,0.05);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+.markdown-body pre code {
+    background: transparent;
+    padding: 0;
+}
+
+.markdown-body pre {
+    background: #2d3436;
+    color: #dfe6e9;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.nav-buttons {
+    margin-top: 4rem;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    background: var(--sidebar-bg);
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background 0.2s;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.btn:hover {
+    background: rgba(0,0,0,0.05);
+    color: var(--link-color);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        z-index: 1000;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    }
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 2rem 1.5rem;
+    }
+    .menu-toggle {
+        display: block;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1001;
+        background: var(--bg-color);
+        border: 1px solid rgba(0,0,0,0.1);
+        padding: 0.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+}
+@media (min-width: 769px) {
+    .menu-toggle { display: none; }
+}
+
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+    <nav class="sidebar">
+        <h1><a href="index.html" style="color: inherit; text-decoration: none;">和聲的引力</a></h1>
+        <ul class="nav-links">
+            <li><a href="lesson_01.html" id="nav-1">第一. 音聲的物理基礎與「引力」的起源</a></li><li><a href="lesson_02.html" id="nav-2">第二. 時間的幾何學 —— 記譜與節奏層級</a></li><li><a class="active" href="lesson_03.html" id="nav-3">第三. 調性的導航圖 —— 五度圈深度解析</a></li><li><a href="lesson_04.html" id="nav-4">第四. 小調的變體 —— 憂鬱中的三種靈魂</a></li><li><a href="lesson_05.html" id="nav-5">第五. 縱向結構 —— 音符的建築學 (和弦)</a></li><li><a href="lesson_06.html" id="nav-6">第六. 和聲動力學 —— 解決、磁力與 Sus 和弦</a></li><li><a href="lesson_07.html" id="nav-7">第七. 橫向連接 —— 讓音樂流動的藝術 (聲部進行)</a></li><li><a href="lesson_08.html" id="nav-8">第八. 模進的力量 —— 五度圈的連鎖反應</a></li><li><a href="lesson_09.html" id="nav-9">第九. 經典分析 I ——《帕薩卡利亞》的結構美學</a></li><li><a href="lesson_10.html" id="nav-10">第十. 經典分析 II ——《枯葉》與爵士 2-5-1 的魅力</a></li><li><a href="lesson_11.html" id="nav-11">第十一. 副屬和弦 —— 音樂中的「暫時引力」</a></li><li><a href="lesson_12.html" id="nav-12">第十二. 調式互換 —— 借用另一個宇宙的顏色</a></li><li><a href="lesson_13.html" id="nav-13">第十三. 進階門檻 —— 突破調性的最後疆界</a></li>
+        </ul>
+    </nav>
+    <main class="main-content">
+        <article class="markdown-body">
+            <h1>第三章：調性的導航圖 —— 五度圈深度解析</h1>
+<blockquote>
+<p>[!NOTE]<br />
+<strong>學習目標</strong>：理解為什麼 C 大調跟 G 大調只差一個音？為什麼順時針走是「升號」，逆時針走是「降號」？我們將學會使用音樂界的 GPS。</p>
+</blockquote>
+<hr />
+<h2>3.1 視覺化描述：音樂的「時鐘幾何」</h2>
+<p>五度圈 (Circle of Fifths) 不是隨機排列的，它是基於第一章我們學到的<strong>「最強引力」——純五度</strong>。</p>
+<h3>🧭 圓環的構造</h3>
+<p>想像一個時鐘面：<br />
+1.  <strong>12 點鐘位置</strong>：<strong>C 大調</strong>（最平衡，沒有任何升降號）。<br />
+2.  <strong>順時針（上行五度）</strong>：每走一格，增加一個 <strong># (升號)</strong>。<br />
+    *   C \to G \to D \to A \to E... (就像是往太陽升起的方向走，光線越來越亮)。<br />
+3.  <strong>逆時針（下行五度/上行四度）</strong>：每走一格，增加一個 <strong>b (降號)</strong>。<br />
+    *   C \to F \to Bb \to Eb \to Ab... (就像是往深海游去，光影越來越沉、越憂鬱)。</p>
+<blockquote>
+<p><strong>記憶口訣</strong> (升號出現順序)：<br />
+<strong>F</strong>ather <strong>C</strong>harles <strong>G</strong>oes <strong>D</strong>own <strong>A</strong>nd <strong>E</strong>nds <strong>B</strong>attle (F-C-G-D-A-E-B)<br />
+💡 這是您在五線譜左側會看到的升號順序。</p>
+</blockquote>
+<hr />
+<h2>3.2 實例驅動：五度圈的「重力加速」與《枯葉》</h2>
+<p>為什麼五度圈很重要？因為它是和聲進行的「軌道」。</p>
+<h3>🍂 範例：爵士經典《枯葉》(Autumn Leaves)</h3>
+<p>這首歌之所以經典，是因為它沿著五度圈的軌道<strong>逆時針連續跳躍</strong>。</p>
+<p>在 Bb 大調中的進行：<br />
+<code>Cm7 (ii) \to F7 (V) \to Bbmaj7 (I) \to Ebmaj7 (IV)</code></p>
+<ul>
+<li><strong>五度關係</strong>：C \to F \to Bb \to Eb。</li>
+<li>這是五度圈上連續的四格！這就是為什麼這首歌聽起來「極其流暢」，因為它完全順著音樂的重力前行。</li>
+</ul>
+<hr />
+<h2>3.3 深度聯繫：Passacaglia 與小調五度圈</h2>
+<p>回到您最愛的 <code>Am - Dm - G - C - F</code>：<br />
+*   在 A 小調中，這同樣是五度圈的運作：<strong>A \to D \to G \to C \to F</strong>。<br />
+*   <strong>您的觀察</strong>：當您說 <code>Am 是 Dm 的 5 7 9 度音</code> 時，實際上是因為在五度圈中，相鄰的兩格和弦共享最多的「共同音」。</p>
+<hr />
+<h2>3.4 🎹 在鍵盤上彈彈看！</h2>
+<h3>任務一：五度圈的體感旅行</h3>
+<ol>
+<li>右手彈一個 <strong>C 和弦</strong>。</li>
+<li><strong>順時針</strong>：移動到 <strong>G 和弦</strong> (只動一個音：C \to B 或保持 G)。</li>
+<li>繼續移動到 <strong>D 和弦</strong>。感受聲音越來越「明亮」的感覺。</li>
+</ol>
+<h3>任務二：體驗《枯葉》的重力感</h3>
+<ol>
+<li>左手只彈根音，右手彈簡單的三和弦：<ul>
+<li><strong>Cm</strong> (C-Eb-G) \to <strong>F</strong> (F-A-C) \to <strong>Bb</strong> (Bb-D-F) \to <strong>Eb</strong> (Eb-G-Bb)</li>
+</ul>
+</li>
+<li>感受這種「停不下來」的動力。</li>
+</ol>
+<hr />
+<p><strong>下一章預告</strong>：地基打好了。下一章我們將進入「小調的變體」，看看為什麼小調聽起來有這麼多種層次。</p>
+        </article>
+        <div class="nav-buttons">
+            <a href="lesson_02.html" class="btn">← 上一章</a>
+            <a href="lesson_04.html" class="btn">下一章 →</a>
+        </div>
+    </main>
+</body>
+</html>

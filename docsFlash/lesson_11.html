@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第十一. 副屬和弦 —— 音樂中的「暫時引力」 - 和聲的引力</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        
+:root {
+    --bg-color: #fdfdfd;
+    --text-color: #333;
+    --sidebar-bg: #f7f7f7;
+    --sidebar-width: 280px;
+    --accent-color: #2c3e50;
+    --link-color: #3498db;
+    --font-heading: "Playfair Display", Georgia, serif;
+    --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #1a1a1a;
+        --text-color: #e0e0e0;
+        --sidebar-bg: #252525;
+        --accent-color: #ecf0f1;
+        --link-color: #5dade2;
+    }
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    border-right: 1px solid rgba(0,0,0,0.1);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 2rem 1.5rem;
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
+}
+
+.sidebar h1 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--accent-color);
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-links li {
+    margin-bottom: 0.8rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    opacity: 0.8;
+    transition: all 0.2s;
+    display: block;
+    padding: 0.3rem 0;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    opacity: 1;
+    color: var(--link-color);
+    font-weight: 600;
+    transform: translateX(5px);
+}
+
+/* Main Content */
+.main-content {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    padding: 4rem 10%;
+    max-width: 800px;
+}
+
+.markdown-body {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+    font-family: var(--font-heading);
+    color: var(--accent-color);
+    margin-top: 2rem;
+}
+
+.markdown-body h1 { font-size: 2.5rem; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 0.5rem; }
+.markdown-body h2 { font-size: 1.8rem; }
+.markdown-body blockquote {
+    border-left: 4px solid var(--link-color);
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+    background: rgba(52, 152, 219, 0.1);
+    border-radius: 0 4px 4px 0;
+    padding: 1rem;
+}
+
+.markdown-body code {
+    background: rgba(0,0,0,0.05);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+.markdown-body pre code {
+    background: transparent;
+    padding: 0;
+}
+
+.markdown-body pre {
+    background: #2d3436;
+    color: #dfe6e9;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.nav-buttons {
+    margin-top: 4rem;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    background: var(--sidebar-bg);
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background 0.2s;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.btn:hover {
+    background: rgba(0,0,0,0.05);
+    color: var(--link-color);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        z-index: 1000;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    }
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 2rem 1.5rem;
+    }
+    .menu-toggle {
+        display: block;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1001;
+        background: var(--bg-color);
+        border: 1px solid rgba(0,0,0,0.1);
+        padding: 0.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+}
+@media (min-width: 769px) {
+    .menu-toggle { display: none; }
+}
+
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+    <nav class="sidebar">
+        <h1><a href="index.html" style="color: inherit; text-decoration: none;">和聲的引力</a></h1>
+        <ul class="nav-links">
+            <li><a href="lesson_01.html" id="nav-1">第一. 音聲的物理基礎與「引力」的起源</a></li><li><a href="lesson_02.html" id="nav-2">第二. 時間的幾何學 —— 記譜與節奏層級</a></li><li><a href="lesson_03.html" id="nav-3">第三. 調性的導航圖 —— 五度圈深度解析</a></li><li><a href="lesson_04.html" id="nav-4">第四. 小調的變體 —— 憂鬱中的三種靈魂</a></li><li><a href="lesson_05.html" id="nav-5">第五. 縱向結構 —— 音符的建築學 (和弦)</a></li><li><a href="lesson_06.html" id="nav-6">第六. 和聲動力學 —— 解決、磁力與 Sus 和弦</a></li><li><a href="lesson_07.html" id="nav-7">第七. 橫向連接 —— 讓音樂流動的藝術 (聲部進行)</a></li><li><a href="lesson_08.html" id="nav-8">第八. 模進的力量 —— 五度圈的連鎖反應</a></li><li><a href="lesson_09.html" id="nav-9">第九. 經典分析 I ——《帕薩卡利亞》的結構美學</a></li><li><a href="lesson_10.html" id="nav-10">第十. 經典分析 II ——《枯葉》與爵士 2-5-1 的魅力</a></li><li><a class="active" href="lesson_11.html" id="nav-11">第十一. 副屬和弦 —— 音樂中的「暫時引力」</a></li><li><a href="lesson_12.html" id="nav-12">第十二. 調式互換 —— 借用另一個宇宙的顏色</a></li><li><a href="lesson_13.html" id="nav-13">第十三. 進階門檻 —— 突破調性的最後疆界</a></li>
+        </ul>
+    </nav>
+    <main class="main-content">
+        <article class="markdown-body">
+            <h1>第十一章：副屬和弦 —— 音樂中的「暫時引力」</h1>
+<blockquote>
+<p>[!NOTE]<br />
+<strong>學習目標</strong>：如何讓一個普通的和弦突然變得更有權威感？我們將學習如何向別的調「借用」引力，這就是<strong>副屬和弦 (Secondary Dominant)</strong>。</p>
+</blockquote>
+<hr />
+<h2>11.1 視覺化描述：暫時的「磁鐵」</h2>
+<p>在之前的章節中，我們學到 <strong>V \to I</strong> 是最強大的引力。<br />
+副屬和弦的原理是：<strong>把調性中任何一個「不穩定的和弦」，暫時當作「主音 (I)」，然後給它一個專屬的「屬和弦 (V)」。</strong></p>
+<h3>🧩 構造解析 (以 C 大調為例)</h3>
+<p>如果您想強調 <strong>Am (vi)</strong>：<br />
+*   在 C 大調外，對準 Am 的五度音是 <strong>E</strong>。<br />
+*   我們在 Am 前面插入一個 <strong>E7</strong> (含有 G# 這個調外音)。<br />
+*   <strong>公式</strong>：V7 / vi \to vi (五之六級 \to 六級)。</p>
+<blockquote>
+<p><strong>視覺想像</strong>：這就像是在一條筆直的公路上突然開了一個帶有霓虹燈的交流道。雖然您最後還是會回到主幹道，但那段「調外音」的出現，會讓目標和弦 (Am) 聽起來更有重量、更具戲劇性。</p>
+</blockquote>
+<hr />
+<h2>11.2 實例驅動：為什麼您會看到 G# 在 C 大調裡？</h2>
+<h3>🚀 範例：從《帕薩卡利亞》到現代流行</h3>
+<ul>
+<li>在您的 <code>Am - Dm - G - C - F</code> 進行中，如果我想讓 <strong>Dm</strong> 聽起來更驚心動魄：<ul>
+<li>我可以在 Dm 前面插入一個 <strong>A7</strong> (含 C#)。</li>
+<li>這就是 <strong>V / ii</strong>。這會讓 Dm 的出現顯得非常有預判感。</li>
+</ul>
+</li>
+</ul>
+<h3>🏮 預測您感興趣的主題：雙重屬和弦 (Double Dominant)</h3>
+<ul>
+<li><strong>預測</strong>：您喜歡層層疊加的深度。如果我們用 V / V (五之五級)，聽起來會有一種「光芒萬丈、準備大合唱」的感覺。</li>
+</ul>
+<hr />
+<h2>11.3 深度聯繫：5-7-9 與磁力的擴張</h2>
+<p>當您使用副屬和弦時，您其實是在擴張調性的疆界。<br />
+*   這就像是您觀察到的 <code>Am 是 Dm 的 5-7-9</code>。副屬和弦是直接從<strong>調性之外</strong>拖進來一個最強大的支援者。<br />
+*   這會產生一種「雖然還在同一個國家，但突然聞到了異國香料」的聽覺震撼。</p>
+<hr />
+<h2>11.4 🎹 在鍵盤上彈彈看！</h2>
+<h3>任務一：製造「假象」主音</h3>
+<ol>
+<li>右手彈一個普通的 <strong>Am</strong>。</li>
+<li>在彈一次 Am 之前，先彈一個 <strong>E7</strong> (E-G#-B-D)。</li>
+<li>感受那個 <strong>G#</strong> 是如何強迫您的耳朵想要聽到 <strong>A</strong> 的。</li>
+</ol>
+<h3>任務二：強化五度模進</h3>
+<ol>
+<li>彈奏您的經典進行：<strong>C \to F \to Dm \to G \to C</strong>。</li>
+<li><strong>升級版</strong>：在 Dm 前插入一個 <strong>A7</strong>；在 G 前插入一個 <strong>D7</strong>。</li>
+<li>聽聽看，這組進行是不是瞬間變成了具有好萊塢質感的複雜和聲？</li>
+</ol>
+<h3>任務三：設計您的「驚喜」</h3>
+<ol>
+<li>彈一段簡單的 C 大調旋律。</li>
+<li>突然插入一個 <strong>C7 (V / IV)</strong> 並導向 <strong>F</strong>。</li>
+<li>這就是披頭四 (The Beatles) 最愛用的招式之一！</li>
+</ol>
+<hr />
+<p><strong>下一章預告</strong>：如果您覺得副屬和弦很酷，那麼下一章的 <strong>「調式互換」</strong> 將教您如何在大調裡偷用小調的憂鬱，讓您的音樂聽起來既成熟又充滿故事感。</p>
+        </article>
+        <div class="nav-buttons">
+            <a href="lesson_10.html" class="btn">← 上一章</a>
+            <a href="lesson_12.html" class="btn">下一章 →</a>
+        </div>
+    </main>
+</body>
+</html>
